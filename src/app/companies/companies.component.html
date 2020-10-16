@@ -1,0 +1,59 @@
+<company-view *ngIf="selectedCompany" [company]="selectedCompany"></company-view>
+
+<div class="container-fluid my-5">
+  <h1 class="text-warning">Llistat d'Empreses</h1>
+  <div class="card-body text-info">
+
+<div class="my-2 text-left">
+  <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-outline-info btn-xs mr-2" type="button" [routerLink]="['/companies/form']">Crear empresa</button>
+</div>
+  <div *ngIf="companies?.length == 0" class="alert alert-info">
+    No hi ha registres a la base de dades
+
+  </div>
+  <table class="table table-responsive table-hover" *ngIf="companies?.length>0">
+    <thead>
+      <tr>
+        <th>logo</th>
+        <th>nom</th>
+        <th>mail</th>
+        <th>telèfon</th>
+        <th>data</th>
+        <th> <!-- *ngIf="authService.hasRole('ROLE_ADMIN')"-->opcions</th>
+      </tr>
+
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let company of companies">
+
+        <td>
+          <!-- *ngIf="authService.hasRole('ROLE_USER')"-->
+          <img (click)="openModal(company)" *ngIf="company?.image"
+          src="http://localhost:8090/api/uploads/img/{{company.image}}" alt="{{company.image}}" class="img-thumbnail rounded"
+          style="width:64px; cursor:pointer;">
+          <img (click)="openModal(company)" *ngIf="!company?.image"
+          src="http://localhost:8090/images/no-image.png" alt="No image" class="img-thumbnail rounded"
+          style="width:64px; cursor:pointer;">
+          <!--button  type="button" (click)="openModal(company)" name="edit"  class="btn btn-outline-info btn-xs">{{ company.name }}</button-->
+          <!--Commented because I use a Modal: [routerLink]="['/companies/view', company.id]"-->
+        </td>
+        <td *ngIf="authService.hasRole('ROLE_USER')">
+        <button  type="button" (click)="openModal(company)" name="edit"  class="btn btn-outline-info btn-xs">{{ company.name }}</button>
+          <!--Commented because I use a Modal: [routerLink]="['/companies/view', company.id]"-->
+        </td>
+        <td *ngIf="!authService.hasRole('ROLE_USER')">{{ company.name }}</td>
+        <td>{{ company.email }}</td>
+        <td>{{ company.phone }}</td>
+        <td>{{ company.createAt }}</td>
+        <td> <!--*ngIf="authService.hasRole('ROLE_ADMIN')"-->
+          <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/companies/form', company.id]" class="btn btn-outline-info btn-xs">Modificar</button>
+          <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="delete" (click)='delete(company)' class="btn btn-outline-danger btn-xs">Eliminar</button>
+          <button type="button" name="edit" [routerLink]="['/tasks/form', company.id]" class="btn btn-outline-success btn-xs">Crear Tasca</button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>

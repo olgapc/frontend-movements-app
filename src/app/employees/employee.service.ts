@@ -1,0 +1,106 @@
+import { Injectable } from '@angular/core';
+import { Employee } from './employee';
+import { of, Observable, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { map, catchError } from 'rxjs/operators';
+import { formatDate } from '@angular/common';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+
+  private urlEndPoint : string = 'http://localhost:8090/api/employees';
+
+  constructor(private http: HttpClient, private router: Router) { }
+
+  getEmployees(): Observable<Employee[]>{
+    //return this.http.get<Employee[]>(this.urlEndPoint);
+
+    return this.http.get(this.urlEndPoint).pipe(
+
+      map (response => {
+        let employees = response as Employee [];
+        return employees.map(employee => {
+          employee.name = employee.name.toUpperCase();
+          employee.createAt = formatDate(employee.createAt, 'EEE dd-MM-yyyy', 'ca');
+          return employee;
+        });
+      }
+    ),
+    );
+  }
+
+  create(employee: Employee) : Observable<any> {
+
+      return this.http.post<any>(this.urlEndPoint, employee).pipe(
+        catchError(e => {
+
+          if(e.status==400){
+            return throwError(e);
+          }
+          if(e.error.message){
+            console.error(e.error.message);
+          }
+          return throwError(e);
+        })
+      )
+    }
+
+  getEmployee(id): Observable<Employee> {
+      return this.http.get<Employee>(`${this.urlEndPoint}/${id}`).pipe(
+        catchError(e => {
+          if(e.status != 401 && e.error.message){
+            this.router.navigate(['/employees']);
+            console.error(e.error.message);
+          }
+
+          return throwError(e);
+        })
+      )
+    }
+
+    update(employee: Employee): Observable<any>{
+      return this.http.put<any>(`${this.urlEndPoint}/${employee.id}`, employee).pipe(
+        catchError(e => {
+
+          if(e.status==400){
+            return throwError(e);
+          }
+          if(e.error.message){
+            console.error(e.error.message);
+          }
+
+          return throwError(e);
+        })
+      )
+    }
+
+    delete(id: number): Observable<Employee>{
+      return this.http.delete<Employee>(`${this.urlEndPoint}/${id}`).pipe(
+        catchError(e => {
+
+          if(e.error.message){
+            console.error(e.error.message);
+          }
+
+          return throwError(e);
+        })
+      )
+    }
+
+  //  uploadImage(file: File, id):Observable<HttpEvent<{}>>{
+
+//      let formData = new FormData();
+  //    formData.append("file", file);
+    //  formData.append("id", id);
+
+      //const req = new HttpRequest('POST', `${this.urlEndPoint}/upload`,formData, {
+        //reportProgress: true
+    //  });
+
+    //  return this.http.request(req);
+    //}
+
+  }

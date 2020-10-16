@@ -1,0 +1,57 @@
+<div class="card bg-light" *ngIf="task">
+  <div class="card-header">{{title}}: {{task.description}}</div>
+    <div class="card-body">
+      <h4 class="card-title">
+        <a [routerLink]="['/companies']" class="btn btn-light">&laquo; Tornar</a>
+      </h4>
+
+      <ul class="list-group my-2" *ngIf="task?.company">
+        <li class="list-group-item list-group-item-primary">EMPRESA</li>
+        <li class="list-group-item">{{task.company.name}}</li>
+        <li class="list-group-item">{{task.company.email}}</li>
+        <li class="list-group-item">{{task.company.phone}}</li>
+      </ul>
+
+      <ul class="list-group my-2" *ngIf="task?.employee">
+        <li class="list-group-item list-group-item-primary">TREBALLADOR</li>
+        <li class="list-group-item">{{task.employee.name}}</li>
+        <li class="list-group-item">{{task.employee.phone}}</li>
+        <li class="list-group-item">{{task.employee.email}}</li>
+      </ul>
+
+      <ul class="list-group my-2">
+        <li class="list-group-item list-group-item-primary">TASCA</li>
+        <li class="list-group-item">{{task.description}}</li>
+        <li class="list-group-item">Venciment: {{task.deadline}}</li>
+        <li class="list-group-item">Creació: {{task.createAt}}</li>
+      </ul>
+
+
+      <table *ngIf="task?.taskInformations.length>0" class="table table-striped table-hover table-bordered my-3">
+        <thead>
+          <tr>
+            <th>Informació</th>
+            <th>Comentari</th>
+            <th>Creació</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of task.taskInformations">
+            <td>{{row.information.description}}</td>
+            <td>{{row.comment}}</td>
+            <td>{{row.createAt}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button class="btn btn-primary btn-sm" type="button" *ngIf="task?.subtasks.length>0">Veure subtasques</button>
+
+    <ul class="list-group my-2"  *ngFor="let sub of task.subtasks">
+      <li class="list-group-item list-group-item-primary">SUBTASCA</li>
+      <li class="list-group-item">{{sub.description}}</li>
+      <li class="list-group-item">Venciment: {{sub.deadline}}</li>
+      <li class="list-group-item">Creació: {{sub.createAt}}</li>
+    </ul>
+
+</div>

@@ -1,0 +1,136 @@
+<div class="open-modal animation fadeIn" *ngIf="modalService.modal">
+<div *ngIf="modalService.modal" class="modal" tabindex="-1" role="dialog" style="display:block;">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ title }}</h5>
+        <button (click)="closeModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <ul *ngIf="company" class="list-group mb-3">
+                <li class="list-group-item list-group-item-warning">{{company.name}}</li>
+                <li class="list-group-item">{{company.companyType.code}}</li>
+                <li class="list-group-item">{{company.email}}</li>
+                <li class="list-group-item">{{company.phone}}</li>
+                <li class="list-group-item">{{company.createAt}}</li>
+
+              </ul>
+
+              <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="input-group mb-3">
+                <div class="custom-file">
+                  <input (change)="selectImage($event)" type="file" class="custom-file-input" id="inputGroupFile04">
+                  <label class="custom-file-label" for="inputGroupFile04">Seleccionar imatge</label>
+                </div>
+                <div class="input-group-append">
+                  <button (click)="uploadImage()" [disabled]="!selectedImage" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Pujar</button>
+                </div>
+              </div>
+
+              <div *ngIf="progress > 0" class="progress" style="height: 40px; ">
+                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" [ngStyle]="{width:progress+'%'}" attr.aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100">
+                {{progress}}%</div>
+              </div>
+
+            </div>
+            <div class="col-sm">
+              <img *ngIf="company?.image" src="http://localhost:8090/api/uploads/img/{{company.image}}" alt="{{company.image}}" class="img-thumbnail rounded">
+            </div>
+          </div>
+
+          <div class="row">
+            <button type="button" name="edit" [routerLink]="['/tasks/form', company.id]" class="btn btn-outline-success btn-xs">Crear Tasca</button>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              <div *ngIf="company.tasks.length==0" class="alert alert-info my-4">L'empresa {{company.name}} no té tasques </div>
+
+              <table *ngIf="company.tasks.length>0" class="table table-bordered table-striped my-4">
+                <thead>
+                  <tr>
+                    <th>id</th>
+                    <th>Descripció</th>
+                    <th>Data</th>
+                    <th>Data Creació</th>
+                    <th>Detall</th>
+                    <th>Eliminar</th>
+                  </tr>
+
+                </thead>
+                <tbody>
+                  <tr *ngFor="let task of company.tasks">
+                    <td>{{task.id}}</td>
+                    <td>{{task.description}}</td>
+                    <td>{{task.deadline}}</td>
+                    <td>{{task.createAt}}</td>
+                    <td><button class="btn btn-primary btn-sm" type="button"
+                      [routerLink]="['/tasks', task.id]">Veure</button></td>
+                    <td><button class="btn btn-danger btn-sm" type="button"
+                      (click)="delete(task)">Eliminar</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button (click)="closeModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<!--
+<div class="container-fluid my-5">
+  <h1 class="text-warning">{{ title }}</h1>
+  <div class="card-body">
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <ul *ngIf="company" class="list-group mb-3">
+          <li class="list-group-item active">{{company.name}}</li>
+          <li class="list-group-item">{{company.companyType.description}}</li>
+          <li class="list-group-item">{{company.email}}</li>
+          <li class="list-group-item">{{company.phone}}</li>
+          <li class="list-group-item">{{company.createAt| date:"fullDate"}}</li>
+
+        </ul>
+
+        <div class="input-group mb-3">
+          <div class="custom-file">
+            <input (change)="selectImage($event)" type="file" class="custom-file-input" id="inputGroupFile04">
+            <label class="custom-file-label" for="inputGroupFile04">Seleccionar imatge</label>
+          </div>
+          <div class="input-group-append">
+            <button (click)="uploadImage()" [disabled]="!selectedImage" class="btn btn-outline-secondary" type="button">Pujar</button>
+          </div>
+        </div>
+
+        <div *ngIf="progress > 0" class="progress" style="height: 40px; ">
+          <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" [ngStyle]="{width:progress+'%'}" attr.aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100">
+          {{progress}}%</div>
+        </div>
+
+      </div>
+      <div class="col-sm">
+        <img *ngIf="company?.logo" src="http://localhost:8090/api/uploads/img/{{company.logo}}" alt="{{company.logo}}" class="img-thumbnail rounded">
+      </div>
+    </div>
+
+  </div>
+
+  </div>
+</div>
+
+-->

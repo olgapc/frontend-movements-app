@@ -1,0 +1,79 @@
+<ul *ngIf="errors?.length >0" class="alert alert-danger">
+  <li *ngFor="let err of errors">
+  {{ err }}</li>
+</ul>
+
+<div class="container-fluid my-5">
+  <h1 class="text-warning">{{ title }}</h1>
+  <div class="card-body">
+
+    <form #companyForm="ngForm">
+      <div class="form-group row">
+        <label for="name" class="col-form-label col-sm-2">Nom</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="company.name" name="name"  #name="ngModel"> <!-- required minlength="4" -->
+          <div class="alert alert-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
+            <div *ngIf="name.errors.required">
+              Nom és obligatori
+            </div>
+            <div *ngIf="name.errors.minlength">
+              Nom ha de tenir mínim 4 caràcters
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="email" class="col-form-label col-sm-2">Mail</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="company.email" name="email"  #email="ngModel" required email minlength="6"> <!-- required email -->
+          <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+            <div *ngIf="email.errors.required">
+              Mail és obligatori.
+            </div>
+            <div *ngIf="email.errors.minlength">
+              Mail ha de tenir almenys 6 caracters.
+            </div>
+            <div *ngIf="email.errors.email">
+              Mail ha de tenir un format vàlid.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="phone" class="col-form-label col-sm-2">Telèfon</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="company.phone" name="phone">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="companyType" class="col-form-label col-sm-2">Tipus d'empresa</label>
+        <div class="col-sm-6">
+          <select [compareWith]="compareCompanyType" class="form-control" [(ngModel)]="company.companyType" name="companyType">
+            <option [ngValue]="undefined">----Seleccionar tipus d'empresa----</option>
+            <option *ngFor="let companyType of companyTypes" [ngValue]="companyType">{{companyType.description}}</option>
+
+          </select>
+        </div>
+      </div>
+
+    <div class="form-group row">
+      <div class="col-sm-6">
+          <button class="btn btn-outline-info" role="button" (click)='create()' *ngIf="!company.id else elseBlock" [disabled]="!companyForm.form.valid">Crear</button>
+        <ng-template #elseBlock>
+          <button class="btn btn-outline-info" role="button" (click)='update()' [disabled]="!companyForm.form.valid">Editar</button>
+        </ng-template>
+
+      </div>
+    </div>
+
+
+
+
+    </form>
+
+    </div>
+</div>
