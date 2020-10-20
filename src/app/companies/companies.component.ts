@@ -17,7 +17,7 @@ export class CompaniesComponent implements OnInit {
   companies: Company[];
   selectedCompany: Company;
   paginator: any;
-  linkPaginator: string = "'/tasks/page'"
+  linkPaginator: string = '/companies/page';
 
 
   constructor(private companyService: CompanyService,

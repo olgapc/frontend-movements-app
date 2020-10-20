@@ -18,7 +18,7 @@ export class TasksComponent implements OnInit {
   task: Task = new Task();
   tasks: Task[];
   paginator: any;
-  //linkPaginator: "'/tasks/page'";
+  linkPaginator: string = '/tasks/page';
 
   constructor(private activatedRoute: ActivatedRoute,
     private taskService: TaskService
