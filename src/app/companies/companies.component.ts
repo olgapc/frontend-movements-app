@@ -5,6 +5,7 @@ import { ModalService } from './view/modal.service';
 import Swal from 'sweetalert2'
 import { tap } from 'rxjs/operators';
 import { AuthService } from '../users/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -15,34 +16,53 @@ export class CompaniesComponent implements OnInit {
 
   companies: Company[];
   selectedCompany: Company;
+  paginator: any;
+  linkPaginator: string = "'/tasks/page'"
+
 
   constructor(private companyService: CompanyService,
     private modalService: ModalService,
-    public authService: AuthService) {
+    public authService: AuthService,
+    private activatedRoute: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
-    this.companyService.getCompanies().pipe(
-      tap(companies => {
-        console.log('CompaniesComponent: tap 3')
-        companies.forEach(company => {
-          console.log(company.name);
-        });
-      })
-    ).subscribe(
-      companies => this.companies = companies
-      //is the same than: function (companies) {this.companies = companies}
-    );
+
+    this.activatedRoute.paramMap.subscribe(params => {
+      let page: number = +params.get('page');
+      if (!page) {
+        page = 0;
+      }
+      this.companyService.getCompanies(page)
+        .pipe(
+          tap(response => {
+            console.log('CompaniesComponent: tap 3');
+            (response.content as Company[]).forEach(company => {
+              console.log(company.name);
+            });
+          })
+
+        ).subscribe(
+          response => {
+            this.companies = response.content as Company[];
+            //is the same than: function (companies) {this.companies = companies}
+            this.paginator = response;
+          }
+        );
+    });
+
     this.modalService.notifyUpload.subscribe(company => {
       this.companies = this.companies.map(originalCompany => {
-        if(company.id == originalCompany.id){
+        if (company.id == originalCompany.id) {
           originalCompany.image = company.image;
         }
         return originalCompany;
       })
     })
+
   }
+
 
   delete(company: Company): void {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -72,14 +92,15 @@ export class CompaniesComponent implements OnInit {
               'success'
             )
           }
-        )}
-      })
-    }
+        )
+      }
+    })
+  }
 
-    openModal(company: Company){
-      this.selectedCompany = company;
-      this.modalService.openModal();
-    }
+  openModal(company: Company) {
+    this.selectedCompany = company;
+    this.modalService.openModal();
+  }
 
 
 }

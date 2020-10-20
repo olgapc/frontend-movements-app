@@ -1,1 +1,34 @@
-<p>employees works!</p>
+
+
+<div class="container-fluid my-5">
+  <h1 class="text-warning">Llistat de treballadors</h1>
+  <div class="card-body text-info">
+
+
+  <div *ngIf="employees?.length == 0" class="alert alert-info">
+    No hi ha registres a la base de dades
+
+  </div>
+  <table class="table table-responsive table-hover" *ngIf="employees?.length>0">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Nif</th>
+        <th>Data creació</th>
+        <th>opcions</th>
+      </tr>
+
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let employee of employees">
+
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.nif }}</td>
+        <td>{{ employee.createAt }}</td>
+        <td>pendent botons</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>

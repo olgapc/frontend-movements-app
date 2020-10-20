@@ -4,6 +4,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { PaginatorComponent } from './paginator/paginator.component';
 import { DirectivaComponent } from './directiva/directiva.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -32,21 +33,25 @@ import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 
+
 registerLocaleData(localeCa, 'ca');
 
 const routes: Routes =[
   {path: '', redirectTo: '/companies', pathMatch: 'full'},
   {path: 'directivas', component: DirectivaComponent},
   {path: 'companies', component: CompaniesComponent},
+  {path: 'companies/page/:page', component: CompaniesComponent},
   {path: 'companies/form', component: FormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'companies/form/:id', component: FormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}}//,
   //{path: 'companies/view/:id', component: ViewComponent}
   ,{path: 'login', component: LoginComponent},
   {path: 'tasks/:id', component: ViewTaskComponent},
   {path: 'tasks', component: TasksComponent},
+  {path: 'tasks/page/:page', component: TasksComponent},
   {path: 'tasks/form/:companyId', component: FormTaskComponent},
   {path: 'tasks/form/:companyId/:employeeId', component: FormTaskComponent},
-  {path: 'tasks/form', component: FormTaskComponent}
+  {path: 'tasks/form', component: FormTaskComponent},
+  {path: 'employees', component: EmployeesComponent},
 ];
 
 @NgModule({
@@ -64,7 +69,8 @@ const routes: Routes =[
     ViewComponent,
     LoginComponent,
     ViewTaskComponent,
-    FormTaskComponent
+    FormTaskComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,

@@ -15,21 +15,21 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
 
-  getTasks(): Observable<Task[]>{
+  getTasks(page:number): Observable<any>{
     //return this.http.get<Task[]>(this.urlEndPoint);
 
-    return this.http.get(this.urlEndPoint).pipe(
+    return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
 
-      map (response => {
-        let tasks = response as Task [];
-        return tasks.map(task => {
+      map ((response:any) => {
+
+        (response.content as Task []).map(task => {
           task.description = task.description.toUpperCase();
           task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy', 'ca');
           task.deadline = formatDate(task.deadline, 'EEE dd-MM-yyyy', 'ca');
           return task;
         });
-      }
-    ),
+        return response;
+      }),
     );
   }
 

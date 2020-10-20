@@ -14,25 +14,39 @@ import { tap } from 'rxjs/operators';
 })
 export class TasksComponent implements OnInit {
 
-  title:string = 'Nova tasca';
+  title: string = 'Nova tasca';
   task: Task = new Task();
   tasks: Task[];
+  paginator: any;
+  //linkPaginator: "'/tasks/page'";
 
   constructor(private activatedRoute: ActivatedRoute,
     private taskService: TaskService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
-    this.taskService.getTasks().pipe(
-      tap(tasks => {
-        console.log('TasksComponent: tap 3')
-        tasks.forEach(t => {
-          console.log(t.description);
-        });
-      })
-    ).subscribe(
-      tasks => this.tasks = tasks
-      //is the same than: function (companies) {this.companies = companies}
+
+    this.activatedRoute.paramMap.subscribe(params => {
+      let page: number = +params.get('page');
+
+      if (!page) {
+        page = 0;
+      }
+
+      this.taskService.getTasks(page)
+        .pipe(
+          tap(response => {
+            console.log('TasksComponent: tap 3');
+            (response.content as Task[]).forEach(t => {
+              console.log(t.description);
+            });
+          })
+        ).subscribe(response => {
+          this.tasks = response.content as Task[];
+          this.paginator = response;
+        })
+    }
+
     );
 
   }

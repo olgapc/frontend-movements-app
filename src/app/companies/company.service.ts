@@ -36,7 +36,7 @@ export class CompanyService {
     return this.http.get<CompanyType[]>(this.urlEndPoint + '/company_types');
   }
 
-  getCompanies(): Observable<Company[]> {
+  getCompanies(page:number): Observable<any> {
     //return of(COMPANIES);
     //return this.http.get(this.urlEndPoint).pipe(
     //it's the same than: return this.http.get<Company[]>(this.urlEndPoint)
@@ -44,20 +44,19 @@ export class CompanyService {
     //it's the same than: map (function (response){return response as Company[]})
 
 
-    return this.http.get(this.urlEndPoint).pipe(
+    return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
 
-      tap(response => {
-        let companies = response as Company[];
-        console.log('CompanyService: tap 1')
-        companies.forEach(company => {
+      tap((response : any) => {
+        console.log('CompanyService: tap 1');
+        (response.content as Company[]).forEach(company => {
           console.log(company.name);
         }
         )
       }),
 
-      map (response => {
-        let companies = response as Company [];
-        return companies.map(company => {
+      map ((response : any) => {
+
+        (response.content as Company[]).map(company => {
           company.name = company.name.toUpperCase();
           company.createAt = formatDate(company.createAt, 'EEE dd-MM-yyyy', 'ca');
           company.tasks.forEach(task => {
@@ -67,6 +66,7 @@ export class CompanyService {
           })
           return company;
         });
+        return response;
       }),
       //map (response => {
         //let companies = response as Company [];
@@ -83,8 +83,8 @@ export class CompanyService {
       //}),
 
     tap(response => {
-      console.log('CompanyService: tap 2')
-      response.forEach(company => {
+      console.log('CompanyService: tap 2');
+      (response.content as Company[]).forEach(company => {
         console.log(company.name);
       }
     )
