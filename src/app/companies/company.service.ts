@@ -22,11 +22,11 @@ export class CompanyService {
   constructor(private http: HttpClient, private router: Router) { }
 
   //private addAuthorizationHeader(){
-    //let token = this.authService.token;
-    //if(token != null) {
-      //return this.httpHeaders.append('Authorization', 'Bearer ' + token);
-    //}
-    //return this.httpHeaders;
+  //let token = this.authService.token;
+  //if(token != null) {
+  //return this.httpHeaders.append('Authorization', 'Bearer ' + token);
+  //}
+  //return this.httpHeaders;
   //}
 
 
@@ -36,7 +36,7 @@ export class CompanyService {
     return this.http.get<CompanyType[]>(this.urlEndPoint + '/company_types');
   }
 
-  getCompanies(page:number): Observable<any> {
+  getCompanies(page: number): Observable<any> {
     //return of(COMPANIES);
     //return this.http.get(this.urlEndPoint).pipe(
     //it's the same than: return this.http.get<Company[]>(this.urlEndPoint)
@@ -46,7 +46,7 @@ export class CompanyService {
 
     return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
 
-      tap((response : any) => {
+      tap((response: any) => {
         console.log('CompanyService: tap 1');
         (response.content as Company[]).forEach(company => {
           console.log(company.name);
@@ -54,54 +54,54 @@ export class CompanyService {
         )
       }),
 
-      map ((response : any) => {
+      map((response: any) => {
 
         (response.content as Company[]).map(company => {
           company.name = company.name.toUpperCase();
-          company.createAt = formatDate(company.createAt, 'EEE dd-MM-yyyy', 'ca');
+          company.createAt = formatDate(company.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
           company.tasks.forEach(task => {
-              task.description = task.description.toUpperCase();
-              task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy', 'ca');
-              task.deadline = formatDate(task.deadline, 'EEE dd-MM-yyyy', 'ca');
+            task.description = task.description.toUpperCase();
+            task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
+            task.deadline = formatDate(task.deadline, 'EEE dd-MM-yyyy', 'ca');
           })
           return company;
         });
         return response;
       }),
       //map (response => {
-        //let companies = response as Company [];
-        //return companies.map(company.tasks => {
-        //    let tasks = response as Task[];
-        //    return tasks.map(task => {
-        //        task.description = task.description.toUpperCase();
-        //        task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy', 'ca');
-        //        return task;
-        //    });
-        //    return company;
+      //let companies = response as Company [];
+      //return companies.map(company.tasks => {
+      //    let tasks = response as Task[];
+      //    return tasks.map(task => {
+      //        task.description = task.description.toUpperCase();
+      //        task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy', 'ca');
+      //        return task;
+      //    });
+      //    return company;
 
-        //});
+      //});
       //}),
 
-    tap(response => {
-      console.log('CompanyService: tap 2');
-      (response.content as Company[]).forEach(company => {
-        console.log(company.name);
-      }
-    )
-    })
+      tap(response => {
+        console.log('CompanyService: tap 2');
+        (response.content as Company[]).forEach(company => {
+          console.log(company.name);
+        }
+        )
+      })
     );
 
   }
 
-  create(company: Company) : Observable<any> {
+  create(company: Company): Observable<any> {
 
     return this.http.post<any>(this.urlEndPoint, company).pipe(
       catchError(e => {
 
-        if(e.status==400){
+        if (e.status == 400) {
           return throwError(e);
         }
-        if(e.error.message){
+        if (e.error.message) {
           console.error(e.error.message);
         }
         return throwError(e);
@@ -112,7 +112,7 @@ export class CompanyService {
   getCompany(id): Observable<Company> {
     return this.http.get<Company>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
-        if(e.status != 401 && e.error.message){
+        if (e.status != 401 && e.error.message) {
           this.router.navigate(['/companies']);
           console.error(e.error.message);
         }
@@ -122,14 +122,14 @@ export class CompanyService {
     )
   }
 
-  update(company: Company): Observable<any>{
+  update(company: Company): Observable<any> {
     return this.http.put<any>(`${this.urlEndPoint}/${company.id}`, company).pipe(
       catchError(e => {
 
-        if(e.status==400){
+        if (e.status == 400) {
           return throwError(e);
         }
-        if(e.error.message){
+        if (e.error.message) {
           console.error(e.error.message);
         }
 
@@ -138,11 +138,11 @@ export class CompanyService {
     )
   }
 
-  delete(id: number): Observable<Company>{
+  delete(id: number): Observable<Company> {
     return this.http.delete<Company>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
 
-        if(e.error.message){
+        if (e.error.message) {
           console.error(e.error.message);
         }
 
@@ -151,13 +151,13 @@ export class CompanyService {
     )
   }
 
-  uploadImage(file: File, id):Observable<HttpEvent<{}>>{
+  uploadImage(file: File, id): Observable<HttpEvent<{}>> {
 
     let formData = new FormData();
     formData.append("file", file);
     formData.append("id", id);
 
-    const req = new HttpRequest('POST', `${this.urlEndPoint}/upload`,formData, {
+    const req = new HttpRequest('POST', `${this.urlEndPoint}/upload`, formData, {
       reportProgress: true
     });
 

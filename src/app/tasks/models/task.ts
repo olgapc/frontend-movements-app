@@ -5,10 +5,10 @@ import { TaskInformation } from './task-information';
 export class Task {
   id: number;
   description: string;
-  optionalSubtask: boolean;
-  toSend: boolean;
-  template: boolean;
-  nameTemplate: string;
+  isOptionalSubtask: boolean;
+  isToSend: boolean;
+  isTemplate: boolean;
+  templateName: string;
   numberToCalculateDeadlineToAlarm: string;
   typeCalculationDeadline: string;
   deadline: string;
@@ -16,9 +16,9 @@ export class Task {
   company: Company;
   employee: Employee;
   taskInformations: Array<TaskInformation>=[];
-  done: boolean;
+  isDone: boolean;
   doneAt: string;
   mainTask: Task;
   subtasks: Task[]=[];
-  taskMain: boolean;
+  isMainTask: boolean;
 }

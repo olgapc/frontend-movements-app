@@ -3,14 +3,14 @@ import { Task } from './models/task';
 import { TaskService } from './services/task.service';
 import { CompanyService } from '../companies/company.service';
 import { EmployeeService } from '../employees/employee.service';
+import { AuthService } from '../users/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
 
 
 @Component({
   selector: 'app-tasks',
-  templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.css']
+  templateUrl: './tasks.component.html'
 })
 export class TasksComponent implements OnInit {
 
@@ -21,6 +21,7 @@ export class TasksComponent implements OnInit {
   linkPaginator: string = '/tasks/page';
 
   constructor(private activatedRoute: ActivatedRoute,
+    public authService: AuthService,
     private taskService: TaskService
   ) { }
 
@@ -34,14 +35,7 @@ export class TasksComponent implements OnInit {
       }
 
       this.taskService.getTasks(page)
-        .pipe(
-          tap(response => {
-            console.log('TasksComponent: tap 3');
-            (response.content as Task[]).forEach(t => {
-              console.log(t.description);
-            });
-          })
-        ).subscribe(response => {
+        .subscribe(response => {
           this.tasks = response.content as Task[];
           this.paginator = response;
         })

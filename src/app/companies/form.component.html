@@ -1,6 +1,7 @@
 <ul *ngIf="errors?.length >0" class="alert alert-danger">
   <li *ngFor="let err of errors">
-  {{ err }}</li>
+    {{ err }}
+  </li>
 </ul>
 
 <div class="container-fluid my-5">
@@ -11,7 +12,7 @@
       <div class="form-group row">
         <label for="name" class="col-form-label col-sm-2">Nom</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="company.name" name="name"  #name="ngModel"> <!-- required minlength="4" -->
+          <input type="text" class="form-control" [(ngModel)]="company.name" name="name" #name="ngModel"> <!-- required minlength="4" -->
           <div class="alert alert-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
             <div *ngIf="name.errors.required">
               Nom és obligatori
@@ -27,7 +28,7 @@
       <div class="form-group row">
         <label for="email" class="col-form-label col-sm-2">Mail</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="company.email" name="email"  #email="ngModel" required email minlength="6"> <!-- required email -->
+          <input type="text" class="form-control" [(ngModel)]="company.email" name="email" #email="ngModel" required email minlength="6"> <!-- required email -->
           <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
             <div *ngIf="email.errors.required">
               Mail és obligatori.
@@ -60,20 +61,37 @@
         </div>
       </div>
 
-    <div class="form-group row">
-      <div class="col-sm-6">
-          <button class="btn btn-outline-info" role="button" (click)='create()' *ngIf="!company.id else elseBlock" [disabled]="!companyForm.form.valid">Crear</button>
-        <ng-template #elseBlock>
-          <button class="btn btn-outline-info" role="button" (click)='update()' [disabled]="!companyForm.form.valid">Editar</button>
-        </ng-template>
-
+      <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="input-group mb-3">
+        <div class="custom-file">
+          <input (change)="selectImage($event)" type="file" class="custom-file-input" id="inputGroupFile04">
+          <label class="custom-file-label" for="inputGroupFile04">Seleccionar imatge</label>
+        </div>
+        <div class="input-group-append">
+          <button (click)="uploadImage()" [disabled]="!selectedImage" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Pujar</button>
+        </div>
       </div>
-    </div>
 
+      <div *ngIf="progress > 0" class="progress" style="height: 40px; ">
+        <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" [ngStyle]="{width:progress+'%'}" attr.aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100">
+          {{progress}}%
+        </div>
+      </div>
 
+      <div class="col-sm">
+        <img *ngIf="company?.image" src="http://localhost:8090/api/uploads/img/{{company.image}}" alt="{{company.image}}" class="img-thumbnail rounded">
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button class="btn btn-outline-info" role="button" (click)='create()' *ngIf="!company.id else elseBlock" [disabled]="!companyForm.form.valid">Crear</button>
+          <ng-template #elseBlock>
+            <button class="btn btn-outline-info" role="button" (click)='update()' [disabled]="!companyForm.form.valid">Editar</button>
+          </ng-template>
+
+        </div>
+      </div>
 
 
     </form>
-
-    </div>
+  </div>
 </div>

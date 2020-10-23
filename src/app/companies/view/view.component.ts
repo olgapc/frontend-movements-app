@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/users/auth.service';
 import { TaskService } from 'src/app/tasks/services/task.service';
 //import Swal from 'sweetalert2';
 import { Task } from 'src/app/tasks/models/task';
+import { Employee } from 'src/app/employees/employee';
 
 @Component({
   selector: 'company-view',
@@ -59,7 +60,8 @@ export class ViewComponent implements OnInit {
 
     if(!this.selectedImage){
       swal.fire('Error al pujar', 'Ha de seleccionar una imatge', 'error');
-    } else {
+    }
+    else {
       this.companyService.uploadImage(this.selectedImage, this.company.id)
       .subscribe(event => {
         if(event.type === HttpEventType.UploadProgress){
@@ -82,7 +84,7 @@ export class ViewComponent implements OnInit {
   }
 
 
-  delete(task: Task):void{
+  deleteTask(task: Task):void{
     const swalWithBootstrapButtons = swal.mixin({
       customClass: {
         confirmButton: 'btn btn-info',
@@ -107,6 +109,38 @@ export class ViewComponent implements OnInit {
             swalWithBootstrapButtons.fire(
               'Tasca eliminada!',
               `Tasca ${task.description} eliminada amb èxit.`,
+              'success'
+            )
+          }
+        )}
+      })
+  }
+
+  deleteEmployee(employee: Employee):void{
+    const swalWithBootstrapButtons = swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-info',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+      title: 'Segur?',
+      text: `Vols eliminar el treballador ${employee.name}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, esborra!',
+      cancelButtonText: 'No, cancela!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        this.taskService.delete(employee.id).subscribe(
+          () => {
+            this.company.employees = this.company.employees.filter(t => t !== employee)
+            swalWithBootstrapButtons.fire(
+              'Treballador eliminat!',
+              `Treballador ${employee.name} eliminat amb èxit.`,
               'success'
             )
           }

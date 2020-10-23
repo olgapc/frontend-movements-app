@@ -1,92 +1,139 @@
 <div class="open-modal animation fadeIn" *ngIf="modalService.modal">
-<div *ngIf="modalService.modal" class="modal" tabindex="-1" role="dialog" style="display:block;">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">{{ title }}</h5>
-        <button (click)="closeModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm">
-              <ul *ngIf="company" class="list-group mb-3">
-                <li class="list-group-item list-group-item-warning">{{company.name}}</li>
-                <li class="list-group-item">{{company.companyType.code}}</li>
-                <li class="list-group-item">{{company.email}}</li>
-                <li class="list-group-item">{{company.phone}}</li>
-                <li class="list-group-item">{{company.createAt}}</li>
+  <div *ngIf="modalService.modal" class="modal" tabindex="-1" role="dialog" style="display:block;">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
 
-              </ul>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ title }}</h5>
+          <button (click)="closeModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                <ul *ngIf="company" class="list-group mb-3">
+                  <li class="list-group-item list-group-item-warning">{{company.name}}</li>
+                  <li class="list-group-item">{{company.companyType.code}}</li>
+                  <li class="list-group-item">{{company.email}}</li>
+                  <li class="list-group-item">{{company.phone}}</li>
+                  <li class="list-group-item">{{company.createAt}}</li>
 
-              <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="input-group mb-3">
-                <div class="custom-file">
-                  <input (change)="selectImage($event)" type="file" class="custom-file-input" id="inputGroupFile04">
-                  <label class="custom-file-label" for="inputGroupFile04">Seleccionar imatge</label>
+                </ul>
+
+                <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="input-group mb-3">
+                  <div class="custom-file">
+                    <input (change)="selectImage($event)" type="file" class="custom-file-input" id="inputGroupFile04">
+                    <label class="custom-file-label" for="inputGroupFile04">Seleccionar imatge</label>
+                  </div>
+                  <div class="input-group-append">
+                    <button (click)="uploadImage()" [disabled]="!selectedImage" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Pujar</button>
+                  </div>
                 </div>
-                <div class="input-group-append">
-                  <button (click)="uploadImage()" [disabled]="!selectedImage" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Pujar</button>
+
+                <div *ngIf="progress > 0" class="progress" style="height: 40px; ">
+                  <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" [ngStyle]="{width:progress+'%'}" attr.aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100">
+                    {{progress}}%
+                  </div>
                 </div>
+
               </div>
-
-              <div *ngIf="progress > 0" class="progress" style="height: 40px; ">
-                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" [ngStyle]="{width:progress+'%'}" attr.aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100">
-                {{progress}}%</div>
+              <div class="col-sm">
+                <img *ngIf="company?.image" src="http://localhost:8090/api/uploads/img/{{company.image}}" alt="{{company.image}}" class="img-thumbnail rounded">
               </div>
-
             </div>
-            <div class="col-sm">
-              <img *ngIf="company?.image" src="http://localhost:8090/api/uploads/img/{{company.image}}" alt="{{company.image}}" class="img-thumbnail rounded">
+
+            <div class="row">
+              <button type="button" name="edit" [routerLink]="['/tasks/form', company.id]" class="btn btn-outline-success btn-xs">Crear Tasca</button>
             </div>
-          </div>
 
-          <div class="row">
-            <button type="button" name="edit" [routerLink]="['/tasks/form', company.id]" class="btn btn-outline-success btn-xs">Crear Tasca</button>
-          </div>
+            <div class="row">
+              <div class="col-sm">
+                <div *ngIf="company.tasks.length==0" class="alert alert-info my-4">L'empresa {{company.name}} no té tasques </div>
 
-          <div class="row">
-            <div class="col-sm">
-              <div *ngIf="company.tasks.length==0" class="alert alert-info my-4">L'empresa {{company.name}} no té tasques </div>
+                <table *ngIf="company.tasks.length>0" class="table table-bordered table-striped my-4">
+                  <thead>
+                    <tr>
+                      <th>id</th>
+                      <th>Descripció</th>
+                      <th>Data</th>
+                      <th>Data Creació</th>
+                      <th>Detall</th>
+                      <th>Eliminar</th>
+                    </tr>
 
-              <table *ngIf="company.tasks.length>0" class="table table-bordered table-striped my-4">
-                <thead>
-                  <tr>
-                    <th>id</th>
-                    <th>Descripció</th>
-                    <th>Data</th>
-                    <th>Data Creació</th>
-                    <th>Detall</th>
-                    <th>Eliminar</th>
-                  </tr>
-
-                </thead>
-                <tbody>
-                  <tr *ngFor="let task of company.tasks">
-                    <td>{{task.id}}</td>
-                    <td>{{task.description}}</td>
-                    <td>{{task.deadline}}</td>
-                    <td>{{task.createAt}}</td>
-                    <td><button class="btn btn-primary btn-sm" type="button"
-                      [routerLink]="['/tasks', task.id]">Veure</button></td>
-                    <td><button class="btn btn-danger btn-sm" type="button"
-                      (click)="delete(task)">Eliminar</button></td>
-                  </tr>
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let task of company.tasks">
+                      <td>{{task.id}}</td>
+                      <td>{{task.description}}</td>
+                      <td>{{task.deadline}}</td>
+                      <td>{{task.createAt}}</td>
+                      <td><button class="btn btn-primary btn-sm" type="button" [routerLink]="['/tasks', task.id]">Veure</button></td>
+                      <td><button class="btn btn-danger btn-sm" type="button" (click)="deleteTask(task)">Eliminar</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
+
+            <div class="row">
+              <div class="col-sm">
+                <div *ngIf="company.employees.length==0" class="alert alert-info my-4">L'empresa {{company.name}} no té treballadors </div>
+
+                <table *ngIf="company.employees.length>0" class="table table-bordered table-striped my-4" scrollX="true" maxWidth="400">
+                  <thead>
+                    <tr>
+                      <th>id</th>
+                      <th>Nom</th>
+                      <th>Nif</th>
+                      <th>Tipus de Nif</th>
+                      <th>Naf</th>
+                      <th>Mail</th>
+                      <th>Telèfon</th>
+                      <th>Data naixement</th>
+                      <th>Gènere</th>
+                      <th>Habilitat</th>
+                      <th>Comentari</th>
+                      <th>Data Creació</th>
+                      <th>Detall</th>
+                      <th>Eliminar</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let employee of company.employees">
+                      <td>{{employee.id}}</td>
+                      <td>{{employee.name}}</td>
+                      <td>{{employee.nif}}</td>
+                      <td>{{employee.nifType}}</td>
+                      <td>{{employee.naf}}</td>
+                      <td>{{employee.email}}</td>
+                      <td>{{employee.phone}}</td>
+                      <td>{{employee.birthDate}}</td>
+                      <td>{{employee.gender}}</td>
+                      <td>{{employee.isEnabled}}</td>
+                      <td>{{employee.comment}}</td>
+                      <td>{{employee.createAt}}</td>
+                      <td><button class="btn btn-primary btn-sm" type="button" [routerLink]="['/employees', employee.id]">Veure</button></td>
+                      <td><button class="btn btn-danger btn-sm" type="button" (click)="deleteEmployee(employee)">Eliminar</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </div>
 
         </div>
+        <div class="modal-footer">
+          <button (click)="closeModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
 
-      </div>
-      <div class="modal-footer">
-        <button (click)="closeModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
     </div>
   </div>
-</div>
 
 </div>
 <!--

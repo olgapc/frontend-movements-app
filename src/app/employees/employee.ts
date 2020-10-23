@@ -1,3 +1,4 @@
+import { Company } from '../companies/company';
 import { Task } from '../tasks/models/task';
 
 export class Employee {
@@ -11,8 +12,9 @@ export class Employee {
   phone: string;
   birthDate: string;
   gender: string;
-  enable: boolean;
+  isEnabled: boolean;
   comment: string;
   createAt: string;
   tasks: Task[] = [];
+  company: Company;
 }

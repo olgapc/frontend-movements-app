@@ -24,7 +24,7 @@ export class TaskService {
 
         (response.content as Task []).map(task => {
           task.description = task.description.toUpperCase();
-          task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy', 'ca');
+          task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
           task.deadline = formatDate(task.deadline, 'EEE dd-MM-yyyy', 'ca');
           return task;
         });

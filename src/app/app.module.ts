@@ -31,6 +31,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { InformationsComponent } from './tasks/informations.component';
+import { UsersComponent } from './users/users.component';
+import { ViewEmployeeComponent } from './employees/view-employee.component';
 
 
 
@@ -48,10 +51,16 @@ const routes: Routes =[
   {path: 'tasks/:id', component: ViewTaskComponent},
   {path: 'tasks', component: TasksComponent},
   {path: 'tasks/page/:page', component: TasksComponent},
+  {path: 'informations', component: InformationsComponent},
+  {path: 'informations/page/:page', component: InformationsComponent},
   {path: 'tasks/form/:companyId', component: FormTaskComponent},
   {path: 'tasks/form/:companyId/:employeeId', component: FormTaskComponent},
   {path: 'tasks/form', component: FormTaskComponent},
   {path: 'employees', component: EmployeesComponent},
+  {path: 'employees/page/:page', component: EmployeesComponent},
+  {path: 'employees/:id', component: ViewEmployeeComponent},
+  {path: 'users', component: UsersComponent},
+  {path: 'users/page/:page', component: UsersComponent}
 ];
 
 @NgModule({
@@ -70,7 +79,10 @@ const routes: Routes =[
     LoginComponent,
     ViewTaskComponent,
     FormTaskComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    InformationsComponent,
+    UsersComponent,
+    ViewEmployeeComponent
   ],
   imports: [
     BrowserModule,

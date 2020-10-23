@@ -11,96 +11,96 @@ import { formatDate } from '@angular/common';
 })
 export class EmployeeService {
 
-  private urlEndPoint : string = 'http://localhost:8090/api/employees';
+  private urlEndPoint: string = 'http://localhost:8090/api/employees';
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  getEmployees(): Observable<Employee[]>{
+  getEmployees(page: number): Observable<any> {
     //return this.http.get<Employee[]>(this.urlEndPoint);
 
-    return this.http.get(this.urlEndPoint).pipe(
+    return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
 
-      map (response => {
-        let employees = response as Employee [];
-        return employees.map(employee => {
+      map((response: any) => {
+
+        (response.content as Employee[]).map(employee => {
           employee.name = employee.name.toUpperCase();
-          employee.createAt = formatDate(employee.createAt, 'EEE dd-MM-yyyy', 'ca');
+          employee.createAt = formatDate(employee.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
           return employee;
         });
-      }
-    ),
+        return response;
+      }),
     );
   }
 
-  create(employee: Employee) : Observable<any> {
+  create(employee: Employee): Observable<any> {
 
-      return this.http.post<any>(this.urlEndPoint, employee).pipe(
-        catchError(e => {
+    return this.http.post<any>(this.urlEndPoint, employee).pipe(
+      catchError(e => {
 
-          if(e.status==400){
-            return throwError(e);
-          }
-          if(e.error.message){
-            console.error(e.error.message);
-          }
+        if (e.status == 400) {
           return throwError(e);
-        })
-      )
-    }
+        }
+        if (e.error.message) {
+          console.error(e.error.message);
+        }
+        return throwError(e);
+      })
+    )
+  }
 
   getEmployee(id): Observable<Employee> {
-      return this.http.get<Employee>(`${this.urlEndPoint}/${id}`).pipe(
-        catchError(e => {
-          if(e.status != 401 && e.error.message){
-            this.router.navigate(['/employees']);
-            console.error(e.error.message);
-          }
+    return this.http.get<Employee>(`${this.urlEndPoint}/${id}`).pipe(
+      catchError(e => {
+        if (e.status != 401 && e.error.message) {
+          this.router.navigate(['/employees']);
+          console.error(e.error.message);
+        }
 
+        return throwError(e);
+      })
+    )
+  }
+
+  update(employee: Employee): Observable<any> {
+    return this.http.put<any>(`${this.urlEndPoint}/${employee.id}`, employee).pipe(
+      catchError(e => {
+
+        if (e.status == 400) {
           return throwError(e);
-        })
-      )
-    }
+        }
+        if (e.error.message) {
+          console.error(e.error.message);
+        }
 
-    update(employee: Employee): Observable<any>{
-      return this.http.put<any>(`${this.urlEndPoint}/${employee.id}`, employee).pipe(
-        catchError(e => {
+        return throwError(e);
+      })
+    )
+  }
 
-          if(e.status==400){
-            return throwError(e);
-          }
-          if(e.error.message){
-            console.error(e.error.message);
-          }
+  delete(id: number): Observable<Employee> {
+    return this.http.delete<Employee>(`${this.urlEndPoint}/${id}`).pipe(
+      catchError(e => {
 
-          return throwError(e);
-        })
-      )
-    }
+        if (e.error.message) {
+          console.error(e.error.message);
+        }
 
-    delete(id: number): Observable<Employee>{
-      return this.http.delete<Employee>(`${this.urlEndPoint}/${id}`).pipe(
-        catchError(e => {
-
-          if(e.error.message){
-            console.error(e.error.message);
-          }
-
-          return throwError(e);
-        })
-      )
-    }
+        return throwError(e);
+      })
+    )
+  }
 
   //  uploadImage(file: File, id):Observable<HttpEvent<{}>>{
 
-//      let formData = new FormData();
+  //      let formData = new FormData();
   //    formData.append("file", file);
-    //  formData.append("id", id);
+  //  formData.append("id", id);
 
-      //const req = new HttpRequest('POST', `${this.urlEndPoint}/upload`,formData, {
-        //reportProgress: true
-    //  });
+  //const req = new HttpRequest('POST', `${this.urlEndPoint}/upload`,formData, {
+  //reportProgress: true
+  //  });
 
-    //  return this.http.request(req);
-    //}
+  //  return this.http.request(req);
+  //}
 
-  }
+}

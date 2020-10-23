@@ -6,5 +6,6 @@ export class User {
   lastName: string;
   password: string;
   roles: string[] = [];
+  enabled: boolean;
   createAt: string;
 }

@@ -1,0 +1,42 @@
+<div class="card bg-light" *ngIf="employee">
+  <div class="card-header">{{title}}: {{employee.name}}</div>
+  <div class="card-body">
+    <h4 class="card-title">
+      <a [routerLink]="['/employees']" class="btn btn-light">&laquo; Tornar</a>
+    </h4>
+
+    <ul class="list-group my-2" *ngIf="employee?.company">
+      <li class="list-group-item list-group-item-primary">EMPRESA</li>
+      <li class="list-group-item">{{employee.company.name}}</li>
+      <li class="list-group-item">{{employee.company.email}}</li>
+      <li class="list-group-item">{{employee.company.phone}}</li>
+    </ul>
+
+    <ul class="list-group my-2">
+      <li class="list-group-item list-group-item-primary">TREBALLADOR</li>
+      <li class="list-group-item">{{employee.name}}</li>
+      <li class="list-group-item">{{employee.phone}}</li>
+      <li class="list-group-item">{{employee.email}}</li>
+    </ul>
+
+    <table *ngIf="employee?.tasks.length>0" class="table table-striped table-hover table-bordered my-3">
+      <thead>
+        <tr>
+          <th>Descripció</th>
+          <th>Data Venciment</th>
+          <th>Creació</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of employee.tasks">
+          <td>{{task.description}}</td>
+          <td>{{task.deadline}}</td>
+          <td>{{task.createAt}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+</div>

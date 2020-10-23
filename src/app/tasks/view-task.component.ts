@@ -5,8 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-task',
-  templateUrl: './view-task.component.html',
-  styleUrls: ['./view-task.component.css']
+  templateUrl: './view-task.component.html'
 })
 export class ViewTaskComponent implements OnInit {
 

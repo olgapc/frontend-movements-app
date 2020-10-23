@@ -23,12 +23,13 @@
     <tbody>
       <tr *ngFor="let employee of employees">
 
-        <td>{{ employee.name }}</td>
+        <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/employees', employee.id]" class="btn btn-outline-info btn-xs">{{ employee.name }}</button></td>
         <td>{{ employee.nif }}</td>
         <td>{{ employee.createAt }}</td>
         <td>pendent botons</td>
       </tr>
     </tbody>
   </table>
+  <paginator-nav *ngIf="paginator" [paginator]= "paginator" [linkPaginator] = "linkPaginator" ></paginator-nav>
 </div>
 </div>
