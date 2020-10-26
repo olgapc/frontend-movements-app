@@ -34,6 +34,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { InformationsComponent } from './tasks/informations.component';
 import { UsersComponent } from './users/users.component';
 import { ViewEmployeeComponent } from './employees/view-employee.component';
+import { FormEmployeeComponent } from './employees/form-employee.component';
 
 
 
@@ -59,6 +60,7 @@ const routes: Routes =[
   {path: 'employees', component: EmployeesComponent},
   {path: 'employees/page/:page', component: EmployeesComponent},
   {path: 'employees/:id', component: ViewEmployeeComponent},
+  {path: 'employees/form/:companyId', component: FormEmployeeComponent},
   {path: 'users', component: UsersComponent},
   {path: 'users/page/:page', component: UsersComponent}
 ];
@@ -82,7 +84,8 @@ const routes: Routes =[
     PaginatorComponent,
     InformationsComponent,
     UsersComponent,
-    ViewEmployeeComponent
+    ViewEmployeeComponent,
+    FormEmployeeComponent
   ],
   imports: [
     BrowserModule,

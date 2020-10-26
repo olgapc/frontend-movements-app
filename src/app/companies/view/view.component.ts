@@ -13,8 +13,7 @@ import { Employee } from 'src/app/employees/employee';
 
 @Component({
   selector: 'company-view',
-  templateUrl: './view.component.html',
-  styleUrls: ['./view.component.css']
+  templateUrl: './view.component.html'
 })
 export class ViewComponent implements OnInit {
 

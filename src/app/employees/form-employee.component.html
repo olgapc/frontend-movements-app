@@ -1,0 +1,91 @@
+<ul *ngIf="errors?.length >0" class="alert alert-danger">
+  <li *ngFor="let err of errors">
+  {{ err }}</li>
+</ul>
+
+<div class="card bg-light" *ngIf="employee">
+  <div class="card-header">{{title}}: {{employee.name}}</div>
+  <div class="card-body">
+
+    <h4 class="card-title">
+      <a [routerLink]="['/employees']" class="btn btn-light">&laquo; Tornar</a>
+    </h4>
+
+    <form>
+
+      <div class="form-group-row" *ngIf="employee.company">
+        <label for="" class="col-sm-2 col-form-label">Empresa</label>
+        <div class="class col-sm-6">
+          <input type="text" name="company" value="{{employee.company.name}}"
+          class="form-control" disabled />
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <label for="name" class="col-sm-2 col-form-label">Nom</label>
+        <div class="class col-sm-6">
+          <input type="text" name="name" [(ngModel)]="employee.name" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <label for="nif" class="col-sm-2 col-form-label">NIF</label>
+        <div class="class col-sm-6">
+          <input type="text" name="nif" [(ngModel)]="employee.nif" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <label for="naf" class="col-sm-2 col-form-label">NAF</label>
+        <div class="class col-sm-6">
+          <input type="text" name="naf" [(ngModel)]="employee.naf" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <label for="email" class="col-sm-2 col-form-label">Mail</label>
+        <div class="class col-sm-6">
+          <input type="text" name="email" [(ngModel)]="employee.email" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <label for="phone" class="col-sm-2 col-form-label">Telèfon</label>
+        <div class="class col-sm-6">
+          <input type="text" name="phone" [(ngModel)]="employee.phone" class="form-control">
+        </div>
+      </div>
+
+
+      <div class="form-group-row">
+        <label for="birthDate" class="col-sm-2 col-form-label">Data de naixement</label>
+        <div class="class col-sm-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Tria una data</mat-label>
+                <input matInput [matDatepicker]="picker" name="birthDate" class="form-control" [(ngModel)]="employee.birthDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <label for="comment" class="col-sm-2 col-form-label">Comentari</label>
+        <div class="class col-sm-6">
+          <input type="text" name="comment" [(ngModel)]="employee.comment" class="form-control">
+        </div>
+      </div>
+
+
+
+      <div class="form-group-row">
+        <div class="class col-sm-6">
+          <input type="submit" (click)="create()" value="Crear Treballador" class="btn btn-secondary">
+        </div>
+      </div>
+
+    </form>
+
+
+  </div>
+</div>

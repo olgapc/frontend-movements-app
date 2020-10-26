@@ -79,6 +79,10 @@
             </div>
 
             <div class="row">
+              <button type="button" name="edit" [routerLink]="['/employees/form', company.id]" class="btn btn-outline-success btn-xs">Crear Treballador</button>
+            </div>
+            
+            <div class="row">
               <div class="col-sm">
                 <div *ngIf="company.employees.length==0" class="alert alert-info my-4">L'empresa {{company.name}} no té treballadors </div>
 
