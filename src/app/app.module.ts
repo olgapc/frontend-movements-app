@@ -35,6 +35,7 @@ import { InformationsComponent } from './tasks/informations.component';
 import { UsersComponent } from './users/users.component';
 import { ViewEmployeeComponent } from './employees/view-employee.component';
 import { FormEmployeeComponent } from './employees/form-employee.component';
+import { MatSelectModule } from "@angular/material/select";
 
 
 
@@ -98,7 +99,8 @@ const routes: Routes =[
     MatInputModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatSelectModule
 
   ],
   providers:

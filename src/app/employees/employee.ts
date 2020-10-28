@@ -1,4 +1,5 @@
 import { Company } from '../companies/company';
+import { NifType } from '../nif-types/nif-type';
 import { Task } from '../tasks/models/task';
 
 export class Employee {
@@ -6,7 +7,7 @@ export class Employee {
   id: number;
   name: string;
   nif: string;
-  typeNif: string;
+  nifType: NifType;
   naf: string;
   email: string;
   phone: string;

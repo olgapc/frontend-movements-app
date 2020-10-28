@@ -1,6 +1,7 @@
 <ul *ngIf="errors?.length >0" class="alert alert-danger">
   <li *ngFor="let err of errors">
-  {{ err }}</li>
+    {{ err }}
+  </li>
 </ul>
 
 <div class="card bg-light" *ngIf="employee">
@@ -16,8 +17,7 @@
       <div class="form-group-row" *ngIf="employee.company">
         <label for="" class="col-sm-2 col-form-label">Empresa</label>
         <div class="class col-sm-6">
-          <input type="text" name="company" value="{{employee.company.name}}"
-          class="form-control" disabled />
+          <input type="text" name="company" value="{{employee.company.name}}" class="form-control" disabled />
         </div>
       </div>
 
@@ -34,6 +34,18 @@
           <input type="text" name="nif" [(ngModel)]="employee.nif" class="form-control">
         </div>
       </div>
+
+      <div class="form-group-row">
+        <label for="nifType" class="col-sm-2 col-form-label">NIF</label>
+        <div class="class col-sm-6">
+          <select class="form-control" [(ngModel)]="employee.nifType" name="nifType">
+            <option [ngValue]="undefined">--Seleccionar tipus d'identificació--</option>
+            <option *ngFor="let key of enumKeys" [value]="key">{{nifTypeEnum[key]}}</option>
+
+          </select>
+        </div>
+      </div>
+
 
       <div class="form-group-row">
         <label for="naf" class="col-sm-2 col-form-label">NAF</label>
@@ -60,12 +72,12 @@
       <div class="form-group-row">
         <label for="birthDate" class="col-sm-2 col-form-label">Data de naixement</label>
         <div class="class col-sm-6">
-            <mat-form-field appearance="fill">
-                <mat-label>Tria una data</mat-label>
-                <input matInput [matDatepicker]="picker" name="birthDate" class="form-control" [(ngModel)]="employee.birthDate">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Tria una data</mat-label>
+            <input matInput [matDatepicker]="picker" name="birthDate" class="form-control" [(ngModel)]="employee.birthDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
         </div>
       </div>
 
