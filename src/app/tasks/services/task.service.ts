@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Task } from '../models/task';
 import { formatDate } from '@angular/common';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Information } from '../models/information';
+import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -55,8 +56,19 @@ export class TaskService {
     );
   }
 
-  delete(id:number):Observable<void>{
-    return this.http.delete<void>(`${this.urlEndPoint}/${id}`);
+  delete(id: number): Observable<Task>{
+    return this.http.delete<Task>(`${this.urlEndPoint}/${id}`).pipe(
+        catchError(e => {
+
+          if (e.error.message) {
+            console.error(e.error.message);
+            swal.fire('Error al eliminar', e.error.message, 'error');
+          }
+
+          return throwError(e);
+        })
+
+    )
   }
 
   uploadInformations(term: string): Observable<Information[]>{

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Information } from '../models/information';
+import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -83,6 +84,7 @@ export class InformationService {
 
         if (e.error.message) {
           console.error(e.error.message);
+          swal.fire('Error al eliminar', e.error.message, 'error');
         }
 
         return throwError(e);

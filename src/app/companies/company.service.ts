@@ -9,6 +9,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CompanyType } from '../company-types/company-type';
 import { Task } from '../tasks/models/task';
+import swal from 'sweetalert2';
 
 
 @Injectable({
@@ -144,6 +145,7 @@ export class CompanyService {
 
         if (e.error.message) {
           console.error(e.error.message);
+          swal.fire('Error al eliminar', e.error.message, 'error');
         }
 
         return throwError(e);

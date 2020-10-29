@@ -36,6 +36,8 @@ import { UsersComponent } from './users/users.component';
 import { ViewEmployeeComponent } from './employees/view-employee.component';
 import { FormEmployeeComponent } from './employees/form-employee.component';
 import { MatSelectModule } from "@angular/material/select";
+import { ViewInformationComponent } from './tasks/view-information/view-information.component';
+import { FormInformationComponent } from './tasks/form-information.component';
 
 
 
@@ -55,6 +57,9 @@ const routes: Routes =[
   {path: 'tasks/page/:page', component: TasksComponent},
   {path: 'informations', component: InformationsComponent},
   {path: 'informations/page/:page', component: InformationsComponent},
+  {path: 'informations/:id', component: ViewInformationComponent},
+  {path: 'informations/form', component: FormInformationComponent},
+  {path: 'informations/form/:id', component: FormInformationComponent},
   {path: 'tasks/form/:companyId', component: FormTaskComponent},
   {path: 'tasks/form/:companyId/:employeeId', component: FormTaskComponent},
   {path: 'tasks/form', component: FormTaskComponent},
@@ -87,7 +92,9 @@ const routes: Routes =[
     InformationsComponent,
     UsersComponent,
     ViewEmployeeComponent,
-    FormEmployeeComponent
+    FormEmployeeComponent,
+    ViewInformationComponent,
+    FormInformationComponent
   ],
   imports: [
     BrowserModule,

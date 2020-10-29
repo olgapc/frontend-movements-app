@@ -1,33 +1,33 @@
-
-
 <div class="container-fluid my-5">
   <h1 class="text-warning">Llistat d'informacions</h1>
   <div class="card-body text-info">
 
 
-  <div *ngIf="informations?.length == 0" class="alert alert-info">
-    No hi ha registres a la base de dades
+    <div *ngIf="informations?.length == 0" class="alert alert-info">
+      No hi ha registres a la base de dades
 
+    </div>
+    <table class="table table-responsive table-hover" *ngIf="informations?.length>0">
+      <thead>
+        <tr>
+          <th>Descripció</th>
+          <th>Data creació</th>
+          <th>opcions</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let information of informations">
+          <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/informations', information.id]" class="btn btn-outline-info btn-xs">{{ information.description }}</button></td>
+          <td>{{ information.createAt }}</td>
+          <td>
+              <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/informations/form', information.id]" class="btn btn-outline-info btn-xs">Modificar</button>
+              <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="delete" (click)='delete(information)' class="btn btn-outline-danger btn-xs">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <paginator-nav *ngIf="paginator" [paginator]="paginator" [linkPaginator]="linkPaginator"></paginator-nav>
   </div>
-  <table class="table table-responsive table-hover" *ngIf="informations?.length>0">
-    <thead>
-      <tr>
-        <th>Descripció</th>
-        <th>Data creació</th>
-        <th>opcions</th>
-      </tr>
-
-    </thead>
-
-    <tbody>
-      <tr *ngFor="let information of informations">
-
-        <td>{{ information.description }}</td>
-        <td>{{ information.createAt }}</td>
-        <td>pendent botons</td>
-      </tr>
-    </tbody>
-  </table>
-  <paginator-nav *ngIf="paginator" [paginator]= "paginator" [linkPaginator] = "linkPaginator" ></paginator-nav>
-</div>
 </div>
