@@ -2,9 +2,6 @@
   <h1 class="text-warning">Llistat d'usuaris</h1>
   <div class="card-body text-info">
 
-    <div class="my-2 text-left">
-      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-outline-info btn-xs mr-2" type="button" [routerLink]="['/tasks/form']">Crear tasca</button>
-    </div>
 
     <div *ngIf="users?.length == 0" class="alert alert-info">
       No hi ha registres a la base de dades

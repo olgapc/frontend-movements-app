@@ -16,25 +16,36 @@ export class FormEmployeeComponent implements OnInit {
   public employee: Employee = new Employee();
   public title: string = "Formulari de Treballador";
   public errors: string[];
-  // public nifType = null;
-  //public selectedNifType = null;
-  public nifTypeEnum = NifType;
-  public enumKeys = [];
+  //public nifTypeEnum = NifType;
+  //public enumKeys = [];
+
+  public eNifType = NifType;
+
+
 
   constructor(private employeeService: EmployeeService,
     private companyService: CompanyService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public authService: AuthService) {
-    this.enumKeys = Object.keys(this.nifTypeEnum);
+    //this.enumKeys = Object.keys(this.nifTypeEnum);
   }
 
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      let companyId = + params.get('companyId');
-      this.companyService.getCompany(companyId).subscribe(company => this.employee.company = company);
-    });
+    this.loadEmployee();
+  }
+
+  public loadEmployee(): void{
+      this.activatedRoute.params.subscribe(params => {
+          let companyId = +params['companyId']
+          let employeeId = +params['employeeId']
+          if(employeeId){
+              this.employeeService.getEmployee(employeeId).subscribe((employee) => this.employee  = employee )
+          } else if (companyId){
+              this.companyService.getCompany(companyId).subscribe(company => this.employee.company = company);
+          }
+      });
 
   }
 

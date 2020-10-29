@@ -21,6 +21,14 @@
         </div>
       </div>
 
+      <div class="form-group-row" *ngIf="task.employee">
+        <label for="" class="col-sm-2 col-form-label">Treballador</label>
+        <div class="class col-sm-6">
+          <input type="text" name="employee" value="{{task.employee.name}}"
+          class="form-control" disabled />
+        </div>
+      </div>
+
       <div class="form-group-row">
         <label for="description" class="col-sm-2 col-form-label">Descripció</label>
         <div class="class col-sm-6">

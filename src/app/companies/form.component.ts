@@ -27,7 +27,7 @@ export class FormComponent implements OnInit {
     public authService: AuthService) { }
 
   ngOnInit(): void {
-    this.loadCompany()
+    this.loadCompany();
   }
 
   public loadCompany(): void{

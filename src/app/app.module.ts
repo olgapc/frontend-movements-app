@@ -62,6 +62,7 @@ const routes: Routes =[
   {path: 'employees/page/:page', component: EmployeesComponent},
   {path: 'employees/:id', component: ViewEmployeeComponent},
   {path: 'employees/form/:companyId', component: FormEmployeeComponent},
+  {path: 'employees/form/:companyId/:employeeId', component: FormEmployeeComponent},
   {path: 'users', component: UsersComponent},
   {path: 'users/page/:page', component: UsersComponent}
 ];
