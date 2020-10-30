@@ -8,7 +8,6 @@ import { map, catchError, tap } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
 import { CompanyType } from '../company-types/company-type';
-import { Task } from '../tasks/models/task';
 import swal from 'sweetalert2';
 
 
@@ -43,7 +42,6 @@ export class CompanyService {
     //it's the same than: return this.http.get<Company[]>(this.urlEndPoint)
     //map (response => response as Company [] ));
     //it's the same than: map (function (response){return response as Company[]})
-
 
     return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
 

@@ -58,8 +58,14 @@ export class InformationService {
         }
 
         return throwError(e);
-      })
-    )
+    }),
+
+    map((information: Information) => {
+        information.createAt = formatDate(information.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
+
+        return information;
+    }),
+);
   }
 
   update(information: Information): Observable<any> {

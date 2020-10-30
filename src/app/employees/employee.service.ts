@@ -51,6 +51,7 @@ export class EmployeeService {
 
   getEmployee(id): Observable<Employee> {
     return this.http.get<Employee>(`${this.urlEndPoint}/${id}`).pipe(
+
       catchError(e => {
         if (e.status != 401 && e.error.message) {
           this.router.navigate(['/employees']);
@@ -58,8 +59,17 @@ export class EmployeeService {
         }
 
         return throwError(e);
-      })
-    )
+    }),
+
+    map((employee: Employee) => {
+            employee.name = employee.name.toUpperCase();
+            employee.createAt = formatDate(employee.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
+            employee.company.createAt = formatDate(employee.company.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
+
+        return employee;
+    }),
+
+);
   }
 
   update(employee: Employee): Observable<any> {

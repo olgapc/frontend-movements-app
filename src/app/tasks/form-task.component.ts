@@ -26,7 +26,7 @@ export class FormTaskComponent implements OnInit {
   filteredInformations: Observable<Information[]>;
 
   constructor(private companyService: CompanyService,
-      private employeeService: EmployeeService,
+    private employeeService: EmployeeService,
     private taskService: TaskService,
     private router: Router,
     private activatedRoute: ActivatedRoute) { }
@@ -46,11 +46,15 @@ export class FormTaskComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       let companyId = +params.get('companyId');
       let employeeId = +params.get('employeeId');
+      let taskId = +params.get('taskId');
+      if(taskId){
+          this.taskService.getTask(taskId).subscribe(task => this.task = task);
+      }
       if (companyId) {
         this.companyService.getCompany(companyId).subscribe(company => this.task.company = company);
       }
       if (employeeId) {
-          this.employeeService.getEmployee(employeeId).subscribe(employee => this.task.employee = employee);
+        this.employeeService.getEmployee(employeeId).subscribe(employee => this.task.employee = employee);
       }
     });
   }

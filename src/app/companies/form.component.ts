@@ -34,7 +34,7 @@ export class FormComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       let id = params['id']
       if(id){
-        this.companyService.getCompany(id).subscribe((company) => this.company = company)
+        this.companyService.getCompany(id).subscribe(company => this.company = company);
       }
     });
     this.companyService.getCompanyTypes().subscribe(companyTypes => this.companyTypes = companyTypes);
