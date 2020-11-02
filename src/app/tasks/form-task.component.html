@@ -14,10 +14,10 @@
     <form>
 
       <div class="form-group-row" *ngIf="task.company">
-        <label for="" class="col-sm-2 col-form-label">Empresa</label>
+        <label for="company" class="col-sm-2 col-form-label">Empresa</label>
         <div class="class col-sm-6">
           <input type="text" name="company" value="{{task.company.name}}"
-          class="form-control" disabled />
+          class="form-control" />
         </div>
       </div>
 
@@ -25,7 +25,7 @@
         <label for="" class="col-sm-2 col-form-label">Treballador</label>
         <div class="class col-sm-6">
           <input type="text" name="employee" value="{{task.employee.name}}"
-          class="form-control" disabled />
+          class="form-control" />
         </div>
       </div>
 

@@ -33,6 +33,8 @@ export class FormComponent implements OnInit {
   public loadCompany(): void{
     this.activatedRoute.params.subscribe(params => {
       let id = params['id']
+      console.log("id");
+      console.log(id);
       if(id){
         this.companyService.getCompany(id).subscribe(company => this.company = company);
       }

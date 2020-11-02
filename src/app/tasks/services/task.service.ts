@@ -6,6 +6,7 @@ import { formatDate } from '@angular/common';
 import { catchError, map } from 'rxjs/operators';
 import { Information } from '../models/information';
 import swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class TaskService {
 
   private urlEndPoint: string = 'http://localhost:8090/api/tasks';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   getTasks(page:number): Observable<any>{
     //return this.http.get<Task[]>(this.urlEndPoint);
@@ -36,6 +37,14 @@ export class TaskService {
 
   getTask(id:number):Observable<Task>{
     return this.http.get<Task>(`${this.urlEndPoint}/${id}`).pipe(
+        catchError(e => {
+          if (e.status != 401 && e.error.message) {
+            this.router.navigate(['/employees']);
+            console.error(e.error.message);
+          }
+
+          return throwError(e);
+      }),
 
         map (task => {
                 task.description = task.description.toUpperCase();
@@ -76,7 +85,34 @@ export class TaskService {
   }
 
   create(task: Task): Observable<any>{
-      return this.http.post<Task>(this.urlEndPoint, task);
+      return this.http.post<Task>(this.urlEndPoint, task).pipe(
+        catchError(e => {
+
+          if (e.status == 400) {
+            return throwError(e);
+          }
+          if (e.error.message) {
+            console.error(e.error.message);
+          }
+          return throwError(e);
+        })
+      )
+  }
+
+  update(task: Task): Observable<any> {
+    return this.http.put<any>(`${this.urlEndPoint}/${task.id}`, task).pipe(
+      catchError(e => {
+
+        if (e.status == 400) {
+          return throwError(e);
+        }
+        if (e.error.message) {
+          console.error(e.error.message);
+        }
+
+        return throwError(e);
+      })
+    )
   }
 
 }

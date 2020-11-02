@@ -43,18 +43,23 @@ export class FormTaskComponent implements OnInit {
   }
 
   public loadTask(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      let companyId = +params.get('companyId');
-      let employeeId = +params.get('employeeId');
-      let taskId = +params.get('taskId');
-      if(taskId){
-          this.taskService.getTask(taskId).subscribe(task => this.task = task);
-      }
-      if (companyId) {
-        this.companyService.getCompany(companyId).subscribe(company => this.task.company = company);
-      }
-      if (employeeId) {
+
+    this.activatedRoute.params.subscribe(params => {
+
+      let taskId = +params['idTask']
+
+      let companyId = +params['idCompany']
+
+      let employeeId = +params['idEmployee']
+
+      if (taskId) {
+        this.taskService.getTask(taskId).subscribe(task => this.task = task);
+        console.log(this.task);
+      } else if (employeeId) {
         this.employeeService.getEmployee(employeeId).subscribe(employee => this.task.employee = employee);
+        this.employeeService.getEmployee(employeeId).subscribe(employee => this.task.company = employee.company);
+      } else if (companyId) {
+        this.companyService.getCompany(companyId).subscribe(company => this.task.company = company);
       }
     });
   }
@@ -118,5 +123,23 @@ export class FormTaskComponent implements OnInit {
         }
       );
 
+  }
+
+
+  public update(): void {
+    console.log(this.task);
+    this.taskService.update(this.task)
+      .subscribe(
+        json => {
+          this.router.navigate(['/tasks'])
+          swal.fire('Tasca actualitzada', `${json.message}: ${json.task.description}`, 'success')
+
+        },
+        err => {
+          this.errors = err.error.errors as string[];
+          console.error('Codi de l\'error des del backend: ' + err.status);
+          console.error(err.error.errors);
+        }
+      )
   }
 }

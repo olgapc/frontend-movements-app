@@ -6,6 +6,7 @@ import { EmployeeService } from '../employees/employee.service';
 import { AuthService } from '../users/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -43,6 +44,39 @@ export class TasksComponent implements OnInit {
 
     );
 
+  }
+
+  delete(task: Task): void {
+      const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+              confirmButton: 'btn btn-info',
+              cancelButton: 'btn btn-danger'
+          },
+          buttonsStyling: false
+      })
+
+      swalWithBootstrapButtons.fire({
+          title: 'Segur?',
+          text: `Vols eliminar la tasca ${task.description}?`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Si, esborra!',
+          cancelButtonText: 'No, cancela',
+          reverseButtons: true
+      }).then((result) => {
+          if (result.value) {
+              this.taskService.delete(task.id).subscribe(
+                  () => {
+                      this.tasks = this.tasks.filter(ta => ta !== task)
+                      swalWithBootstrapButtons.fire(
+                          'Tasca eliminada!',
+                          `Tasca ${task.description} eliminada amb èxit.`,
+                          'success'
+                      )
+                  }
+              )
+          }
+      })
   }
 
 }
