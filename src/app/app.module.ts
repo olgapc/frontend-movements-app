@@ -30,7 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule} from '@angular/material/datepicker';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { InformationsComponent } from './tasks/informations.component';
 import { UsersComponent } from './users/users.component';
 import { ViewEmployeeComponent } from './employees/view-employee.component';
@@ -119,6 +119,7 @@ const routes: Routes =[
   [{provide:LOCALE_ID, useValue: 'ca'},
   {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi:true},
   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true},
+  {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}}
 
 ],
   bootstrap: [AppComponent]

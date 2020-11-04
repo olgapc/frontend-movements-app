@@ -82,9 +82,9 @@
         <tbody>
             <tr *ngFor="let information of task.taskInformations">
                 <td>{{information.information.description}}</td>
-                <td>{{information.createAt}}</td>
+                <td>{{information.createAt | date: 'dd.MM.yyyy'}}</td>
                 <td>{{information.done}}</td>
-                <td>{{information.doneAt}}</td>
+                <td>{{information.doneAt | date: 'dd.MM.yyyy'}}</td>
                 <td><button class="btn btn-danger btn-sm" type="button"
                     (click)="deleteTaskInformation(information.information.id)">x</button></td>
             </tr>

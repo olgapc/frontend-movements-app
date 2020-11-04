@@ -7,6 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Information } from '../models/information';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +27,8 @@ export class TaskService {
 
         (response.content as Task []).map(task => {
           task.description = task.description.toUpperCase();
-          task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
-          task.deadline = formatDate(task.deadline, 'EEE dd-MM-yyyy', 'ca');
+          //task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
+          //task.deadline = formatDate(task.deadline, 'EEE dd-MM-yyyy', 'ca');
           return task;
         });
         return response;
@@ -48,16 +49,16 @@ export class TaskService {
 
         map (task => {
                 task.description = task.description.toUpperCase();
-                task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy', 'ca');
-                task.deadline = formatDate(task.deadline, 'EEE dd-MM-yyyy', 'ca');
+                //task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy', 'ca');
+                //task.deadline = formatDate(task.deadline, 'EEE dd-MM-yyyy', 'ca');
                 task.taskInformations.forEach(taskInformation => {
                     taskInformation.information.description = taskInformation.information.description.toUpperCase();
-                    taskInformation.createAt = formatDate(taskInformation.createAt, 'EEE dd-MM-yyyy', 'ca');
+                    //taskInformation.createAt = formatDate(taskInformation.createAt, 'EEE dd-MM-yyyy', 'ca');
                 })
                 task.subtasks.forEach(subtask => {
                     subtask.description = subtask.description.toUpperCase();
-                    subtask.createAt = formatDate(subtask.createAt, 'EEE dd-MM-yyyy', 'ca');
-                    subtask.deadline = formatDate(subtask.deadline, 'EEE dd-MM-yyyy', 'ca');
+                    //subtask.createAt = formatDate(subtask.createAt, 'EEE dd-MM-yyyy', 'ca');
+                    //subtask.deadline = formatDate(subtask.deadline, 'EEE dd-MM-yyyy', 'ca');
                 })
                 return task;
 
@@ -85,6 +86,7 @@ export class TaskService {
   }
 
   create(task: Task): Observable<any>{
+      
       return this.http.post<Task>(this.urlEndPoint, task).pipe(
         catchError(e => {
 
@@ -100,7 +102,25 @@ export class TaskService {
   }
 
   update(task: Task): Observable<any> {
+      //task.createAt = formatDate(task.createAt, 'yyyy-MM-dd', 'es');
+      task.deadline = formatDate(task.deadline, 'yyyy-MM-dd', 'es');
+
     return this.http.put<any>(`${this.urlEndPoint}/${task.id}`, task).pipe(
+        map (task => {
+                task.description = task.description.toUpperCase();
+
+                task.taskInformations.forEach(taskInformation => {
+                    taskInformation.information.description = taskInformation.information.description.toUpperCase();
+                    taskInformation.createAt = formatDate(taskInformation.createAt, 'yyyy-MM-dd', 'es');
+                })
+                task.subtasks.forEach(subtask => {
+                    subtask.description = subtask.description.toUpperCase();
+                    subtask.createAt = formatDate(subtask.createAt, 'yyyy-MM-dd', 'es');
+                    subtask.deadline = formatDate(subtask.deadline, 'yyyy-MM-dd', 'es');
+                })
+                return task;
+
+        }),
       catchError(e => {
 
         if (e.status == 400) {
