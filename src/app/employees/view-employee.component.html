@@ -9,7 +9,7 @@
       <li class="list-group-item list-group-item-primary">{{employee.company.name}}, {{employee.company.companyType.code}}</li>
       <li class="list-group-item">{{employee.company.email}}</li>
       <li class="list-group-item">{{employee.company.phone}}</li>
-      <li class="list-group-item">{{employee.company.createAt}}</li>
+      <li class="list-group-item">{{employee.company.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
     </ul>
 
     <ul class="list-group my-2">
@@ -18,8 +18,8 @@
       <li class="list-group-item">{{employee.naf}}</li>
       <li class="list-group-item">{{employee.phone}}</li>
       <li class="list-group-item">{{employee.email}}</li>
-      <li class="list-group-item">{{employee.birthDate}}</li>
-      <li class="list-group-item">{{employee.createAt}}</li>
+      <li class="list-group-item">{{employee.birthDate | date: 'dd.MM.yyyy'}}</li>
+      <li class="list-group-item">{{employee.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
       <li class="list-group-item">{{employee.comment}}</li>
       <li class="list-group-item">{{employee.isEnabled}}</li>
 
@@ -40,8 +40,8 @@
           <tbody>
             <tr *ngFor="let task of employee.tasks">
               <td>{{task.description}}</td>
-              <td>{{task.deadline}}</td>
-              <td>{{task.createAt}}</td>
+              <td>{{task.deadline | date: 'dd.MM.yyyy'}}</td>
+              <td>{{task.createAt | date: 'dd.MM.yyyy'}}</td>
             </tr>
           </tbody>
         </table>

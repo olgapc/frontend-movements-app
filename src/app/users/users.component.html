@@ -31,7 +31,7 @@
           <td>{{ user.lastName }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.enabled }}</td>
-          <td>{{ user.createAt }}</td>
+          <td>{{ user.createAt | date: 'EEE dd.MM.yyyy HH:mm' }}</td>
           <td>{{ user.roles }}</td>
           <td>pendent botons</td>
         </tr>

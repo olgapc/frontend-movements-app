@@ -18,7 +18,7 @@
                   <li class="list-group-item">{{company.companyType.code}}</li>
                   <li class="list-group-item">{{company.email}}</li>
                   <li class="list-group-item">{{company.phone}}</li>
-                  <li class="list-group-item">{{company.createAt}}</li>
+                  <li class="list-group-item">{{company.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
 
                 </ul>
 
@@ -68,8 +68,8 @@
                     <tr *ngFor="let task of company.tasks">
                       <td>{{task.id}}</td>
                       <td>{{task.description}}</td>
-                      <td>{{task.deadline}}</td>
-                      <td>{{task.createAt}}</td>
+                      <td>{{task.deadline | date: 'dd.MM.yyyy'}}</td>
+                      <td>{{task.createAt | date: 'dd.MM.yyyy'}}</td>
                       <td><button class="btn btn-primary btn-sm" type="button" [routerLink]="['/tasks', task.id]">Veure</button></td>
                       <td><button class="btn btn-danger btn-sm" type="button" (click)="deleteTask(task)">Eliminar</button></td>
                     </tr>
@@ -81,7 +81,7 @@
             <div class="row">
               <button type="button" name="edit" [routerLink]="['/employees/form', company.id]" class="btn btn-outline-success btn-xs">Crear Treballador</button>
             </div>
-            
+
             <div class="row">
               <div class="col-sm">
                 <div *ngIf="company.employees.length==0" class="alert alert-info my-4">L'empresa {{company.name}} no té treballadors </div>
@@ -98,7 +98,7 @@
                       <th>Telèfon</th>
                       <th>Data naixement</th>
                       <th>Gènere</th>
-                      <th>Habilitat</th>
+                      <th>Actiu</th>
                       <th>Comentari</th>
                       <th>Data Creació</th>
                       <th>Detall</th>
@@ -115,11 +115,11 @@
                       <td>{{employee.naf}}</td>
                       <td>{{employee.email}}</td>
                       <td>{{employee.phone}}</td>
-                      <td>{{employee.birthDate}}</td>
+                      <td>{{employee.birthDate | date: 'dd.MM.yyyy'}}</td>
                       <td>{{employee.gender}}</td>
                       <td>{{employee.isEnabled}}</td>
                       <td>{{employee.comment}}</td>
-                      <td>{{employee.createAt}}</td>
+                      <td>{{employee.createAt | date: 'dd.MM.yyyy'}}</td>
                       <td><button class="btn btn-primary btn-sm" type="button" [routerLink]="['/employees', employee.id]">Veure</button></td>
                       <td><button class="btn btn-danger btn-sm" type="button" (click)="deleteEmployee(employee)">Eliminar</button></td>
                     </tr>

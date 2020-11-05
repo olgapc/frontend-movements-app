@@ -18,7 +18,7 @@
         <th>nom</th>
         <th>mail</th>
         <th>telèfon</th>
-        <th>data</th>
+        <th>data creació</th>
         <th> <!-- *ngIf="authService.hasRole('ROLE_ADMIN')"-->opcions</th>
       </tr>
 
@@ -45,7 +45,7 @@
         <td *ngIf="!authService.hasRole('ROLE_USER')">{{ company.name }}</td>
         <td>{{ company.email }}</td>
         <td>{{ company.phone }}</td>
-        <td>{{ company.createAt }}</td>
+        <td>{{ company.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</td>
         <td> <!--*ngIf="authService.hasRole('ROLE_ADMIN')"-->
           <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/companies/form', company.id]" class="btn btn-outline-info btn-xs">Modificar</button>
           <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="delete" (click)='delete(company)' class="btn btn-outline-danger btn-xs">Eliminar</button>

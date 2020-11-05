@@ -57,11 +57,11 @@ export class CompanyService {
 
         (response.content as Company[]).map(company => {
           company.name = company.name.toUpperCase();
-          company.createAt = formatDate(company.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
+          //company.createAt = formatDate(company.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
           company.tasks.forEach(task => {
             task.description = task.description.toUpperCase();
-            task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
-            task.deadline = formatDate(task.deadline, 'EEE dd-MM-yyyy', 'ca');
+            //task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
+            //task.deadline = formatDate(task.deadline, 'EEE dd-MM-yyyy', 'ca');
           })
           return company;
         });

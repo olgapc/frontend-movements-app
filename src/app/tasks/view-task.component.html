@@ -22,8 +22,8 @@
       <ul class="list-group my-2">
         <li class="list-group-item list-group-item-primary">TASCA</li>
         <li class="list-group-item">{{task.description}}</li>
-        <li class="list-group-item">Venciment: {{task.deadline}}</li>
-        <li class="list-group-item">Creació: {{task.createAt}}</li>
+        <li class="list-group-item">Venciment: {{task.deadline | date: 'dd.MM.yyyy'}}</li>
+        <li class="list-group-item">Creació: {{task.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
       </ul>
 
 
@@ -39,7 +39,7 @@
           <tr *ngFor="let row of task.taskInformations">
             <td>{{row.information.description}}</td>
             <td>{{row.comment}}</td>
-            <td>{{row.createAt}}</td>
+            <td>{{row.createAt | date: 'dd.MM.yyyy'}}</td>
           </tr>
         </tbody>
       </table>
@@ -50,8 +50,8 @@
     <ul class="list-group my-2"  *ngFor="let sub of task.subtasks">
       <li class="list-group-item list-group-item-primary">SUBTASCA</li>
       <li class="list-group-item">{{sub.description}}</li>
-      <li class="list-group-item">Venciment: {{sub.deadline}}</li>
-      <li class="list-group-item">Creació: {{sub.createAt}}</li>
+      <li class="list-group-item">Venciment: {{sub.deadline| date: 'dd.MM.yyyy'}}</li>
+      <li class="list-group-item">Creació: {{sub.createAt| date: 'EEE dd.MM.yyyy HH:mm'}}</li>
     </ul>
 
 </div>

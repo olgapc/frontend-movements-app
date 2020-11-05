@@ -25,7 +25,7 @@ export class InformationService {
         (response.content as Information[]).map(information => {
 
           information.description = information.description.toUpperCase();
-          information.createAt = formatDate(information.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
+          //information.createAt = formatDate(information.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
 
           return information;
         });
@@ -60,11 +60,6 @@ export class InformationService {
         return throwError(e);
     }),
 
-    map((information: Information) => {
-        information.createAt = formatDate(information.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
-
-        return information;
-    }),
 );
   }
 

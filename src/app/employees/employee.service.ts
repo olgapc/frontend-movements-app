@@ -25,7 +25,7 @@ export class EmployeeService {
 
         (response.content as Employee[]).map(employee => {
           employee.name = employee.name.toUpperCase();
-          employee.createAt = formatDate(employee.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
+          //employee.createAt = formatDate(employee.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
           return employee;
         });
         return response;
@@ -63,8 +63,8 @@ export class EmployeeService {
 
     map((employee: Employee) => {
             employee.name = employee.name.toUpperCase();
-            employee.createAt = formatDate(employee.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
-            employee.company.createAt = formatDate(employee.company.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
+            //employee.createAt = formatDate(employee.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
+            //employee.company.createAt = formatDate(employee.company.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
 
         return employee;
     }),

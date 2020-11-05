@@ -36,6 +36,7 @@ import { UsersComponent } from './users/users.component';
 import { ViewEmployeeComponent } from './employees/view-employee.component';
 import { FormEmployeeComponent } from './employees/form-employee.component';
 import { MatSelectModule } from "@angular/material/select";
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ViewInformationComponent } from './tasks/view-information/view-information.component';
 import { FormInformationComponent } from './tasks/form-information.component';
 
@@ -112,7 +113,8 @@ const routes: Routes =[
     MatFormFieldModule,
     MatDatepickerModule,
     MatMomentDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
 
   ],
   providers:
