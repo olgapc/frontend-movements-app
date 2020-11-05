@@ -5,7 +5,8 @@ import { AuthService } from '../users/auth.service';
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
 import swal from 'sweetalert2';
-import { NifType } from '../nif-types/nif-type';
+import { NifType } from '../enums/nif-type';
+import { Gender } from '../enums/gender';
 
 @Component({
   selector: 'app-form-employee',
@@ -20,6 +21,7 @@ export class FormEmployeeComponent implements OnInit {
   //public enumKeys = [];
 
   public eNifType = NifType;
+  public eGender = Gender;
 
 
 

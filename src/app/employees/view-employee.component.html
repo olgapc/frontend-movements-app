@@ -18,16 +18,27 @@
       <li class="list-group-item">{{employee.naf}}</li>
       <li class="list-group-item">{{employee.phone}}</li>
       <li class="list-group-item">{{employee.email}}</li>
+      <li class="list-group-item">
+        <mat-radio-group name="eGender" [(ngModel)]="employee.gender">
+          <mat-radio-button class="example-margin" [disabled]="true" value="MALE">Home</mat-radio-button>
+          <mat-radio-button class="example-margin" [disabled]="true" value="FEMALE">Dona</mat-radio-button>
+        </mat-radio-group>
+      </li>
       <li class="list-group-item">{{employee.birthDate | date: 'dd.MM.yyyy'}}</li>
       <li class="list-group-item">{{employee.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
-      <li class="list-group-item">{{employee.comment}}</li>
-      <li class="list-group-item">{{employee.isEnabled}}</li>
 
+      <li class="list-group-item">
+        <mat-checkbox for="isEnabled" name="isEnabled" [(ngModel)]="employee.isEnabled" class="example-margin" [disabled]="true">Actiu</mat-checkbox>
+      </li>
+      <li class="list-group-item">{{employee.comment}}</li>
 
     </ul>
 
     <ul class="list-group my-2">
       <li class="list-group-item list-group-item-primary">TASQUES</li>
+      <div *ngIf="employee?.tasks.length == 0" class="alert alert-info">
+        No hi ha registres a la base de dades
+      </div>
       <li class="list-group-item">
         <table *ngIf="employee?.tasks.length>0" class="table table-striped table-hover table-bordered my-3">
           <thead>

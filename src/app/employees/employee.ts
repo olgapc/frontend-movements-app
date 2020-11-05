@@ -1,5 +1,6 @@
 import { Company } from '../companies/company';
-import { NifType } from '../nif-types/nif-type';
+import { Gender } from '../enums/gender';
+import { NifType } from '../enums/nif-type';
 import { Task } from '../tasks/models/task';
 
 export class Employee {
@@ -12,7 +13,7 @@ export class Employee {
   email: string;
   phone: string;
   birthDate: string;
-  gender: string;
+  gender: Gender;
   isEnabled: boolean;
   comment: string;
   createAt: string;

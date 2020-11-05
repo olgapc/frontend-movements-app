@@ -30,13 +30,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatSelectModule } from "@angular/material/select";
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { InformationsComponent } from './tasks/informations.component';
 import { UsersComponent } from './users/users.component';
 import { ViewEmployeeComponent } from './employees/view-employee.component';
 import { FormEmployeeComponent } from './employees/form-employee.component';
-import { MatSelectModule } from "@angular/material/select";
-import { MatCheckboxModule } from '@angular/material/checkbox';
+
 import { ViewInformationComponent } from './tasks/view-information/view-information.component';
 import { FormInformationComponent } from './tasks/form-information.component';
 
@@ -114,7 +116,8 @@ const routes: Routes =[
     MatDatepickerModule,
     MatMomentDateModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatRadioModule
 
   ],
   providers:
