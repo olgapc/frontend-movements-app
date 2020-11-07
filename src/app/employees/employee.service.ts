@@ -65,7 +65,7 @@ export class EmployeeService {
             employee.name = employee.name.toUpperCase();
             //employee.createAt = formatDate(employee.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
             //employee.company.createAt = formatDate(employee.company.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
-
+            console.log(employee);
         return employee;
     }),
 

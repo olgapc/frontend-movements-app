@@ -51,7 +51,7 @@
         <div class="class col-sm-6">
           <select class="form-control" [(ngModel)]="employee.nifType" name="eNifType">
             <option [ngValue]="undefined">--Seleccionar tipus d'identificació--</option>
-            <option *ngFor="let type of eNifType | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+            <option *ngFor="let type of eNifType | keyvalue" [ngValue]="type.key">{{type.value}}</option>
 
           </select>
         </div>

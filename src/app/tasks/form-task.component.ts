@@ -11,6 +11,8 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { TaskInformation } from './models/task-information';
 import swal from 'sweetalert2';
 import { EmployeeService } from '../employees/employee.service';
+import { TimeTypes } from '../enums/time-types.enum';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-form-task',
@@ -22,6 +24,8 @@ export class FormTaskComponent implements OnInit {
   task: Task = new Task();
   autocompleteControl = new FormControl();
   public errors: string[];
+  public eTimeTypes = TimeTypes;
+  public doneAt: Date;
 
   filteredInformations: Observable<Information[]>;
 
@@ -54,11 +58,14 @@ export class FormTaskComponent implements OnInit {
 
       if (taskId) {
         this.taskService.getTask(taskId).subscribe(task => this.task = task);
+        console.log("task");
         console.log(this.task);
       } else if (employeeId) {
+        console.log("employee task");
         this.employeeService.getEmployee(employeeId).subscribe(employee => this.task.employee = employee);
         this.employeeService.getEmployee(employeeId).subscribe(employee => this.task.company = employee.company);
       } else if (companyId) {
+        console.log("company task");
         this.companyService.getCompany(companyId).subscribe(company => this.task.company = company);
       }
     });
@@ -141,5 +148,23 @@ export class FormTaskComponent implements OnInit {
           console.error(err.error.errors);
         }
       )
+  }
+
+  public taskDone(event: any): void {
+    if (this.task.isDone) {
+      this.task.doneAt = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss", 'ca');
+
+    }
+  }
+
+  public informationDone(id: number, $event): void {
+    for (let information of this.task.taskInformations) {
+
+      if (information.information.id == id) {
+        if (information.done) {
+          information.doneAt = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss", 'ca');
+        }
+      }
+    }
   }
 }

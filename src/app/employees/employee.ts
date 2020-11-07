@@ -1,6 +1,6 @@
 import { Company } from '../companies/company';
-import { Gender } from '../enums/gender';
-import { NifType } from '../enums/nif-type';
+import { Gender } from '../enums/gender.enum';
+import { NifType } from '../enums/nif-types.enum';
 import { Task } from '../tasks/models/task';
 
 export class Employee {

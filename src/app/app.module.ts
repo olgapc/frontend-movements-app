@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { PaginatorComponent } from './paginator/paginator.component';
-import { DirectivaComponent } from './directiva/directiva.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -38,7 +37,6 @@ import { InformationsComponent } from './tasks/informations.component';
 import { UsersComponent } from './users/users.component';
 import { ViewEmployeeComponent } from './employees/view-employee.component';
 import { FormEmployeeComponent } from './employees/form-employee.component';
-
 import { ViewInformationComponent } from './tasks/view-information/view-information.component';
 import { FormInformationComponent } from './tasks/form-information.component';
 
@@ -48,7 +46,6 @@ registerLocaleData(localeCa, 'ca');
 
 const routes: Routes =[
   {path: '', redirectTo: '/companies', pathMatch: 'full'},
-  {path: 'directivas', component: DirectivaComponent},
   {path: 'companies', component: CompaniesComponent},
   {path: 'companies/page/:page', component: CompaniesComponent},
   {path: 'companies/form', component: FormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
@@ -84,7 +81,6 @@ const routes: Routes =[
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    DirectivaComponent,
     CompaniesComponent,
     FormComponent,
     EmployeesComponent,

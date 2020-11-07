@@ -60,6 +60,7 @@ export class TaskService {
                     //subtask.createAt = formatDate(subtask.createAt, 'EEE dd-MM-yyyy', 'ca');
                     //subtask.deadline = formatDate(subtask.deadline, 'EEE dd-MM-yyyy', 'ca');
                 })
+                console.log(task);
                 return task;
 
         }),
@@ -86,7 +87,7 @@ export class TaskService {
   }
 
   create(task: Task): Observable<any>{
-      
+
       return this.http.post<Task>(this.urlEndPoint, task).pipe(
         catchError(e => {
 

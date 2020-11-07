@@ -37,7 +37,44 @@
       </div>
 
       <div class="form-group-row">
-        <label for="deadline" class="col-sm-2 col-form-label">Data de venciment</label>
+        <div class="class col-sm-6">
+          <mat-checkbox for="isToSend" name="isToSend" [(ngModel)]="task.isToSend" class="example-margin">Per enviar</mat-checkbox>
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <div class="class col-sm-6">
+          <mat-checkbox for="isTemplate" name="isTemplate" [(ngModel)]="task.isTemplate" class="example-margin">Plantilla</mat-checkbox>
+        </div>
+      </div>
+
+      <div class="form-group-row" *ngIf="task.isTemplate">
+        <label for="templateName" *ngIf="task.isTemplate" class="col-sm-6 col-form-label">Nom Plantilla</label>
+        <div class="class col-sm-6" *ngIf="task.isTemplate">
+          <input type="text" name="templateName" [(ngModel)]="task.templateName" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <label for="numberToCalculateDeadlineToAlarm" class="col-sm-6 col-form-label">Número per calcular data avís</label>
+        <div class="class col-sm-2" >
+          <input type="number" name="numberToCalculateDeadlineToAlarm" [(ngModel)]="task.numberToCalculateDeadlineToAlarm" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <label for="eTimeTypes" class="col-sm-2 col-form-label">Tipus</label>
+        <div class="class col-sm-4">
+          <select class="form-control" [(ngModel)]="task.typeCalculationDeadline" name="eTimeTypes">
+            <option [ngValue]="undefined">--Seleccionar--</option>
+            <option *ngFor="let type of eTimeTypes | keyvalue" [ngValue]="type.key">{{type.value}}</option>
+
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <label for="deadline" class="col-sm-6 col-form-label">Data de venciment</label>
         <div class="class col-sm-6">
             <mat-form-field appearance="fill">
                 <mat-label>Tria una data</mat-label>
@@ -45,6 +82,12 @@
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <div class="class col-sm-6">
+          <mat-checkbox for="isDone" (change)="taskDone($event)" color='primary' name="isDone" [(ngModel)]="task.isDone" class="example-margin">Feta</mat-checkbox>
         </div>
       </div>
 
@@ -83,7 +126,7 @@
             <tr *ngFor="let information of task.taskInformations">
                 <td>{{information.information.description}}</td>
                 <td>{{information.createAt | date: 'dd.MM.yyyy'}}</td>
-                <td>{{information.done}}</td>
+                <td><mat-checkbox (change)="informationDone(information.information.id, $event)" color='primary' name="done{{information.information.id}}" [(ngModel)]="information.done"></mat-checkbox></td>
                 <td>{{information.doneAt | date: 'dd.MM.yyyy'}}</td>
                 <td><button class="btn btn-danger btn-sm" type="button"
                     (click)="deleteTaskInformation(information.information.id)">x</button></td>

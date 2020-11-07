@@ -1,3 +1,4 @@
+import { TimeTypes } from 'src/app/enums/time-types.enum';
 import { Company } from '../../companies/company';
 import { Employee } from '../../employees/employee';
 import { TaskInformation } from './task-information';
@@ -10,7 +11,7 @@ export class Task {
   isTemplate: boolean;
   templateName: string;
   numberToCalculateDeadlineToAlarm: string;
-  typeCalculationDeadline: string;
+  typeCalculationDeadline: TimeTypes;
   deadline: string;
   createAt: string;
   company: Company;

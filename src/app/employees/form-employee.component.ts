@@ -5,8 +5,8 @@ import { AuthService } from '../users/auth.service';
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
 import swal from 'sweetalert2';
-import { NifType } from '../enums/nif-type';
-import { Gender } from '../enums/gender';
+import { NifType } from '../enums/nif-types.enum';
+import { Gender } from '../enums/gender.enum';
 
 @Component({
   selector: 'app-form-employee',
@@ -43,7 +43,7 @@ export class FormEmployeeComponent implements OnInit {
           let companyId = +params['companyId']
           let employeeId = +params['employeeId']
           if(employeeId){
-              this.employeeService.getEmployee(employeeId).subscribe((employee) => this.employee  = employee )
+              this.employeeService.getEmployee(employeeId).subscribe((employee) => this.employee  = employee);
           } else if (companyId){
               this.companyService.getCompany(companyId).subscribe(company => this.employee.company = company);
           }
