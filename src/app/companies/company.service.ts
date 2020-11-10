@@ -9,6 +9,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CompanyType } from '../company-types/company-type';
 import swal from 'sweetalert2';
+import { CompanyTypeService } from '../company-types/company-type.service';
 
 
 @Injectable({
@@ -19,7 +20,9 @@ export class CompanyService {
   private urlEndPoint: string = 'http://localhost:8090/api/companies';
 
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient,
+      private router: Router,
+      private companyTypeService: CompanyTypeService) { }
 
   //private addAuthorizationHeader(){
   //let token = this.authService.token;
@@ -33,7 +36,7 @@ export class CompanyService {
 
 
   getCompanyTypes(): Observable<CompanyType[]> {
-    return this.http.get<CompanyType[]>(this.urlEndPoint + '/company_types');
+    return this.companyTypeService.getCompanyTypes();
   }
 
   getCompanies(page: number): Observable<any> {

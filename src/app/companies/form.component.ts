@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Company } from './company';
-import { CompanyService } from './company.service'
-import { Router, ActivatedRoute } from '@angular/router'
-import swal from 'sweetalert2'
+import { CompanyService } from './company.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import swal from 'sweetalert2';
 import { CompanyType } from '../company-types/company-type';
 import { AuthService } from 'src/app/users/auth.service';
 import { HttpEventType } from '@angular/common/http';
@@ -61,20 +61,20 @@ export class FormComponent implements OnInit {
   }
 
   public update(): void {
-    console.log(this.company);
-    this.companyService.update(this.company)
+  console.log(this.company);
+  this.companyService.update(this.company)
     .subscribe(
       json => {
-      this.router.navigate(['/companies'])
-      swal.fire('Empresa actualitzada', `${json.message}: ${json.company.name}`, 'success')
-    },
-    err => {
-      this.errors = err.error.errors as string[];
-      console.error('Codi de l\'error des del backend: ' + err.status);
-      console.error(err.error.errors);
-    }
-  )
-  }
+        this.router.navigate(['/companies'])
+        swal.fire('Empresa actualitzada', `${json.message}: ${json.company.name}`, 'success')
+      },
+      err => {
+        this.errors = err.error.errors as string[];
+        console.error('Codi de l\'error des del backend: ' + err.status);
+        console.error(err.error.errors);
+      }
+    )
+}
 
   compareCompanyType(o1:CompanyType, o2: CompanyType):boolean {
     if (o1===undefined && o2===undefined){

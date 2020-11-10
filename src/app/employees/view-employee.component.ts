@@ -11,7 +11,7 @@ export class ViewEmployeeComponent implements OnInit {
 
     employee: Employee;
     title: string = 'Treballador';
-    
+
 
   constructor(private employeeService: EmployeeService,
   private activatedRoute: ActivatedRoute) { }
@@ -19,8 +19,8 @@ export class ViewEmployeeComponent implements OnInit {
   ngOnInit(): void {
       this.activatedRoute.paramMap.subscribe(params => {
           let id = +params.get('id');
-          this.employeeService.getEmployee(id).subscribe(employee => this.employee = employee);
-
+          this.employeeService.getEmployee(id).subscribe(employee =>
+              this.employee = employee);
       });
   }
 

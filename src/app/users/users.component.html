@@ -26,14 +26,19 @@
       <tbody>
         <tr *ngFor="let user of users">
 
-          <td>{{ user.username }}</td>
+          <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/users', user.id]" class="btn btn-outline-info btn-xs">{{ user.username }}</button></td>
           <td>{{ user.name }}</td>
           <td>{{ user.lastName }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.enabled }}</td>
           <td>{{ user.createAt | date: 'EEE dd.MM.yyyy HH:mm' }}</td>
-          <td>{{ user.roles }}</td>
-          <td>pendent botons</td>
+          <td>
+              <li *ngFor="let role of user.roles">{{ role.description }}</li>
+          </td>
+          <td>
+              <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/users/form', user.id]" class="btn btn-outline-info btn-xs">Modificar</button>
+              <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="delete" (click)='delete(user)' class="btn btn-outline-danger btn-xs">Eliminar</button>
+      </td>
         </tr>
       </tbody>
     </table>

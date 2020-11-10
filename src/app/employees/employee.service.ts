@@ -49,7 +49,7 @@ export class EmployeeService {
     )
   }
 
-  getEmployee(id): Observable<Employee> {
+  getEmployee(id:number): Observable<Employee> {
     return this.http.get<Employee>(`${this.urlEndPoint}/${id}`).pipe(
 
       catchError(e => {

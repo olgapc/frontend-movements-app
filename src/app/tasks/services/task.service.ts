@@ -7,7 +7,6 @@ import { catchError, map } from 'rxjs/operators';
 import { Information } from '../models/information';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'

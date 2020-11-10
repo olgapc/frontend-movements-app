@@ -39,6 +39,8 @@ import { ViewEmployeeComponent } from './employees/view-employee.component';
 import { FormEmployeeComponent } from './employees/form-employee.component';
 import { ViewInformationComponent } from './tasks/view-information/view-information.component';
 import { FormInformationComponent } from './tasks/form-information.component';
+import { ViewUserComponent } from './users/view-user.component';
+import { FormUserComponent } from './users/form-user.component';
 
 
 
@@ -73,7 +75,9 @@ const routes: Routes =[
   {path: 'employees/form/:companyId', component: FormEmployeeComponent},
   {path: 'employees/form/:companyId/:employeeId', component: FormEmployeeComponent},
   {path: 'users', component: UsersComponent},
-  {path: 'users/page/:page', component: UsersComponent}
+  {path: 'users/page/:page', component: UsersComponent},
+  {path: 'users/:id', component: ViewUserComponent},
+  {path: 'users/form/:id', component: FormUserComponent}
 ];
 
 @NgModule({
@@ -97,7 +101,9 @@ const routes: Routes =[
     ViewEmployeeComponent,
     FormEmployeeComponent,
     ViewInformationComponent,
-    FormInformationComponent
+    FormInformationComponent,
+    ViewUserComponent,
+    FormUserComponent
   ],
   imports: [
     BrowserModule,

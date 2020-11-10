@@ -4,7 +4,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { User } from './user';
+import { Role } from '../roles/role';
+import { RoleService } from '../roles/role.service';
+import { User } from './models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,9 @@ export class UserService {
 
     private urlEndPoint: string = 'http://localhost:8090/api/users';
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient,
+        private router: Router,
+        private roleService: RoleService) { }
 
     getUsers(page: number): Observable<any> {
 
@@ -49,7 +53,7 @@ export class UserService {
       )
     }
 
-    getUser(id): Observable<User> {
+    getUser(id:number): Observable<User> {
       return this.http.get<User>(`${this.urlEndPoint}/${id}`).pipe(
         catchError(e => {
           if (e.status != 401 && e.error.message) {
@@ -89,5 +93,9 @@ export class UserService {
           return throwError(e);
         })
       )
+    }
+
+    getRoles(): Observable<Role[]>{
+        return this.roleService.getRoles();
     }
 }

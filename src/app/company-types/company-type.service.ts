@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CompanyTypeService {
 
-  private urlEndPoint : string = 'http://localhost:8090/api/companyTypes';
+  private urlEndPoint : string = 'http://localhost:8090/api/company_types';
 
   constructor(private http: HttpClient) { }
 

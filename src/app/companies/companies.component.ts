@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Company } from './company';
 import { CompanyService } from './company.service';
 import { ModalService } from './view/modal.service';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '../users/auth.service';
 import { ActivatedRoute } from '@angular/router';
