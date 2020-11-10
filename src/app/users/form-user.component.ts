@@ -30,13 +30,12 @@ export class FormUserComponent implements OnInit {
 
   public loadUser(): void {
     this.activatedRoute.params.subscribe(params => {
-      let id = params['id']
-      if (id) {
-        this.userService.getUser(id).subscribe(user => this.user = user);
+      let id = +params['id']
+      if(id) {
+        this.userService.getUser(id).subscribe((user) => this.user = user);
       }
     });
     this.userService.getRoles().subscribe(roles => this.roles = roles);
-    console.log(this.user);
   }
 
   public create(): void {

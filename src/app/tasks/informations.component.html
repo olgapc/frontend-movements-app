@@ -1,7 +1,9 @@
 <div class="container-fluid my-5">
   <h1 class="text-warning">Llistat d'informacions</h1>
   <div class="card-body text-info">
-
+      <div class="my-2 text-left">
+        <button class="btn btn-outline-info btn-xs mr-2" type="button" [routerLink]="['/informations/form']">Crear informació</button>
+      </div>
 
     <div *ngIf="informations?.length == 0" class="alert alert-info">
       No hi ha registres a la base de dades
@@ -19,7 +21,7 @@
 
       <tbody>
         <tr *ngFor="let information of informations">
-          <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/informations', information.id]" class="btn btn-outline-info btn-xs">{{ information.description }}</button></td>
+          <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/informations/view', information.id]" class="btn btn-outline-info btn-xs">{{ information.description }}</button></td>
           <td>{{ information.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</td>
           <td>
               <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/informations/form', information.id]" class="btn btn-outline-info btn-xs">Modificar</button>

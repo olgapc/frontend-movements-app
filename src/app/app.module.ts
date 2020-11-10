@@ -66,18 +66,19 @@ const routes: Routes =[
   {path: 'tasks/form/employee/:idCompany/:idEmployee', component: FormTaskComponent},
   {path: 'informations', component: InformationsComponent},
   {path: 'informations/page/:page', component: InformationsComponent},
-  {path: 'informations/:id', component: ViewInformationComponent},
+  {path: 'informations/view/:id', component: ViewInformationComponent},
   {path: 'informations/form', component: FormInformationComponent},
   {path: 'informations/form/:id', component: FormInformationComponent},
   {path: 'employees', component: EmployeesComponent},
   {path: 'employees/page/:page', component: EmployeesComponent},
-  {path: 'employees/:id', component: ViewEmployeeComponent},
+  {path: 'employees/view/:id', component: ViewEmployeeComponent},
   {path: 'employees/form/:companyId', component: FormEmployeeComponent},
   {path: 'employees/form/:companyId/:employeeId', component: FormEmployeeComponent},
   {path: 'users', component: UsersComponent},
   {path: 'users/page/:page', component: UsersComponent},
-  {path: 'users/:id', component: ViewUserComponent},
-  {path: 'users/form/:id', component: FormUserComponent}
+  {path: 'users/view/:id', component: ViewUserComponent},
+  {path: 'users/form', component: FormUserComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
+  {path: 'users/form/:id', component: FormUserComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}}
 ];
 
 @NgModule({

@@ -23,7 +23,7 @@
     <tbody>
       <tr *ngFor="let employee of employees">
 
-        <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/employees', employee.id]" class="btn btn-outline-info btn-xs">{{ employee.name }}</button></td>
+        <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/employees/view', employee.id]" class="btn btn-outline-info btn-xs">{{ employee.name }}</button></td>
         <td>{{ employee.nif }}</td>
         <td>{{ employee.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</td>
         <td>

@@ -8,18 +8,19 @@ import { UserService } from './user.service';
   templateUrl: './view-user.component.html'
 })
 export class ViewUserComponent implements OnInit {
-    user:User;
-    title: string = 'Usuari';
+  user: User;
+  title: string = 'Usuari';
 
   constructor(private userService: UserService,
-  private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-      this.activatedRoute.paramMap.subscribe(params => {
+    this.activatedRoute.paramMap.subscribe(params => {
       let id = +params.get('id');
       this.userService.getUser(id).subscribe(user =>
-      this.user = user);
-  });
+        this.user = user);
+    });
+
   }
 
 }

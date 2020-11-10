@@ -11,6 +11,8 @@ import { InformationService } from './services/information.service';
 })
 export class InformationsComponent implements OnInit {
 
+  title: string = 'Nova informació';
+  information: Information = new Information();
   informations: Information[];
   selectedInformation: Information;
   paginator: any;
@@ -24,16 +26,19 @@ export class InformationsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       let page: number = +params.get('page');
+
       if (!page) {
         page = 0;
       }
+
       this.informationService.getInformations(page).subscribe(
         response => {
           this.informations = response.content as Information[];
           this.paginator = response;
         })
-    })
+    });
   }
+
   delete(information: Information): void {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {

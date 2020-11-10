@@ -20,7 +20,7 @@ import { DatePipe, formatDate } from '@angular/common';
 })
 export class FormTaskComponent implements OnInit {
 
-  title: string = 'Nova Tasca';
+  title: string = 'Formulari de Tasca';
   task: Task = new Task();
   autocompleteControl = new FormControl();
   public errors: string[];

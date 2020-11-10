@@ -35,6 +35,7 @@ export class InformationService {
   }
 
   create(information: Information): Observable<any> {
+      
     return this.http.post<any>(this.urlEndPoint, information).pipe(
       catchError(e => {
 

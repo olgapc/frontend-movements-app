@@ -7,6 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Role } from '../roles/role';
 import { RoleService } from '../roles/role.service';
 import { User } from './models/user';
+import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class UserService {
     constructor(private http: HttpClient,
         private router: Router,
         private roleService: RoleService) { }
+
 
     getUsers(page: number): Observable<any> {
 
@@ -88,6 +90,7 @@ export class UserService {
 
           if (e.error.message) {
             console.error(e.error.message);
+            swal.fire('Error al eliminar', e.error.message, 'error');
           }
 
           return throwError(e);

@@ -11,9 +11,10 @@ import swal from 'sweetalert2'
 })
 export class FormInformationComponent implements OnInit {
 
-  title: string = 'Nova informació';
-  information: Information = new Information();
-  autocompleteControl = new FormControl();
+  public information: Information = new Information();
+  public title: string = 'Formulari d\'informació';
+
+  //autocompleteControl = new FormControl();
   public errors: string[];
 
   constructor(private informationService: InformationService,
@@ -21,44 +22,46 @@ export class FormInformationComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-      this.activatedRoute.params.subscribe(params => {
-          let id = params['id']
-          if(id){
-              this.informationService.getInformation(id).subscribe(information => this.information = information)
-          }
-      });
+    this.activatedRoute.params.subscribe(params => {
+      let id = +params['id']
+      console.log("id");
+      console.log(id);
+      if(id) {
+        this.informationService.getInformation(id).subscribe(information => this.information = information)
+      }
+    });
   }
 
-  public create():void {
-      console.log(this.information);
-      this.informationService.create(this.information)
+  public create(): void {
+    console.log(this.information);
+    this.informationService.create(this.information)
       .subscribe(
-          json => {
-              this.router.navigate(['/informations'])
-              swal.fire('Nova informació', `${json.message}: ${json.information.description}`, 'success')
-          },
-          err => {
-              this.errors = err.error.errors as string[];
-              console.error('Codi de l\'error des del backend: ' + err.status);
-              console.error(err.error.errors);
-          }
+        json => {
+          this.router.navigate(['/informations'])
+          swal.fire('Nova informació', `${json.message}: ${json.information.description}`, 'success')
+        },
+        err => {
+          this.errors = err.error.errors as string[];
+          console.error('Codi de l\'error des del backend: ' + err.status);
+          console.error(err.error.errors);
+        }
       );
   }
 
 
   public update(): void {
-      console.log(this.information);
-      this.informationService.update(this.information)
+    console.log(this.information);
+    this.informationService.update(this.information)
       .subscribe(
-          json => {
-              this.router.navigate(['/informations'])
-              swal.fire('Informació actualitzada', `${json.message}: ${json.information.description}`, 'success')
-          },
-          err => {
-              this.errors = err.error.errors as string[];
-              console.error('Codi de l\'error del backend: ' + err.status);
-              console.error(err.error.errors);
-          }
+        json => {
+          this.router.navigate(['/informations'])
+          swal.fire('Informació actualitzada', `${json.message}: ${json.information.description}`, 'success')
+        },
+        err => {
+          this.errors = err.error.errors as string[];
+          console.error('Codi de l\'error del backend: ' + err.status);
+          console.error(err.error.errors);
+        }
       )
   }
 }
