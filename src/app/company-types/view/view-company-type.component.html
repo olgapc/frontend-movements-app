@@ -1,0 +1,17 @@
+<div class="card bg-light" *ngIf="companyType">
+  <div class="card-header">{{title}}: {{companyType.description}}</div>
+  <div class="card-body">
+    <h4 class="card-title">
+      <a [routerLink]="['/company_types']" class="btn btn-light">&laquo; Tornar</a>
+    </h4>
+
+    <ul class="list-group my-2">
+      <li class="list-group-item list-group-item-primary">{{companyType.description}}</li>
+      <li class="list-group-item">{{ companyType.code }}</li>
+      <li class="list-group-item">{{ companyType.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
+      <li class="list-group-item">{{ companyType.comment }}</li>
+    </ul>
+
+
+  </div>
+</div>

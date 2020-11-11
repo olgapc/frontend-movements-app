@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Information } from './models/information';
 import { InformationService } from './services/information.service';
-import swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-form-information',
@@ -24,8 +24,6 @@ export class FormInformationComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       let id = +params['id']
-      console.log("id");
-      console.log(id);
       if(id) {
         this.informationService.getInformation(id).subscribe(information => this.information = information)
       }
@@ -38,7 +36,7 @@ export class FormInformationComponent implements OnInit {
       .subscribe(
         json => {
           this.router.navigate(['/informations'])
-          swal.fire('Nova informació', `${json.message}: ${json.information.description}`, 'success')
+          Swal.fire('Nova informació', `${json.message}: ${json.information.description}`, 'success')
         },
         err => {
           this.errors = err.error.errors as string[];
@@ -55,7 +53,7 @@ export class FormInformationComponent implements OnInit {
       .subscribe(
         json => {
           this.router.navigate(['/informations'])
-          swal.fire('Informació actualitzada', `${json.message}: ${json.information.description}`, 'success')
+          Swal.fire('Informació actualitzada', `${json.message}: ${json.information.description}`, 'success')
         },
         err => {
           this.errors = err.error.errors as string[];

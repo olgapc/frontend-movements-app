@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Information } from '../models/information';
 import { InformationService } from '../services/information.service';
-import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-view-information',
@@ -25,5 +24,5 @@ export class ViewInformationComponent implements OnInit {
   }
 
 
-  
+
 }

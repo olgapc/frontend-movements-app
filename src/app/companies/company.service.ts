@@ -36,7 +36,7 @@ export class CompanyService {
 
 
   getCompanyTypes(): Observable<CompanyType[]> {
-    return this.companyTypeService.getCompanyTypes();
+    return this.companyTypeService.getCompanyTypesList();
   }
 
   getCompanies(page: number): Observable<any> {

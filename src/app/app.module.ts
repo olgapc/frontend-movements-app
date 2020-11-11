@@ -28,7 +28,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from "@angular/material/select";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
@@ -41,44 +41,51 @@ import { ViewInformationComponent } from './tasks/view-information/view-informat
 import { FormInformationComponent } from './tasks/form-information.component';
 import { ViewUserComponent } from './users/view-user.component';
 import { FormUserComponent } from './users/form-user.component';
+import { ViewCompanyTypeComponent } from './company-types/view/view-company-type.component';
+import { FormCompanyTypeComponent } from './company-types/form/form-company-type.component';
 
 
 
 registerLocaleData(localeCa, 'ca');
 
-const routes: Routes =[
-  {path: '', redirectTo: '/companies', pathMatch: 'full'},
-  {path: 'companies', component: CompaniesComponent},
-  {path: 'companies/page/:page', component: CompaniesComponent},
-  {path: 'companies/form', component: FormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
-  {path: 'companies/form/:id', component: FormComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}}//,
+const routes: Routes = [
+  { path: '', redirectTo: '/companies', pathMatch: 'full' },
+  { path: 'companies', component: CompaniesComponent },
+  { path: 'companies/page/:page', component: CompaniesComponent },
+  { path: 'companies/form', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
+  { path: 'companies/form/:id', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } }//,
   //{path: 'companies/view/:id', component: ViewComponent}
-  ,{path: 'login', component: LoginComponent},
-  {path: 'tasks/:id', component: ViewTaskComponent},
-  {path: 'tasks', component: TasksComponent},
-  {path: 'tasks/page/:page', component: TasksComponent},
+  , { path: 'login', component: LoginComponent },
+  { path: 'tasks/:id', component: ViewTaskComponent },
+  { path: 'tasks', component: TasksComponent },
+  { path: 'tasks/page/:page', component: TasksComponent },
   //{path: 'tasks/form/:companyId', component: FormTaskComponent},
   //{path: 'tasks/form/:companyId/:employeeId', component: FormTaskComponent},
   //{path: 'tasks/form/task/:taskId', component: FormTaskComponent},
-  {path: 'tasks/form/task', component: FormTaskComponent},
-  {path: 'tasks/form/task/:idTask', component: FormTaskComponent},
-  {path: 'tasks/form/company/:idCompany', component: FormTaskComponent},
-  {path: 'tasks/form/employee/:idCompany/:idEmployee', component: FormTaskComponent},
-  {path: 'informations', component: InformationsComponent},
-  {path: 'informations/page/:page', component: InformationsComponent},
-  {path: 'informations/view/:id', component: ViewInformationComponent},
-  {path: 'informations/form', component: FormInformationComponent},
-  {path: 'informations/form/:id', component: FormInformationComponent},
-  {path: 'employees', component: EmployeesComponent},
-  {path: 'employees/page/:page', component: EmployeesComponent},
-  {path: 'employees/view/:id', component: ViewEmployeeComponent},
-  {path: 'employees/form/:companyId', component: FormEmployeeComponent},
-  {path: 'employees/form/:companyId/:employeeId', component: FormEmployeeComponent},
-  {path: 'users', component: UsersComponent},
-  {path: 'users/page/:page', component: UsersComponent},
-  {path: 'users/view/:id', component: ViewUserComponent},
-  {path: 'users/form', component: FormUserComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
-  {path: 'users/form/:id', component: FormUserComponent, canActivate:[AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}}
+  { path: 'tasks/form/task', component: FormTaskComponent },
+  { path: 'tasks/form/task/:idTask', component: FormTaskComponent },
+  { path: 'tasks/form/company/:idCompany', component: FormTaskComponent },
+  { path: 'tasks/form/employee/:idCompany/:idEmployee', component: FormTaskComponent },
+  { path: 'informations', component: InformationsComponent },
+  { path: 'informations/page/:page', component: InformationsComponent },
+  { path: 'informations/view/:id', component: ViewInformationComponent },
+  { path: 'informations/form', component: FormInformationComponent },
+  { path: 'informations/form/:id', component: FormInformationComponent },
+  { path: 'employees', component: EmployeesComponent },
+  { path: 'employees/page/:page', component: EmployeesComponent },
+  { path: 'employees/view/:id', component: ViewEmployeeComponent },
+  { path: 'employees/form/:companyId', component: FormEmployeeComponent },
+  { path: 'employees/form/:companyId/:employeeId', component: FormEmployeeComponent },
+  { path: 'users', component: UsersComponent },
+  { path: 'users/page/:page', component: UsersComponent },
+  { path: 'users/view/:id', component: ViewUserComponent },
+  { path: 'users/form', component: FormUserComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
+  { path: 'users/form/:id', component: FormUserComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
+  { path: 'company_types', component: CompanyTypesComponent },
+  { path: 'company_types/page/:page', component: CompanyTypesComponent },
+  { path: 'company_types/form', component: FormCompanyTypeComponent},
+  { path: 'company_types/form/:id', component: FormCompanyTypeComponent},
+  { path: 'company_types/view/:id', component: ViewCompanyTypeComponent}
 ];
 
 @NgModule({
@@ -104,7 +111,9 @@ const routes: Routes =[
     ViewInformationComponent,
     FormInformationComponent,
     ViewUserComponent,
-    FormUserComponent
+    FormUserComponent,
+    ViewCompanyTypeComponent,
+    FormCompanyTypeComponent
   ],
   imports: [
     BrowserModule,
@@ -124,12 +133,12 @@ const routes: Routes =[
 
   ],
   providers:
-  [{provide:LOCALE_ID, useValue: 'ca'},
-  {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi:true},
-  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true},
-  {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}}
+    [{ provide: LOCALE_ID, useValue: 'ca' },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
 
-],
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

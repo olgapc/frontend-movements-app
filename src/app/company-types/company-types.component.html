@@ -1,1 +1,37 @@
-<p>company-types works!</p>
+<div class="container-fluid my-5">
+  <h1 class="text-warning">Llistat de tipus d'empreses</h1>
+  <div class="card-body text-info">
+    <div class="my-2 text-left">
+      <button class="btn btn-outline-info btn-xs mr-2" type="button" [routerLink]="['/company_types/form']">Crear tipus d'empresa</button>
+    </div>
+
+    <div *ngIf="companyTypes?.length == 0" class="alert alert-info">
+      No hi ha registres a la base de dades
+
+    </div>
+    <table class="table table-responsive table-hover" *ngIf="companyTypes?.length>0">
+      <thead>
+        <tr>
+          <th>Descripció</th>
+          <th>Codi</th>
+          <th>Data creació</th>
+          <th>opcions</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let type of companyTypes">
+          <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/company_types/view', type.id]" class="btn btn-outline-info btn-xs">{{ type.description }}</button></td>
+          <td>{{type.code}}</td>
+          <td>{{ type.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</td>
+          <td>
+            <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/company_types/form', type.id]" class="btn btn-outline-info btn-xs">Modificar</button>
+            <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="delete" (click)='delete(type)' class="btn btn-outline-danger btn-xs">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <paginator-nav *ngIf="paginator" [paginator]="paginator" [linkPaginator]="linkPaginator"></paginator-nav>
+  </div>
+</div>
