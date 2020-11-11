@@ -8,6 +8,12 @@
   <h1 class="text-warning">{{ title }}</h1>
   <div class="card-body">
 
+    <div style="max-width: 250px;">
+      <img *ngIf="company?.image" src="http://localhost:8090/api/uploads/img/{{company.image}}" alt="{{company.image}}" class="img-thumbnail rounded">
+    </div>
+
+    <br>
+
     <form #companyForm="ngForm">
       <div class="form-group row">
         <label for="name" class="col-form-label col-sm-2">Nom</label>
@@ -61,6 +67,13 @@
         </div>
       </div>
 
+      <div class="form-group row">
+        <label for="comment" class="col-form-label col-sm-2">Comentari</label>
+        <div class="col-sm-6">
+          <textarea class="form-control" [(ngModel)]="company.comment" name="comment"></textarea>
+        </div>
+      </div>
+
       <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="input-group mb-3">
         <div class="custom-file">
           <input (change)="selectImage($event)" type="file" class="custom-file-input" id="inputGroupFile04">
@@ -77,9 +90,7 @@
         </div>
       </div>
 
-      <div class="col-sm">
-        <img *ngIf="company?.image" src="http://localhost:8090/api/uploads/img/{{company.image}}" alt="{{company.image}}" class="img-thumbnail rounded">
-      </div>
+
 
       <div class="form-group row">
         <div class="col-sm-6">

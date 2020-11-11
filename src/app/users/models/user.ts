@@ -8,4 +8,5 @@ export class User {
   roles: string[] = [];
   enabled: boolean;
   createAt: string;
+  comment: string;
 }

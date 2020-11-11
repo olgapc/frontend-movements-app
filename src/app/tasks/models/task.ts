@@ -22,4 +22,5 @@ export class Task {
   mainTask: Task;
   subtasks: Task[]=[];
   isMainTask: boolean;
+  comment: string;
 }

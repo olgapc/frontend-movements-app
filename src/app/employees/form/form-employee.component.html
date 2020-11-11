@@ -35,17 +35,6 @@
         </div>
       </div>
 
-      <!--div class="form-group-row">
-        <label for="nifType" class="col-sm-2 col-form-label">NIF</label>
-        <div class="class col-sm-6">
-          <select class="form-control" [(ngModel)]="employee.nifType" name="nifType">
-            <option [ngValue]="undefined">--Seleccionar tipus d'identificació--</option>
-            <option *ngFor="let key of enumKeys" [value]="key">{{nifTypeEnum[key]}}</option>
-
-          </select>
-        </div>
-      </div-->
-
       <div class="form-group-row">
         <label for="eNifType" class="col-sm-2 col-form-label">Tipus</label>
         <div class="class col-sm-6">
@@ -95,12 +84,14 @@
       <div class="form-group-row">
         <label for="eGender" class="col-sm-6 col-form-label">Gènere:</label>
         <div class="class col-sm-8">
-        <mat-radio-group name="eGender" [(ngModel)]="employee.gender">
-          <mat-radio-button value="MALE">Home</mat-radio-button>
-          <mat-radio-button value="FEMALE">Dona</mat-radio-button>
-        </mat-radio-group>
+          <mat-radio-group name="eGender" [(ngModel)]="employee.gender">
+            <mat-radio-button value="MALE">Home</mat-radio-button>
+            <mat-radio-button value="FEMALE">Dona</mat-radio-button>
+          </mat-radio-group>
         </div>
       </div>
+
+      <br>
 
       <div class="form-group-row">
         <div class="class col-sm-6">
@@ -109,18 +100,11 @@
       </div>
 
 
-      <!--div class="form-group-row">
-        <label for="isEnabled" class="col-sm-2 col-form-label">Actiu</label>
-        <div class="class col-sm-6">
-          <input type="checkbox" name="isEnabled" [(ngModel)]="employee.isEnabled" class="form-control">
-        </div>
-      </div-->
-
 
       <div class="form-group-row">
         <label for="comment" class="col-sm-2 col-form-label">Comentari</label>
         <div class="class col-sm-6">
-          <input type="text" name="comment" [(ngModel)]="employee.comment" class="form-control">
+          <textarea name="comment" [(ngModel)]="employee.comment" class="form-control"></textarea>
         </div>
       </div>
 

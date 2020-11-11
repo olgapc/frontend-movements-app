@@ -6,4 +6,5 @@ export class Role {
   role: string;
   users: User[] = [];
   createAt: string;
+  comment: string;
 }

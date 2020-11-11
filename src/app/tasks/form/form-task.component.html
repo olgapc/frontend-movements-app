@@ -1,6 +1,7 @@
 <ul *ngIf="errors?.length >0" class="alert alert-danger">
   <li *ngFor="let err of errors">
-  {{ err }}</li>
+    {{ err }}
+  </li>
 </ul>
 
 <div class="card bg-light" *ngIf="task">
@@ -16,16 +17,14 @@
       <div class="form-group-row" *ngIf="task.company">
         <label for="company" class="col-sm-2 col-form-label">Empresa</label>
         <div class="class col-sm-6">
-          <input type="text" name="company" value="{{task.company.name}}"
-          class="form-control" />
+          <input type="text" name="company" value="{{task.company.name}}" class="form-control" />
         </div>
       </div>
 
       <div class="form-group-row" *ngIf="task.employee">
         <label for="" class="col-sm-2 col-form-label">Treballador</label>
         <div class="class col-sm-6">
-          <input type="text" name="employee" value="{{task.employee.name}}"
-          class="form-control" />
+          <input type="text" name="employee" value="{{task.employee.name}}" class="form-control" />
         </div>
       </div>
 
@@ -57,7 +56,7 @@
 
       <div class="form-group-row">
         <label for="numberToCalculateDeadlineToAlarm" class="col-sm-6 col-form-label">Número per calcular data avís</label>
-        <div class="class col-sm-2" >
+        <div class="class col-sm-2">
           <input type="number" name="numberToCalculateDeadlineToAlarm" [(ngModel)]="task.numberToCalculateDeadlineToAlarm" class="form-control">
         </div>
       </div>
@@ -76,15 +75,24 @@
       <div class="form-group-row">
         <label for="deadline" class="col-sm-6 col-form-label">Data de venciment</label>
         <div class="class col-sm-6">
-            <mat-form-field appearance="fill">
-                <mat-label>Tria una data</mat-label>
-                <input matInput [matDatepicker]="picker" name="deadline" class="form-control" [(ngModel)]="task.deadline">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Tria una data</mat-label>
+            <input matInput [matDatepicker]="picker" name="deadline" class="form-control" [(ngModel)]="task.deadline">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
         </div>
       </div>
 
+      <div class="form-group-row">
+        <label for="comment" class="col-sm-6 col-form-label">Comentari</label>
+        <div class="class col-sm-6">
+          <textarea name="comment" [(ngModel)]="task.comment" class="form-control"></textarea>
+        </div>
+      </div>
+
+      <br>
+      
       <div class="form-group-row">
         <div class="class col-sm-6">
           <mat-checkbox for="isDone" (change)="taskDone($event)" color='primary' name="isDone" [(ngModel)]="task.isDone" class="example-margin">Feta</mat-checkbox>
@@ -105,34 +113,35 @@
       </div>
 
 
-    <div class="alert alert-info my-4" *ngIf="task.taskInformations.length === 0">
+      <div class="alert alert-info my-4" *ngIf="task.taskInformations.length === 0">
         No hi ha informacions per la tasca {{task.description}}
-    </div>
+      </div>
 
-    <h5 class="float-right" *ngIf="task.taskInformations.length > 0">Informacions: <span class="badge badge-secondary">{{task.taskInformations.length}}</span></h5>
+      <h5 class="float-right" *ngIf="task.taskInformations.length > 0">Informacions: <span class="badge badge-secondary">{{task.taskInformations.length}}</span></h5>
 
 
-    <table class="table table-striped table-hover table-sm" *ngIf="task.taskInformations.length > 0">
+      <table class="table table-striped table-hover table-sm" *ngIf="task.taskInformations.length > 0">
         <thead>
-            <tr>
-                <th>Informació</th>
-                <th>Creació</th>
-                <th>Feta</th>
-                <th>Data Realització</th>
-                <th>Eliminar</th>
-            </tr>
+          <tr>
+            <th>Informació</th>
+            <th>Creació</th>
+            <th>Feta</th>
+            <th>Data Realització</th>
+            <th>Eliminar</th>
+          </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let information of task.taskInformations">
-                <td>{{information.information.description}}</td>
-                <td>{{information.createAt | date: 'dd.MM.yyyy'}}</td>
-                <td><mat-checkbox (change)="informationDone(information.information.id, $event)" color='primary' name="done{{information.information.id}}" [(ngModel)]="information.done"></mat-checkbox></td>
-                <td>{{information.doneAt | date: 'dd.MM.yyyy'}}</td>
-                <td><button class="btn btn-danger btn-sm" type="button"
-                    (click)="deleteTaskInformation(information.information.id)">x</button></td>
-            </tr>
+          <tr *ngFor="let information of task.taskInformations">
+            <td>{{information.information.description}}</td>
+            <td>{{information.createAt | date: 'dd.MM.yyyy'}}</td>
+            <td>
+              <mat-checkbox (change)="informationDone(information.information.id, $event)" color='primary' name="done{{information.information.id}}" [(ngModel)]="information.done"></mat-checkbox>
+            </td>
+            <td>{{information.doneAt | date: 'dd.MM.yyyy'}}</td>
+            <td><button class="btn btn-danger btn-sm" type="button" (click)="deleteTaskInformation(information.information.id)">x</button></td>
+          </tr>
         </tbody>
-    </table>
+      </table>
 
 
 
