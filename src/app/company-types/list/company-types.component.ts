@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/users/auth.service';
 import Swal from 'sweetalert2';
-import { AuthService } from '../users/auth.service';
-import { CompanyType } from './company-type';
-import { CompanyTypeService } from './company-type.service';
+import { CompanyType } from '../company-type';
+import { CompanyTypeService } from '../company-type.service';
 
 @Component({
   selector: 'app-company-types',

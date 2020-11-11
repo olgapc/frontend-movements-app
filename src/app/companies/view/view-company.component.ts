@@ -13,9 +13,9 @@ import { Employee } from 'src/app/employees/employee';
 
 @Component({
   selector: 'company-view',
-  templateUrl: './view.component.html'
+  templateUrl: './view-company.component.html'
 })
-export class ViewComponent implements OnInit {
+export class ViewCompanyComponent implements OnInit {
 
   //input for Modal, without Modal: ngOnInit()
   @Input() company: Company;

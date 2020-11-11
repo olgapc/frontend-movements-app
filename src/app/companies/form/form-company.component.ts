@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Company } from './company';
-import { CompanyService } from './company.service';
+import { Company } from '../company';
+import { CompanyService } from '../company.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
-import { CompanyType } from '../company-types/company-type';
 import { AuthService } from 'src/app/users/auth.service';
 import { HttpEventType } from '@angular/common/http';
+import { CompanyType } from 'src/app/company-types/company-type';
 
 @Component({
   selector: 'app-form',
-  templateUrl: './form.component.html',
+  templateUrl: './form-company.component.html',
 
 })
-export class FormComponent implements OnInit {
+export class FormCompanyComponent implements OnInit {
 
   public company: Company = new Company();
   public companyTypes: CompanyType[];

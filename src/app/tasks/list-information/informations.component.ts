@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/users/auth.service';
 import Swal from 'sweetalert2';
-import { AuthService } from '../users/auth.service';
-import { Information } from './models/information';
-import { InformationService } from './services/information.service';
+import { Information } from '../models/information';
+import { InformationService } from '../services/information.service';
 
 @Component({
   selector: 'app-informations',

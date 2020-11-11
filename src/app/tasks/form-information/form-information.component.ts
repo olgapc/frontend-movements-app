@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Information } from './models/information';
-import { InformationService } from './services/information.service';
+import { Information } from '../models/information';
+import { InformationService } from '../services/information.service';
 import Swal from 'sweetalert2'
 
 @Component({

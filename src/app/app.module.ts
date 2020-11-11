@@ -5,25 +5,25 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { PaginatorComponent } from './paginator/paginator.component';
-import { CompaniesComponent } from './companies/companies.component';
+import { CompaniesComponent } from './companies/list/companies.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormComponent } from './companies/form.component';
+import { FormCompanyComponent } from './companies/form/form-company.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import localeCa from '@angular/common/locales/ca';
-import { EmployeesComponent } from './employees/employees.component';
+import { EmployeesComponent } from './employees/list/employees.component';
 import { RolesComponent } from './roles/roles.component';
-import { TasksComponent } from './tasks/tasks.component';
-import { CompanyTypesComponent } from './company-types/company-types.component';
-import { ViewComponent } from './companies/view/view.component';
+import { TasksComponent } from './tasks/list/tasks.component';
+import { CompanyTypesComponent } from './company-types/list/company-types.component';
+import { ViewCompanyComponent } from './companies/view/view-company.component';
 import { LoginComponent } from './users/login.component';
 import { AuthGuard } from './users/guards/auth.guard';
 import { RoleGuard } from './users/guards/role.guard';
 import { TokenInterceptor } from './users/interceptors/token.interceptor';
 import { AuthInterceptor } from './users/interceptors/auth.interceptor';
-import { ViewTaskComponent } from './tasks/view-task.component';
-import { FormTaskComponent } from './tasks/form-task.component';
+import { ViewTaskComponent } from './tasks/view/view-task.component';
+import { FormTaskComponent } from './tasks/form/form-task.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
@@ -33,14 +33,14 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
-import { InformationsComponent } from './tasks/informations.component';
-import { UsersComponent } from './users/users.component';
-import { ViewEmployeeComponent } from './employees/view-employee.component';
-import { FormEmployeeComponent } from './employees/form-employee.component';
+import { InformationsComponent } from './tasks/list-information/informations.component';
+import { UsersComponent } from './users/list/users.component';
+import { ViewEmployeeComponent } from './employees/view/view-employee.component';
+import { FormEmployeeComponent } from './employees/form/form-employee.component';
 import { ViewInformationComponent } from './tasks/view-information/view-information.component';
-import { FormInformationComponent } from './tasks/form-information.component';
-import { ViewUserComponent } from './users/view-user.component';
-import { FormUserComponent } from './users/form-user.component';
+import { FormInformationComponent } from './tasks/form-information/form-information.component';
+import { ViewUserComponent } from './users/view/view-user.component';
+import { FormUserComponent } from './users/form/form-user.component';
 import { ViewCompanyTypeComponent } from './company-types/view/view-company-type.component';
 import { FormCompanyTypeComponent } from './company-types/form/form-company-type.component';
 
@@ -52,8 +52,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/companies', pathMatch: 'full' },
   { path: 'companies', component: CompaniesComponent },
   { path: 'companies/page/:page', component: CompaniesComponent },
-  { path: 'companies/form', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
-  { path: 'companies/form/:id', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } }//,
+  { path: 'companies/form', component: FormCompanyComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
+  { path: 'companies/form/:id', component: FormCompanyComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } }//,
   //{path: 'companies/view/:id', component: ViewComponent}
   , { path: 'login', component: LoginComponent },
   { path: 'tasks/:id', component: ViewTaskComponent },
@@ -94,12 +94,12 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     CompaniesComponent,
-    FormComponent,
+    FormCompanyComponent,
     EmployeesComponent,
     RolesComponent,
     TasksComponent,
     CompanyTypesComponent,
-    ViewComponent,
+    ViewCompanyComponent,
     LoginComponent,
     ViewTaskComponent,
     FormTaskComponent,

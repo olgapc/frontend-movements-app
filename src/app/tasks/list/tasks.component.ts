@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from './models/task';
-import { TaskService } from './services/task.service';
-import { CompanyService } from '../companies/company.service';
-import { EmployeeService } from '../employees/employee.service';
-import { AuthService } from '../users/auth.service';
+import { Task } from '../models/task';
+import { TaskService } from '../services/task.service';
 import { ActivatedRoute } from '@angular/router';
-import { tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/users/auth.service';
 
 
 @Component({

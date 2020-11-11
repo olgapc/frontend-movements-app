@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from './models/task';
-import { CompanyService } from '../companies/company.service';
+import { Task } from '../models/task';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, flatMap } from 'rxjs/operators';
-import { TaskService } from './services/task.service';
-import { Information } from './models/information';
+import { TaskService } from '../services/task.service';
+import { Information } from '../models/information';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { TaskInformation } from './models/task-information';
+import { TaskInformation } from '../models/task-information';
 import swal from 'sweetalert2';
-import { EmployeeService } from '../employees/employee.service';
-import { TimeTypes } from '../enums/time-types.enum';
 import { DatePipe, formatDate } from '@angular/common';
+import { TimeTypes } from 'src/app/enums/time-types.enum';
+import { CompanyService } from 'src/app/companies/company.service';
+import { EmployeeService } from 'src/app/employees/employee.service';
 
 @Component({
   selector: 'app-form-task',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from './employee';
-import { EmployeeService } from './employee.service';
-import { AuthService } from '../users/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { EmployeeService } from '../employee.service';
+import { AuthService } from 'src/app/users/auth.service';
+import { Employee } from '../employee';
 
 @Component({
   selector: 'app-employees',

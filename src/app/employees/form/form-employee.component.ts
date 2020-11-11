@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CompanyService } from '../companies/company.service';
-import { AuthService } from '../users/auth.service';
-import { Employee } from './employee';
-import { EmployeeService } from './employee.service';
-import swal from 'sweetalert2';
-import { NifType } from '../enums/nif-types.enum';
-import { Gender } from '../enums/gender.enum';
+import { CompanyService } from 'src/app/companies/company.service';
+import { Gender } from 'src/app/enums/gender.enum';
+import { NifType } from 'src/app/enums/nif-types.enum';
+import { AuthService } from 'src/app/users/auth.service';
+import Swal from 'sweetalert2';
+import { Employee } from '../employee';
+import { EmployeeService } from '../employee.service';
+
 
 @Component({
   selector: 'app-form-employee',
@@ -57,7 +58,7 @@ export class FormEmployeeComponent implements OnInit {
       .subscribe(
         json => {
           this.router.navigate(['/employees'])
-          swal.fire('Nou treballador', `${json.message}: ${json.employee.name}`, 'success')
+          Swal.fire('Nou treballador', `${json.message}: ${json.employee.name}`, 'success')
         },
         err => {
           this.errors = err.error.errors as string[];
@@ -73,7 +74,7 @@ export class FormEmployeeComponent implements OnInit {
       .subscribe(
         json => {
           this.router.navigate(['/employees'])
-          swal.fire('Treballador actualitzat', `${json.message}: ${json.employee.name}`, 'success')
+          Swal.fire('Treballador actualitzat', `${json.message}: ${json.employee.name}`, 'success')
 
         },
         err => {

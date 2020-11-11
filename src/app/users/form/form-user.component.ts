@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Role } from '../roles/role';
-import { AuthService } from './auth.service';
-import { User } from './models/user';
-import { UserService } from './user.service';
-import swal from 'sweetalert2';
+import { AuthService } from '../auth.service';
+import { User } from '../models/user';
+import { UserService } from '../user.service';
+import Swal from 'sweetalert2';
+import { Role } from 'src/app/roles/role';
 
 @Component({
   selector: 'app-form-user',
@@ -45,7 +45,7 @@ export class FormUserComponent implements OnInit {
         //response => this.router.navigate(['/companies'])
         json => {
           this.router.navigate(['/users'])
-          swal.fire('Nou Usuari', `${json.message}: ${json.user.username}`, 'success')
+          Swal.fire('Nou Usuari', `${json.message}: ${json.user.username}`, 'success')
         },
         err => {
           this.errors = err.error.errors as string[];
@@ -61,7 +61,7 @@ export class FormUserComponent implements OnInit {
       .subscribe(
         json => {
           this.router.navigate(['/users'])
-          swal.fire('Usuari actualitzat', `${json.message}: ${json.user.username}`, 'success')
+          Swal.fire('Usuari actualitzat', `${json.message}: ${json.user.username}`, 'success')
         },
         err => {
           this.errors = err.error.errors as string[];
