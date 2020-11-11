@@ -8,10 +8,18 @@
     <ul class="list-group my-2">
       <li class="list-group-item list-group-item-primary">{{companyType.description}}</li>
       <li class="list-group-item">{{ companyType.code }}</li>
-      <li class="list-group-item">{{ companyType.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
-      <li class="list-group-item">{{ companyType.comment }}</li>
+      <li class="list-group-item">Creació: {{ companyType.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
     </ul>
 
+    <div class="class border-info my-2" >
+        <div class="card card-header">
+            Comentaris
+        </div>
+        <div class="card card-body">
+            <p *ngIf="!companyType.comment">No té comentaris</p>
+            <p *ngIf="companyType.comment">{{companyType.comment}}</p>
+        </div>
+    </div>
 
   </div>
 </div>

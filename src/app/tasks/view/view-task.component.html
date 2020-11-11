@@ -26,6 +26,15 @@
         <li class="list-group-item">Creació: {{task.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
       </ul>
 
+      <div class="class border-info my-2" >
+          <div class="card card-header">
+              Comentaris
+          </div>
+          <div class="card card-body">
+              <p *ngIf="!task.comment">No té comentaris</p>
+              <p *ngIf="task.comment">{{task.comment}}</p>
+          </div>
+      </div>
 
       <table *ngIf="task?.taskInformations.length>0" class="table table-striped table-hover table-bordered my-3">
         <thead>

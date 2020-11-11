@@ -18,9 +18,19 @@
                   <li class="list-group-item">{{company.companyType.code}}</li>
                   <li class="list-group-item">{{company.email}}</li>
                   <li class="list-group-item">{{company.phone}}</li>
-                  <li class="list-group-item">{{company.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
+                  <li class="list-group-item">Creació: {{company.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
 
                 </ul>
+
+                <div class="class border-info mb-3" >
+                    <div class="card card-header">
+                        Comentaris
+                    </div>
+                    <div class="card card-body">
+                        <p *ngIf="!company.comment">No té comentaris</p>
+                        <p *ngIf="company.comment">{{company.comment}}</p>
+                    </div>
+                </div>
 
                 <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="input-group mb-3">
                   <div class="custom-file">
