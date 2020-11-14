@@ -13,7 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import localeCa from '@angular/common/locales/ca';
 import { EmployeesComponent } from './employees/list/employees.component';
-import { RolesComponent } from './roles/roles.component';
+import { RolesComponent } from './users/list-roles/roles.component';
 import { TasksComponent } from './tasks/list/tasks.component';
 import { CompanyTypesComponent } from './company-types/list/company-types.component';
 import { ViewCompanyComponent } from './companies/view/view-company.component';

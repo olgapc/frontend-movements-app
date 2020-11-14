@@ -5,7 +5,7 @@ import { Task } from '../models/task';
 import { formatDate } from '@angular/common';
 import { catchError, map } from 'rxjs/operators';
 import { Information } from '../models/information';
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -72,7 +72,7 @@ export class TaskService {
 
           if (e.error.message) {
             console.error(e.error.message);
-            swal.fire('Error al eliminar', e.error.message, 'error');
+            Swal.fire('Error al eliminar', e.error.message, 'error');
           }
 
           return throwError(e);

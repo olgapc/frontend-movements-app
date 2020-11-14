@@ -1,3 +1,5 @@
+import { UserRole } from './user-role';
+
 export class User {
   id: number;
   username: string;
@@ -5,7 +7,7 @@ export class User {
   name: string;
   email: string;
   password: string;
-  roles: string[] = [];
+  userRoles: Array<UserRole>=[];
   enabled: boolean;
   createAt: string;
   comment: string;

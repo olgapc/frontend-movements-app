@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { User } from '../models/user';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 import Swal from 'sweetalert2';
-import { Role } from 'src/app/roles/role';
+import { Role } from '../models/role';
+import { UserRole } from '../models/user-role';
+import { formatDate } from '@angular/common';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { RoleService } from '../services/role.service';
 
 @Component({
   selector: 'app-form-user',
@@ -13,10 +18,12 @@ import { Role } from 'src/app/roles/role';
 export class FormUserComponent implements OnInit {
 
   public user: User = new User();
-  public roles: Role[];
-  public userRoles: Role[]=[];
+  public allRoles: Role[];
+
+  //public userRoles: UserRole[];
   public title: string = "Formulari d'Usuari";
   public errors: string[];
+  //public filteredUserRole: Observable<UserRole>;
 
 
   constructor(private userService: UserService,
@@ -31,12 +38,28 @@ export class FormUserComponent implements OnInit {
   public loadUser(): void {
     this.activatedRoute.params.subscribe(params => {
       let id = +params['id']
-      if(id) {
-        this.userService.getUser(id).subscribe((user) => this.user = user);
+      if (id) {
+        this.userService.getUser(id)
+          //.pipe(
+          //tap(user => {
+          //console.log("user : ");
+          //console.log(user);
+          //user.userRoles.forEach(element => {
+          //console.log("aqui tinc usuari");
+          //console.log(element.role);
+          //this.thisUserRoles.push(element.role);
+          //console.log("hello " + element.role);
+          //});
+          //}
+          //)
+          //)
+          .subscribe(user => this.user = user);
       }
-    });
-    this.userService.getRoles().subscribe(roles => this.roles = roles);
+    })
+
+    this.userService.getRoles().subscribe(roles => this.allRoles = roles);
   }
+
 
   public create(): void {
     console.log(this.user);
@@ -71,12 +94,43 @@ export class FormUserComponent implements OnInit {
       )
   }
 
-  compareRoles(role1: Role, role2: Role){
+  compareRoles(role1: Role, role2: Role) {
 
-      if (role1==null || role2 == null){
-          return false;
-      }
-      return role1.description === role2.description;
+    if (role1 == null || role2 == null) {
+      return false;
+    }
+    return role1.description === role2.description;
   }
+
+  hasRole(role: Role): boolean {
+
+    let thisUserRoles: string[]=[];
+
+    this.user.userRoles.forEach(element => {
+      thisUserRoles.push(element.role.description);
+  })
+  return thisUserRoles.includes(role.description);
+}
+
+
+  public roleChange(id: number, event): void {
+        let newUserRole: UserRole;
+        if(event.target.checked) {
+          for (let role of this.allRoles) {
+            if (role.id == id) {
+              newUserRole.role = role;
+              newUserRole.createAt = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss", 'ca');
+            }
+          }
+          this.user.userRoles.push(newUserRole);
+        } else {
+          this.user.userRoles.forEach((role, index) => {
+            if (role.id == id) {
+              this.user.userRoles.splice(index, 1);
+            }
+          });
+        }
+
+      }
 
 }

@@ -3,7 +3,7 @@ import { Task } from '../models/task';
 import { TaskService } from '../services/task.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
-import { AuthService } from 'src/app/users/auth.service';
+import { AuthService } from 'src/app/users/services/auth.service';
 
 
 @Component({

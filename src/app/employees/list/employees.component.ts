@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { EmployeeService } from '../employee.service';
-import { AuthService } from 'src/app/users/auth.service';
+import { AuthService } from 'src/app/users/services/auth.service';
 import { Employee } from '../employee';
 
 @Component({

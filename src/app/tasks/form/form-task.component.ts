@@ -8,7 +8,7 @@ import { TaskService } from '../services/task.service';
 import { Information } from '../models/information';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { TaskInformation } from '../models/task-information';
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import { DatePipe, formatDate } from '@angular/common';
 import { TimeTypes } from 'src/app/enums/time-types.enum';
 import { CompanyService } from 'src/app/companies/company.service';
@@ -121,7 +121,7 @@ export class FormTaskComponent implements OnInit {
         //response => this.router.navigate(['/companies'])
         json => {
           this.router.navigate(['/tasks'])
-          swal.fire('Nova tasca', `${json.message}: ${json.task.description}`, 'success')
+          Swal.fire('Nova tasca', `${json.message}: ${json.task.description}`, 'success')
         },
         err => {
           this.errors = err.error.errors as string[];
@@ -139,7 +139,7 @@ export class FormTaskComponent implements OnInit {
       .subscribe(
         json => {
           this.router.navigate(['/tasks'])
-          swal.fire('Tasca actualitzada', `${json.message}: ${json.task.description}`, 'success')
+          Swal.fire('Tasca actualitzada', `${json.message}: ${json.task.description}`, 'success')
 
         },
         err => {
@@ -163,6 +163,9 @@ export class FormTaskComponent implements OnInit {
       if (information.information.id == id) {
         if (information.done) {
           information.doneAt = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss", 'ca');
+        }
+        else {
+            information.doneAt = null;
         }
       }
     }

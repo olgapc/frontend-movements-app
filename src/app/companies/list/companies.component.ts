@@ -5,7 +5,7 @@ import { ModalService } from '../view/modal.service';
 import Swal from 'sweetalert2';
 import { tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from 'src/app/users/auth.service';
+import { AuthService } from 'src/app/users/services/auth.service';
 
 
 @Component({
@@ -52,14 +52,15 @@ export class CompaniesComponent implements OnInit {
         );
     });
 
-    this.modalService.notifyUpload.subscribe(company => {
-      this.companies = this.companies.map(originalCompany => {
-        if (company.id == originalCompany.id) {
-          originalCompany.image = company.image;
-        }
-        return originalCompany;
+    this.modalService.notifyUpload.subscribe(
+      company => {
+        this.companies = this.companies.map(originalCompany => {
+            if (company.id == originalCompany.id) {
+              originalCompany.image = company.image;
+            }
+            return originalCompany;
+          })
       })
-    })
   }
 
 

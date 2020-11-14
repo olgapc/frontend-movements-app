@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './models/user';
-import swal from 'sweetalert2';
-import { AuthService } from './auth.service';
+import Swal from 'sweetalert2';
+import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.authService.isAuthenticated()){
-      swal.fire('Login', `Hola ${this.authService.user.username} ya estàs autentificat!`, 'info');
+      Swal.fire('Login', `Hola ${this.authService.user.username} ya estàs autentificat!`, 'info');
       this.router.navigate(['/companies']);
     }
   }
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   login(): void {
     console.log(this.user);
     if(this.user.username == null || this.user.password == null){
-      swal.fire('Error login', 'Username o password buides', 'error');
+      Swal.fire('Error login', 'Username o password buides', 'error');
       return;
     }
 
@@ -41,12 +41,12 @@ export class LoginComponent implements OnInit {
       let user = this.authService.user;
 
       this.router.navigate(['/companies']);
-      swal.fire('Login', `Hola ${user.username}, has iniciat sessió amb èxit`, 'success');
+      Swal.fire('Login', `Hola ${user.username}, has iniciat sessió amb èxit`, 'success');
 
     }, err => {
 
       if(err.status == 400){
-        swal.fire('Error login', 'Usuari i/o clau incorrectes!', 'error');
+        Swal.fire('Error login', 'Usuari i/o clau incorrectes!', 'error');
       }
     }
 

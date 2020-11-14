@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from 'src/app/users/auth.service';
+import { AuthService } from 'src/app/users/services/auth.service';
 import Swal from 'sweetalert2';
 import { CompanyType } from '../company-type';
 import { CompanyTypeService } from '../company-type.service';

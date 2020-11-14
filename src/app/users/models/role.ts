@@ -1,10 +1,10 @@
-import { User } from '../users/models/user';
+import { User } from './user';
+
 
 export class Role {
   id: number;
-  description: string;
   role: string;
-  users: User[] = [];
+  description: string;
   createAt: string;
   comment: string;
 }

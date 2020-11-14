@@ -46,13 +46,79 @@
         </div>
       </div>
 
+      <table class="table table-striped table-hover table-sm">
+        <thead>
+          <tr>
+            <th>Rol</th>
+            <th></th>
+            <th>Creació</th>
+            <th>Comentari</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let role of allRoles">
+            <td>{{role.description}}</td>
+            <td>
+              <mat-checkbox [checked]="hasRole(role)" (change)="roleChange(role.id, $event)" color='primary' name="roleChange{{role.id}}"></mat-checkbox>
+            </td>
+            <ng-container *ngFor="let userRole of user.userRoles">
+              <ng-container *ngIf="role.description == userRole.role.description">
+                <td>{{userRole.createAt | date: 'dd.MM.yyyy'}}</td>
+                <td>{{userRole.comment}}</td>
+              </ng-container>
+            </ng-container>
+
+          </tr>
+        </tbody>
+      </table>
+
+
+
+      <table class="table table-striped table-hover table-sm">
+        <thead>
+          <tr>
+            <th>Rol</th>
+            <th></th>
+            <th>Creació</th>
+            <th>Comentari</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let role of allRoles">
+            <td>{{role.description}}</td>
+            <!--ng-container *ngIf="hasRole(role)"-->
+            <ng-container *ngFor="let userRole of user.userRoles">
+              <td>{{userRole.description}}</td>
+              <ng-container *ngIf="userRole.role == role">
+                <td>
+                  <mat-checkbox [checked]=true (change)="roleChange(role.id, $event)" color='primary' name="roleChange{{role.id}}"></mat-checkbox>
+                </td>
+                <td>{{userRole.createAt | date: 'dd.MM.yyyy'}}</td>
+                <td>{{userRole.comment}}</td>
+              </ng-container>
+              <td *ngIf="userRole.role != role">
+                <mat-checkbox [checked]=false (change)="roleChange(role.id, $event)" color='primary' name="roleChange{{role.id}}"></mat-checkbox>
+              </td>
+            </ng-container>
+            <!--/ng-container>
+            <ng-container *ngIf="!hasRole(role)"-->
+
+
+            <!--/ng-container-->
+          </tr>
+        </tbody>
+      </table>
+
+
+
+      <!-- SURT LA LLISTA DE ROLS, PERÒ NOMÉS SELECCIONA USUARI -->
       <div class="form-group row">
         <label for="roles" class="col-form-label col-sm-2">Rols</label>
         <div class="col-sm-6">
           <mat-form-field appearance="fill">
             <mat-label>Rols</mat-label>
-            <mat-select multiple [(ngModel)]="user.roles" name="roles" [compareWith]="compareRoles">
-              <mat-option *ngFor="let role of roles" [value]="role">{{role.description}}</mat-option>
+            <mat-select multiple [(ngModel)]="user.userRoles" name="allRoles" [compareWith]="compareRoles">
+              <mat-option *ngFor="let role of allRoles" [value]="user.userRoles">{{role.description}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

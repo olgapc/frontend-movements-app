@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../auth.service';
-import swal from 'sweetalert2';
+import { AuthService } from '../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class RoleGuard implements CanActivate {
         return true;
       }
 
-      swal.fire('Accés denegat', `Hola ${this.authService.user.username} no tens accés a aquest recurs!`, 'warning');
+      Swal.fire('Accés denegat', `Hola ${this.authService.user.username} no tens accés a aquest recurs!`, 'warning');
       this.router.navigate(['/companies']);
       return false;
   }

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Company } from '../company';
 import { CompanyService } from '../company.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import swal from 'sweetalert2';
-import { AuthService } from 'src/app/users/auth.service';
+import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/users/services/auth.service';
 import { HttpEventType } from '@angular/common/http';
 import { CompanyType } from 'src/app/company-types/company-type';
 
@@ -50,7 +50,7 @@ export class FormCompanyComponent implements OnInit {
       //response => this.router.navigate(['/companies'])
       json => {
         this.router.navigate(['/companies'])
-        swal.fire('Nova Empresa', `${json.message}: ${json.company.name}`, 'success')
+        Swal.fire('Nova Empresa', `${json.message}: ${json.company.name}`, 'success')
       },
       err => {
         this.errors = err.error.errors as string[];
@@ -66,7 +66,7 @@ export class FormCompanyComponent implements OnInit {
     .subscribe(
       json => {
         this.router.navigate(['/companies'])
-        swal.fire('Empresa actualitzada', `${json.message}: ${json.company.name}`, 'success')
+        Swal.fire('Empresa actualitzada', `${json.message}: ${json.company.name}`, 'success')
       },
       err => {
         this.errors = err.error.errors as string[];
@@ -88,7 +88,7 @@ export class FormCompanyComponent implements OnInit {
     this.progress = 0;
     console.log(this.selectedImage);
     if(this.selectedImage.type.indexOf('image') < 0){
-      swal.fire('Error al seleccionar imatge', 'L\'arxiu ha de ser de tipus imatge', 'error');
+      Swal.fire('Error al seleccionar imatge', 'L\'arxiu ha de ser de tipus imatge', 'error');
       this.selectedImage = null;
     }
   }
@@ -96,7 +96,7 @@ export class FormCompanyComponent implements OnInit {
   uploadImage(){
 
     if(!this.selectedImage){
-      swal.fire('Error al pujar', 'Ha de seleccionar una imatge', 'error');
+      Swal.fire('Error al pujar', 'Ha de seleccionar una imatge', 'error');
     }
     else {
       this.companyService.uploadImage(this.selectedImage, this.company.id)
@@ -108,7 +108,7 @@ export class FormCompanyComponent implements OnInit {
           this.company = response.company as Company;
 
 
-          swal.fire('La imatge s\'ha pujat completament', response.message , 'success');
+          Swal.fire('La imatge s\'ha pujat completament', response.message , 'success');
         }
       });
     }

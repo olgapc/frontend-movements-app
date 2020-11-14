@@ -3,9 +3,9 @@ import { Company } from '../company';
 import { CompanyService } from '../company.service';
 import { ModalService } from './modal.service';
 import { ActivatedRoute } from '@angular/router';
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
-import { AuthService } from 'src/app/users/auth.service';
+import { AuthService } from 'src/app/users/services/auth.service';
 import { TaskService } from 'src/app/tasks/services/task.service';
 //import Swal from 'sweetalert2';
 import { Task } from 'src/app/tasks/models/task';
@@ -49,7 +49,7 @@ export class ViewCompanyComponent implements OnInit {
     this.progress = 0;
     console.log(this.selectedImage);
     if(this.selectedImage.type.indexOf('image') < 0){
-      swal.fire('Error al seleccionar imatge', 'L\'arxiu ha de ser de tipus imatge', 'error');
+      Swal.fire('Error al seleccionar imatge', 'L\'arxiu ha de ser de tipus imatge', 'error');
       this.selectedImage = null;
     }
   }
@@ -58,7 +58,7 @@ export class ViewCompanyComponent implements OnInit {
   uploadImage(){
 
     if(!this.selectedImage){
-      swal.fire('Error al pujar', 'Ha de seleccionar una imatge', 'error');
+      Swal.fire('Error al pujar', 'Ha de seleccionar una imatge', 'error');
     }
     else {
       this.companyService.uploadImage(this.selectedImage, this.company.id)
@@ -70,7 +70,7 @@ export class ViewCompanyComponent implements OnInit {
           this.company = response.company as Company;
 
           this.modalService.notifyUpload.emit(this.company);
-          swal.fire('La imatge s\'ha pujat completament', response.message , 'success');
+          Swal.fire('La imatge s\'ha pujat completament', response.message , 'success');
         }
       });
     }
@@ -84,7 +84,7 @@ export class ViewCompanyComponent implements OnInit {
 
 
   deleteTask(task: Task):void{
-    const swalWithBootstrapButtons = swal.mixin({
+    const SwalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-info',
         cancelButton: 'btn btn-danger'
@@ -92,7 +92,7 @@ export class ViewCompanyComponent implements OnInit {
       buttonsStyling: false
     })
 
-    swalWithBootstrapButtons.fire({
+    SwalWithBootstrapButtons.fire({
       title: 'Segur?',
       text: `Vols eliminar la tasca ${task.description}?`,
       icon: 'warning',
@@ -105,7 +105,7 @@ export class ViewCompanyComponent implements OnInit {
         this.taskService.delete(task.id).subscribe(
           () => {
             this.company.tasks = this.company.tasks.filter(t => t !== task)
-            swalWithBootstrapButtons.fire(
+            SwalWithBootstrapButtons.fire(
               'Tasca eliminada!',
               `Tasca ${task.description} eliminada amb èxit.`,
               'success'
@@ -116,7 +116,7 @@ export class ViewCompanyComponent implements OnInit {
   }
 
   deleteEmployee(employee: Employee):void{
-    const swalWithBootstrapButtons = swal.mixin({
+    const SwalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-info',
         cancelButton: 'btn btn-danger'
@@ -124,7 +124,7 @@ export class ViewCompanyComponent implements OnInit {
       buttonsStyling: false
     })
 
-    swalWithBootstrapButtons.fire({
+    SwalWithBootstrapButtons.fire({
       title: 'Segur?',
       text: `Vols eliminar el treballador ${employee.name}?`,
       icon: 'warning',
@@ -137,7 +137,7 @@ export class ViewCompanyComponent implements OnInit {
         this.taskService.delete(employee.id).subscribe(
           () => {
             this.company.employees = this.company.employees.filter(t => t !== employee)
-            swalWithBootstrapButtons.fire(
+            SwalWithBootstrapButtons.fire(
               'Treballador eliminat!',
               `Treballador ${employee.name} eliminat amb èxit.`,
               'success'

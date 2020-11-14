@@ -14,7 +14,7 @@
       <li class="list-group-item">{{user.email}}</li>
       <li class="list-group-item">
         <h5 class="card-title">ROL/S:</h5>
-        <p class="card-text" *ngFor="let role of user.roles">{{role.description}}</p>
+        <p class="card-text" *ngFor="let role of user.userRoles">{{role.role.description}}</p>
       </li>
 
       <li class="list-group-item">

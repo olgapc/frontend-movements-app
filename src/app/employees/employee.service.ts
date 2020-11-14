@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { map, catchError } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -94,7 +94,7 @@ export class EmployeeService {
 
         if (e.error.message) {
           console.error(e.error.message);
-          swal.fire('Error al eliminar', e.error.message, 'error');
+          Swal.fire('Error al eliminar', e.error.message, 'error');
         }
 
         return throwError(e);

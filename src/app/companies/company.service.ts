@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
-import { formatDate } from '@angular/common';
-//import { COMPANIES } from './companies.json';
 import { Company } from './company';
-import { of, Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
-
 import { Router } from '@angular/router';
 import { CompanyType } from '../company-types/company-type';
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import { CompanyTypeService } from '../company-types/company-type.service';
 
 
@@ -60,11 +57,8 @@ export class CompanyService {
 
         (response.content as Company[]).map(company => {
           company.name = company.name.toUpperCase();
-          //company.createAt = formatDate(company.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
           company.tasks.forEach(task => {
             task.description = task.description.toUpperCase();
-            //task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
-            //task.deadline = formatDate(task.deadline, 'EEE dd-MM-yyyy', 'ca');
           })
           return company;
         });
@@ -146,7 +140,7 @@ export class CompanyService {
 
         if (e.error.message) {
           console.error(e.error.message);
-          swal.fire('Error al eliminar', e.error.message, 'error');
+          Swal.fire('Error al eliminar', e.error.message, 'error');
         }
 
         return throwError(e);

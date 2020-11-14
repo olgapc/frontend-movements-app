@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../users/auth.service';
+import { AuthService } from '../users/services/auth.service';
 import { Router } from '@angular/router';
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +19,7 @@ export class HeaderComponent {
 
     let username = this.authService.user.username;
     this.authService.logout();
-    swal.fire('Logout', `Adéu ${username}, has tancat sessió amb èxit!`, 'success');
+    Swal.fire('Logout', `Adéu ${username}, has tancat sessió amb èxit!`, 'success');
     this.router.navigate(['/login']);
   }
 }

@@ -1,13 +1,12 @@
-import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Role } from '../roles/role';
-import { RoleService } from '../roles/role.service';
-import { User } from './models/user';
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
+import { Role } from '../models/role';
+import { User } from '../models/user';
+import { RoleService } from './role.service';
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +61,6 @@ export class UserService {
             this.router.navigate(['/users']);
             console.error(e.error.message);
           }
-
           return throwError(e);
         })
       )
@@ -90,7 +88,7 @@ export class UserService {
 
           if (e.error.message) {
             console.error(e.error.message);
-            swal.fire('Error al eliminar', e.error.message, 'error');
+            Swal.fire('Error al eliminar', e.error.message, 'error');
           }
 
           return throwError(e);

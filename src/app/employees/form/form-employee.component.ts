@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyService } from 'src/app/companies/company.service';
 import { Gender } from 'src/app/enums/gender.enum';
 import { NifType } from 'src/app/enums/nif-types.enum';
-import { AuthService } from 'src/app/users/auth.service';
+import { AuthService } from 'src/app/users/services/auth.service';
 import Swal from 'sweetalert2';
 import { Employee } from '../employee';
 import { EmployeeService } from '../employee.service';
