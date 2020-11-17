@@ -21,6 +21,7 @@ export class FormCompanyComponent implements OnInit {
   public selectedImage: File;
   public progress: number = 0;
 
+
   constructor(private companyService: CompanyService,
     private router: Router,
     private activatedRoute : ActivatedRoute,

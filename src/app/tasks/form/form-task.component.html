@@ -92,7 +92,7 @@
       </div>
 
       <br>
-      
+
       <div class="form-group-row">
         <div class="class col-sm-6">
           <mat-checkbox for="isDone" (change)="taskDone($event)" color='primary' name="isDone" [(ngModel)]="task.isDone" class="example-margin">Feta</mat-checkbox>
@@ -102,7 +102,7 @@
       <div class="class form-group-row">
         <div class="class col-sm-6">
           <mat-form-field>
-            <input type="text" placeholder="Afegir informació" aria-label="Informations" matInput [formControl]="autocompleteControl" [matAutocomplete]="auto">
+            <input matInput type="text" placeholder="Afegir informació" aria-label="Informations"  [formControl]="autocompleteControl" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="showDescription" (optionSelected)="selectInformation($event)">
               <mat-option *ngFor="let information of filteredInformations | async" [value]="information">
                 {{information.description}}
