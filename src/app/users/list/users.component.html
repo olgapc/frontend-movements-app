@@ -33,7 +33,7 @@
           <td>{{ user.name }}</td>
           <td>{{ user.lastName }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.enabled }}</td>
+          <td>{{ user.isEnabled }}</td>
           <td>{{ user.createAt | date: 'EEE dd.MM.yyyy HH:mm' }}</td>
           <td>
               <li *ngFor="let role of user.userRoles">{{ role.role.description }}</li>

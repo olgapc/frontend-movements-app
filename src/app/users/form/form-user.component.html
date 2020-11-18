@@ -31,7 +31,6 @@
         </div>
       </div>
 
-
       <div class="form-group row">
         <label for="email" class="col-form-label col-sm-2">Mail</label>
         <div class="col-sm-6">
@@ -40,11 +39,29 @@
       </div>
 
       <div class="form-group row">
+        <label for="comment" class="col-form-label col-sm-2">Comentari</label>
+        <div class="col-sm-6">
+          <textarea class="form-control" [(ngModel)]="user.comment" name="comment"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <div class="class col-sm-6">
+          <mat-checkbox or="isEnabled" name="isEnabled" [(ngModel)]="user.isEnabled" class="example-margin">Actiu</mat-checkbox>
+        </div>
+      </div>
+
+      <br>
+      <div class="form-group row" *ngIf="!user.id">
         <label for="password" class="col-form-label col-sm-2">Password</label>
         <div class="col-sm-6">
           <input type="password" class="form-control" [(ngModel)]="user.password" name="password">
         </div>
       </div>
+
+
+
+
 
       <table class="table table-striped table-hover table-sm">
         <thead>
@@ -71,19 +88,7 @@
         </tbody>
       </table>
 
-      <div class="form-group row">
-        <label for="comment" class="col-form-label col-sm-2">Comentari</label>
-        <div class="col-sm-6">
-          <textarea class="form-control" [(ngModel)]="user.comment" name="comment"> </textarea>
-        </div>
-      </div>
 
-      <div class="form-group-row">
-        <div class="class col-sm-6">
-          <mat-checkbox for="enabled" name="enabled" [(ngModel)]="user.enabled" class="example-margin">Actiu</mat-checkbox>
-        </div>
-      </div>
-      <br>
 
       <div class="form-group row">
         <div class="col-sm-6">

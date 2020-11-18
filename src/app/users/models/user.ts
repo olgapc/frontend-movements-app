@@ -8,7 +8,7 @@ export class User {
   email: string;
   password: string;
   userRoles: Array<UserRole>=[];
-  enabled: boolean;
+  isEnabled: boolean;
   createAt: string;
   comment: string;
 }

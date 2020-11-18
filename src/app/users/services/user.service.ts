@@ -30,7 +30,6 @@ export class UserService {
             user.username = user.username.toUpperCase();
             user.name = user.name.toUpperCase();
             user.lastName = user.lastName.toUpperCase();
-            //user.createAt = formatDate(user.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
             return user;
           });
           return response;
