@@ -22,12 +22,12 @@
 
       <tbody>
         <tr *ngFor="let type of companyTypes">
-          <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/company_types/view', type.id]" class="btn btn-outline-info btn-xs">{{ type.description }}</button></td>
+          <td><button type="button" name="edit" [routerLink]="['/company_types/view', type.id]" class="btn btn-outline-info btn-xs">{{ type.description }}</button></td>
           <td>{{type.code}}</td>
           <td>{{ type.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</td>
           <td>
-            <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/company_types/form', type.id]" class="btn btn-outline-info btn-xs">Modificar</button>
-            <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="delete" (click)='delete(type)' class="btn btn-outline-danger btn-xs">Eliminar</button>
+            <button type="button" name="edit" [routerLink]="['/company_types/form', type.id]" class="btn btn-outline-info btn-xs">Modificar</button>
+            <button type="button" *ngIf="authService.hasRole('ROLE_ADMIN')" name="delete" (click)='delete(type)' class="btn btn-outline-danger btn-xs">Eliminar</button>
           </td>
         </tr>
       </tbody>

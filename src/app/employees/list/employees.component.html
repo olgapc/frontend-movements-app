@@ -23,13 +23,13 @@
     <tbody>
       <tr *ngFor="let employee of employees">
 
-        <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/employees/view', employee.id]" class="btn btn-outline-info btn-xs">{{ employee.name }}</button></td>
+        <td><button type="button" name="edit" [routerLink]="['/employees/view', employee.id]" class="btn btn-outline-info btn-xs">{{ employee.name }}</button></td>
         <td>{{ employee.nif }}</td>
         <td>{{ employee.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</td>
         <td>
-            <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/employees/form', employee.company.id, employee.id]" class="btn btn-outline-info btn-xs">Modificar</button>
-            <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="delete" (click)='delete(employee)' class="btn btn-outline-danger btn-xs">Eliminar</button>
-            <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/tasks/form/employee', employee.company.id, employee.id]" class="btn btn-outline-success btn-xs">Crear tasca</button>
+            <button type="button" name="edit" [routerLink]="['/employees/form', employee.company.id, employee.id]" class="btn btn-outline-info btn-xs">Modificar</button>
+            <button type="button" *ngIf="authService.hasRole('ROLE_ADMIN')" name="delete" (click)='delete(employee)' class="btn btn-outline-danger btn-xs">Eliminar</button>
+            <button type="button" name="edit" [routerLink]="['/tasks/form/employee', employee.company.id, employee.id]" class="btn btn-outline-success btn-xs">Crear tasca</button>
         </td>
       </tr>
     </tbody>

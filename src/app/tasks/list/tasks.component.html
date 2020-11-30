@@ -3,7 +3,7 @@
   <div class="card-body text-info">
 
     <div class="my-2 text-left">
-      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-outline-info btn-xs mr-2" type="button" [routerLink]="['/tasks/form/task']">Crear tasca</button>
+      <button class="btn btn-outline-info btn-xs mr-2" type="button" [routerLink]="['/tasks/form/task']">Crear tasca</button>
     </div>
 
     <div *ngIf="tasks?.length == 0" class="alert alert-info">
@@ -24,12 +24,12 @@
 
       <tbody>
         <tr *ngFor="let task of tasks">
-          <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/tasks', task.id]" class="btn btn-outline-info btn-xs">{{ task.description }}</button></td>
+          <td><button type="button" name="edit" [routerLink]="['/tasks', task.id]" class="btn btn-outline-info btn-xs">{{ task.description }}</button></td>
           <td>{{ task.deadline | date: 'dd.MM.yyyy'}}</td>
           <td>{{ task.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</td>
           <td>
-              <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/tasks/form/task', task.id]" class="btn btn-outline-info btn-xs">Modificar</button>
-              <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="delete" (click)='delete(task)' class="btn btn-outline-danger btn-xs">Eliminar</button>
+              <button type="button" name="edit" [routerLink]="['/tasks/form/task', task.id]" class="btn btn-outline-info btn-xs">Modificar</button>
+              <button type="button" name="delete" (click)='delete(task)' class="btn btn-outline-danger btn-xs">Eliminar</button>
           </td>
         </tr>
       </tbody>

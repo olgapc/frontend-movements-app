@@ -21,11 +21,11 @@
 
       <tbody>
         <tr *ngFor="let information of informations">
-          <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/informations/view', information.id]" class="btn btn-outline-info btn-xs">{{ information.description }}</button></td>
+          <td><button type="button" name="edit" [routerLink]="['/informations/view', information.id]" class="btn btn-outline-info btn-xs">{{ information.description }}</button></td>
           <td>{{ information.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</td>
           <td>
-              <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/informations/form', information.id]" class="btn btn-outline-info btn-xs">Modificar</button>
-              <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="delete" (click)='delete(information)' class="btn btn-outline-danger btn-xs">Eliminar</button>
+              <button type="button" name="edit" [routerLink]="['/informations/form', information.id]" class="btn btn-outline-info btn-xs">Modificar</button>
+              <button type="button" *ngIf="authService.hasRole('ROLE_ADMIN')" name="delete" (click)='delete(information)' class="btn btn-outline-danger btn-xs">Eliminar</button>
           </td>
         </tr>
       </tbody>

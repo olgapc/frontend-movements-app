@@ -70,7 +70,7 @@
                       <th>Data</th>
                       <th>Data Creació</th>
                       <th>Detall</th>
-                      <th>Eliminar</th>
+                      <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
                     </tr>
 
                   </thead>
@@ -81,7 +81,7 @@
                       <td>{{task.deadline | date: 'dd.MM.yyyy'}}</td>
                       <td>{{task.createAt | date: 'dd.MM.yyyy'}}</td>
                       <td><button class="btn btn-primary btn-sm" type="button" [routerLink]="['/tasks', task.id]">Veure</button></td>
-                      <td><button class="btn btn-danger btn-sm" type="button" (click)="deleteTask(task)">Eliminar</button></td>
+                      <td><button class="btn btn-danger btn-sm" *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" (click)="deleteTask(task)">Eliminar</button></td>
                     </tr>
                   </tbody>
                 </table>
@@ -112,7 +112,7 @@
                       <th>Comentari</th>
                       <th>Data Creació</th>
                       <th>Detall</th>
-                      <th>Eliminar</th>
+                      <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
                     </tr>
 
                   </thead>
@@ -131,7 +131,7 @@
                       <td>{{employee.comment}}</td>
                       <td>{{employee.createAt | date: 'dd.MM.yyyy'}}</td>
                       <td><button class="btn btn-primary btn-sm" type="button" [routerLink]="['/employees', employee.id]">Veure</button></td>
-                      <td><button class="btn btn-danger btn-sm" type="button" (click)="deleteEmployee(employee)">Eliminar</button></td>
+                      <td><button class="btn btn-danger btn-sm" *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" (click)="deleteEmployee(employee)">Eliminar</button></td>
                     </tr>
                   </tbody>
                 </table>
