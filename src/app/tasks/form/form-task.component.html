@@ -12,7 +12,7 @@
       <a [routerLink]="['/tasks']" class="btn btn-light">&laquo; Tornar</a>
     </h4>
 
-    <form>
+    <form #taskForm="ngForm">
 
       <div class="form-group-row" *ngIf="task.company">
         <label for="company" class="col-sm-2 col-form-label">Empresa</label>
@@ -29,9 +29,34 @@
       </div>
 
       <div class="form-group-row">
-        <label for="description" class="col-sm-2 col-form-label">Descripció</label>
+        <label for="description" class="col-sm-6 col-form-label">Descripció</label>
         <div class="class col-sm-6">
-          <input type="text" name="description" [(ngModel)]="task.description" class="form-control">
+          <input type="text" name="description" [(ngModel)]="task.description" class="form-control" required minlength="3" maxlength="80" #description="ngModel">
+          <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
+            <div *ngIf="description.errors.required">
+              Camp obligatori.
+            </div>
+            <div *ngIf="description.errors.minlength">
+              Ha de tenir mínim 3 caràcters.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <label for="deadline" class="col-sm-6 col-form-label">Data de venciment</label>
+        <div class="class col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Tria una data</mat-label>
+            <input matInput [matDatepicker]="picker" name="deadline" class="form-control" [(ngModel)]="task.deadline" required #deadline="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <div class="alert alert-danger" *ngIf="deadline.invalid && (deadline.dirty || deadline.touched)">
+              <div *ngIf="deadline.errors.required">
+                Camp obligatori.
+              </div>
+            </div>
+          </mat-form-field>
         </div>
       </div>
 
@@ -39,6 +64,7 @@
         <div class="class col-sm-6">
           <mat-checkbox for="isToSend" name="isToSend" [(ngModel)]="task.isToSend" class="example-margin">Per enviar</mat-checkbox>
         </div>
+
       </div>
 
       <div class="form-group-row">
@@ -50,7 +76,7 @@
       <div class="form-group-row" *ngIf="task.isTemplate">
         <label for="templateName" *ngIf="task.isTemplate" class="col-sm-6 col-form-label">Nom Plantilla</label>
         <div class="class col-sm-6" *ngIf="task.isTemplate">
-          <input type="text" name="templateName" [(ngModel)]="task.templateName" class="form-control">
+          <input type="text" name="templateName" [(ngModel)]="task.templateName" class="form-control" maxlength="25" #templateName="ngModel">
         </div>
       </div>
 
@@ -69,18 +95,6 @@
             <option *ngFor="let type of eTimeTypes | keyvalue" [ngValue]="type.key">{{type.value}}</option>
 
           </select>
-        </div>
-      </div>
-
-      <div class="form-group-row">
-        <label for="deadline" class="col-sm-6 col-form-label">Data de venciment</label>
-        <div class="class col-sm-6">
-          <mat-form-field appearance="fill">
-            <mat-label>Tria una data</mat-label>
-            <input matInput [matDatepicker]="picker" name="deadline" class="form-control" [(ngModel)]="task.deadline">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
         </div>
       </div>
 
@@ -143,18 +157,13 @@
         </tbody>
       </table>
 
-
-
-
-
       <div class="form-group-row">
         <div class="class col-sm-6">
-          <input type="submit" (click)="create()" value="Crear Tasca" class="btn btn-secondary">
+          <input type="submit" (click)="create()" value="Crear Tasca" class="btn btn-secondary" [disabled]="!taskForm.form.valid">
         </div>
       </div>
 
     </form>
-
 
   </div>
 </div>

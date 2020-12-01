@@ -36,6 +36,8 @@ export class FormUserComponent implements OnInit {
       let id = +params['id']
       if (id) {
         this.userService.getUser(id).subscribe(user => this.user = user);
+      } else {
+        this.user.isEnabled = true;
       }
     })
 
@@ -53,6 +55,7 @@ export class FormUserComponent implements OnInit {
         },
         err => {
           this.errors = err.error.errors as string[];
+          Swal.fire('Error', `${err.error.errors}`, 'error');
           console.error('Codi de l\'error des del backend: ' + err.status);
           console.error(err.error.errors);
         }
@@ -69,6 +72,7 @@ export class FormUserComponent implements OnInit {
         },
         err => {
           this.errors = err.error.errors as string[];
+          Swal.fire('Error', `${err.error.errors}`, 'error');
           console.error('Codi de l\'error des del backend: ' + err.status);
           console.error(err.error.errors);
         }

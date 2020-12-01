@@ -13,19 +13,35 @@
       <a [routerLink]="['/company_types']" class="btn btn-light">&laquo; Tornar</a>
     </h4>
 
-    <form>
+    <form #companyTypeForm="ngForm">
 
       <div class="form-group-row">
         <label for="description" class="col-sm-2 col-form-label">Descripció</label>
         <div class="class col-sm-6">
-          <input type="text" name="description" [(ngModel)]="companyType.description" class="form-control">
+          <input type="text" name="description" [(ngModel)]="companyType.description" class="form-control" required minlength="5" maxlength="50" #description="ngModel">
+          <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
+            <div *ngIf="description.errors.required">
+              Camp obligatori.
+            </div>
+            <div *ngIf="description.errors.minlength">
+              Ha de tenir mínim 5 caràcters.
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="form-group-row">
         <label for="code" class="col-sm-2 col-form-label">Codi</label>
         <div class="class col-sm-6">
-          <input type="text" name="code" [(ngModel)]="companyType.code" class="form-control">
+          <input type="text" name="code" [(ngModel)]="companyType.code" class="form-control" required minlength="2" maxlength="6" #code="ngModel">
+          <div class="alert alert-danger" *ngIf="code.invalid && (code.dirty || code.touched)">
+            <div *ngIf="code.errors.required">
+              Camp obligatori.
+            </div>
+            <div *ngIf="code.errors.minlength">
+              Ha de tenir mínim 2 caràcters.
+            </div>
+          </div>
         </div>
       </div>
 
@@ -40,9 +56,9 @@
 
       <div class="form-group-row">
         <div class="col-sm-6">
-          <button class="btn btn-outline-info" role="button" (click)='create()' *ngIf="!companyType.id else elseBlock">Crear</button>
+          <button class="btn btn-outline-info" role="button" (click)='create()' *ngIf="!companyType.id else elseBlock" [disabled]="!companyTypeForm.form.valid">Crear</button>
           <ng-template #elseBlock>
-            <button class="btn btn-outline-info" role="button" (click)='update()'>Editar</button>
+            <button class="btn btn-outline-info" role="button" (click)='update()' [disabled]="!companyTypeForm.form.valid">Editar</button>
           </ng-template>
         </div>
       </div>

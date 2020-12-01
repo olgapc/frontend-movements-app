@@ -21,16 +21,6 @@ export class CompanyService {
       private router: Router,
       private companyTypeService: CompanyTypeService) { }
 
-  //private addAuthorizationHeader(){
-  //let token = this.authService.token;
-  //if(token != null) {
-  //return this.httpHeaders.append('Authorization', 'Bearer ' + token);
-  //}
-  //return this.httpHeaders;
-  //}
-
-
-
 
   getCompanyTypes(): Observable<CompanyType[]> {
     return this.companyTypeService.getCompanyTypesList();
@@ -64,19 +54,6 @@ export class CompanyService {
         });
         return response;
       }),
-      //map (response => {
-      //let companies = response as Company [];
-      //return companies.map(company.tasks => {
-      //    let tasks = response as Task[];
-      //    return tasks.map(task => {
-      //        task.description = task.description.toUpperCase();
-      //        task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy', 'ca');
-      //        return task;
-      //    });
-      //    return company;
-
-      //});
-      //}),
 
       tap(response => {
         console.log('CompanyService: tap 2');

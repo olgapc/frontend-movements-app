@@ -39,16 +39,19 @@ export class FormEmployeeComponent implements OnInit {
     this.loadEmployee();
   }
 
-  public loadEmployee(): void{
-      this.activatedRoute.params.subscribe(params => {
-          let companyId = +params['companyId']
-          let employeeId = +params['employeeId']
-          if(employeeId){
-              this.employeeService.getEmployee(employeeId).subscribe((employee) => this.employee  = employee);
-          } else if (companyId){
-              this.companyService.getCompany(companyId).subscribe(company => this.employee.company = company);
-          }
-      });
+  public loadEmployee(): void {
+    this.activatedRoute.params.subscribe(params => {
+      let companyId = +params['companyId']
+      let employeeId = +params['employeeId']
+      if (employeeId) {
+        this.employeeService.getEmployee(employeeId).subscribe((employee) => this.employee = employee);
+      } else if (companyId) {
+        this.companyService.getCompany(companyId).subscribe(company => this.employee.company = company);
+        this.employee.isEnabled = true;
+        //this.employee.gender = "MALE";
+
+      }
+    });
 
   }
 
@@ -62,6 +65,7 @@ export class FormEmployeeComponent implements OnInit {
         },
         err => {
           this.errors = err.error.errors as string[];
+          Swal.fire('Error', `${err.error.errors}`, 'error');
           console.error('Codi de l\'error des del backend: ' + err.status);
           console.error(err.error.errors);
         }
@@ -79,6 +83,7 @@ export class FormEmployeeComponent implements OnInit {
         },
         err => {
           this.errors = err.error.errors as string[];
+          Swal.fire('Error', `${err.error.errors}`, 'error');
           console.error('Codi de l\'error des del backend: ' + err.status);
           console.error(err.error.errors);
         }

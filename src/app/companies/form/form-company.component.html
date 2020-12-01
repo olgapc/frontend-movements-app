@@ -18,13 +18,13 @@
       <div class="form-group row">
         <label for="name" class="col-form-label col-sm-2">Nom</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="company.name" name="name" #name="ngModel"> <!-- required minlength="4" -->
+          <input type="text" class="form-control" [(ngModel)]="company.name" name="name" required minlength="2" maxlength="50" #name="ngModel">
           <div class="alert alert-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
             <div *ngIf="name.errors.required">
-              Nom és obligatori
+              Camp obligatori.
             </div>
             <div *ngIf="name.errors.minlength">
-              Nom ha de tenir mínim 4 caràcters
+              Ha de tenir mínim 2 caràcters.
             </div>
 
           </div>
@@ -34,16 +34,13 @@
       <div class="form-group row">
         <label for="email" class="col-form-label col-sm-2">Mail</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="company.email" name="email" #email="ngModel" required email minlength="6"> <!-- required email -->
+          <input type="text" class="form-control" [(ngModel)]="company.email" name="email" #email="ngModel" required email>
           <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
             <div *ngIf="email.errors.required">
-              Mail és obligatori.
-            </div>
-            <div *ngIf="email.errors.minlength">
-              Mail ha de tenir almenys 6 caracters.
+              Camp obligatori.
             </div>
             <div *ngIf="email.errors.email">
-              Mail ha de tenir un format vàlid.
+              Ha de tenir un format de mail vàlid.
             </div>
           </div>
         </div>
@@ -52,7 +49,12 @@
       <div class="form-group row">
         <label for="phone" class="col-form-label col-sm-2">Telèfon</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="company.phone" name="phone">
+          <input type="text" class="form-control" [(ngModel)]="company.phone" name="phone" required #phone="ngModel">
+          <div class="alert alert-danger" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+            <div *ngIf="phone.errors.required">
+              Camp obligatori.
+            </div>
+          </div>
         </div>
       </div>
 
@@ -62,7 +64,6 @@
           <select [compareWith]="compareCompanyType" class="form-control" [(ngModel)]="company.companyType" name="companyType">
             <option [ngValue]="undefined">----Seleccionar tipus d'empresa----</option>
             <option *ngFor="let companyType of companyTypes" [ngValue]="companyType">{{companyType.description}}</option>
-
           </select>
         </div>
       </div>

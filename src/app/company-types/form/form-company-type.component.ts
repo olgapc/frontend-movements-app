@@ -39,6 +39,7 @@ export class FormCompanyTypeComponent implements OnInit {
         },
         err => {
           this.errors = err.error.errors as string[];
+          Swal.fire('Error', `${err.error.errors}`, 'error');
           console.error('Codi de l\'error des del backend: ' + err.status);
           console.error(err.error.errors);
         }
@@ -55,6 +56,7 @@ export class FormCompanyTypeComponent implements OnInit {
         },
         err => {
           this.errors = err.error.errors as string[];
+          Swal.fire('Error', `${err.error.errors}`, 'error');
           console.error('Codi de l\'error del backend: ' + err.status);
           console.error(err.error.errors);
         }

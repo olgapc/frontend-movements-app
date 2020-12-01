@@ -13,12 +13,21 @@
       <a [routerLink]="['/informations']" class="btn btn-light">&laquo; Tornar</a>
     </h4>
 
-    <form>
+    <form #informationForm="ngForm">
 
       <div class="form-group-row">
         <label for="description" class="col-sm-2 col-form-label">Descripció</label>
         <div class="class col-sm-6">
-          <input type="text" name="description" [(ngModel)]="information.description" class="form-control">
+          <input type="text" name="description" [(ngModel)]="information.description" class="form-control" required minlength="2" maxlength="25" #description="ngModel">
+          <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
+            <div *ngIf="description.errors.required">
+              Camp obligatori.
+            </div>
+            <div *ngIf="description.errors.minlength">
+              Ha de tenir mínim 2 caràcters.
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -33,9 +42,9 @@
 
       <div class="form-group-row">
         <div class="col-sm-6">
-          <button class="btn btn-outline-info" role="button" (click)='create()' *ngIf="!information.id else elseBlock">Crear</button>
+          <button class="btn btn-outline-info" role="button" (click)='create()' *ngIf="!information.id else elseBlock" [disabled]="!informationForm.form.valid">Crear</button>
           <ng-template #elseBlock>
-            <button class="btn btn-outline-info" role="button" (click)='update()'>Editar</button>
+            <button class="btn btn-outline-info" role="button" (click)='update()' [disabled]="!informationForm.form.valid">Editar</button>
           </ng-template>
         </div>
       </div>
