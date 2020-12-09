@@ -1,3 +1,4 @@
+import { MatTableDataSource } from '@angular/material/table';
 import { TimeTypes } from 'src/app/enums/time-types.enum';
 import { Company } from '../../companies/company';
 import { Employee } from '../../employees/employee';
@@ -16,11 +17,11 @@ export class Task {
   createAt: string;
   company: Company;
   employee: Employee;
-  taskInformations: Array<TaskInformation>=[];
+  taskInformations?: TaskInformation[];
   isDone: boolean;
   doneAt: string;
   mainTask: Task;
-  subtasks: Task[]=[];
+  subtasks?: Task[] | MatTableDataSource<Task>;
   isMainTask: boolean;
   comment: string;
 }

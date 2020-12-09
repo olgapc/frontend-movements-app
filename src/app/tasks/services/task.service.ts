@@ -17,22 +17,22 @@ export class TaskService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  getTasks(page:number): Observable<any>{
-    //return this.http.get<Task[]>(this.urlEndPoint);
+  getTasks(): Observable<Task[]>{
+    return this.http.get<Task[]>(this.urlEndPoint);
 
-    return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
+    //return this.http.get(this.urlEndPoint).pipe(
 
-      map ((response:any) => {
+      //map ((response:any) => {
 
-        (response.content as Task []).map(task => {
-          task.description = task.description.toUpperCase();
+        //(response.content as Task []).map(task => {
+          //task.description = task.description.toUpperCase();
           //task.createAt = formatDate(task.createAt, 'EEE dd-MM-yyyy hh:mm', 'ca');
           //task.deadline = formatDate(task.deadline, 'EEE dd-MM-yyyy', 'ca');
-          return task;
-        });
-        return response;
-      }),
-    );
+          //return task;
+        //});
+        //return response;
+      //}),
+    //);
   }
 
   getTask(id:number):Observable<Task>{
@@ -54,11 +54,11 @@ export class TaskService {
                     taskInformation.information.description = taskInformation.information.description.toUpperCase();
                     //taskInformation.createAt = formatDate(taskInformation.createAt, 'EEE dd-MM-yyyy', 'ca');
                 })
-                task.subtasks.forEach(subtask => {
-                    subtask.description = subtask.description.toUpperCase();
+                //task.subtasks.forEach(subtask => {
+                //    subtask.description = subtask.description.toUpperCase();
                     //subtask.createAt = formatDate(subtask.createAt, 'EEE dd-MM-yyyy', 'ca');
                     //subtask.deadline = formatDate(subtask.deadline, 'EEE dd-MM-yyyy', 'ca');
-                })
+                //})
                 console.log(task);
                 return task;
 
@@ -134,5 +134,6 @@ export class TaskService {
       })
     )
   }
+
 
 }

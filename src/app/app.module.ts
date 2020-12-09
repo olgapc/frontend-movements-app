@@ -43,7 +43,10 @@ import { ViewUserComponent } from './users/view/view-user.component';
 import { FormUserComponent } from './users/form/form-user.component';
 import { ViewCompanyTypeComponent } from './company-types/view/view-company-type.component';
 import { FormCompanyTypeComponent } from './company-types/form/form-company-type.component';
-
+import { TemplatesComponent } from './tasks/list-templates/templates.component';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 
 registerLocaleData(localeCa, 'ca');
@@ -66,6 +69,8 @@ const routes: Routes = [
   { path: 'tasks/form/task/:idTask', component: FormTaskComponent },
   { path: 'tasks/form/company/:idCompany', component: FormTaskComponent },
   { path: 'tasks/form/employee/:idCompany/:idEmployee', component: FormTaskComponent },
+  { path: 'templates', component: TemplatesComponent },
+  { path: 'templates/page/:page', component: TemplatesComponent },
   { path: 'informations', component: InformationsComponent },
   { path: 'informations/page/:page', component: InformationsComponent },
   { path: 'informations/view/:id', component: ViewInformationComponent },
@@ -83,9 +88,10 @@ const routes: Routes = [
   { path: 'users/form/:id', component: FormUserComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
   { path: 'company_types', component: CompanyTypesComponent },
   { path: 'company_types/page/:page', component: CompanyTypesComponent },
-  { path: 'company_types/form', component: FormCompanyTypeComponent},
-  { path: 'company_types/form/:id', component: FormCompanyTypeComponent},
-  { path: 'company_types/view/:id', component: ViewCompanyTypeComponent}
+  { path: 'company_types/form', component: FormCompanyTypeComponent },
+  { path: 'company_types/form/:id', component: FormCompanyTypeComponent },
+  { path: 'company_types/view/:id', component: ViewCompanyTypeComponent },
+
 ];
 
 @NgModule({
@@ -113,7 +119,9 @@ const routes: Routes = [
     ViewUserComponent,
     FormUserComponent,
     ViewCompanyTypeComponent,
-    FormCompanyTypeComponent
+    FormCompanyTypeComponent,
+    TemplatesComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -129,7 +137,10 @@ const routes: Routes = [
     MatMomentDateModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTableModule
 
   ],
   providers:
