@@ -1,0 +1,68 @@
+<div class="container-fluid my-5">
+  <h1 class="text-warning">Llistat de tasques</h1>
+  <div class="card-body text-info">
+
+    <!--div class="my-2 text-left">
+      <button class="btn btn-outline-info btn-xs mr-2" type="button" [routerLink]="['/tasks/form/task']">Crear tasca</button>
+    </div>
+
+    <div *ngIf="tasks?.length == 0" class="alert alert-info">
+      No hi ha registres a la base de dades
+    </div>
+
+    <!--div class="mat-elevation-z8">
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      </mat-form-field>
+      <table class="table table-responsive table-hover" *ngIf="tasks?.length>0">
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripció </th>
+          <td mat-cell *matCellDef="let task"> {{task.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="createAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Data creació </th>
+          <td mat-cell *matCellDef="let task"> {{ task.createAt | date: 'EEE dd.MM.yyyy HH:mm' }} </td>
+        </ng-container>
+        <ng-container matColumnDef="deadline">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Data venciment </th>
+          <td mat-cell *matCellDef="let task"> {{ task.deadline | date: 'dd.MM.yyyy'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="options">
+          <th mat-header-cell *matHeaderCellDef> Opcions </th>
+          <td mat-cell *matCellDef="let element"> <button type="button" name="edit" [routerLink]="['/tasks/form/task', element.id]" class="btn btn-outline-info btn-xs">Modificar</button> </td>
+        </ng-container>
+
+
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+    <!--table class="table table-responsive table-hover" *ngIf="tasks?.length>0">
+      <thead>
+        <tr>
+          <th></th>
+          <th>descripció</th>
+          <th>Data venciment</th>
+          <th>Data creació</th>
+          <th>opcions</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td><button type="button" name="viewChild" </td>
+          <td><button type="button" name="edit" [routerLink]="['/tasks', task.id]" class="btn btn-outline-info btn-xs">{{ task.description }}</button></td>
+          <td>{{ task.deadline | date: 'dd.MM.yyyy'}}</td>
+          <td>{{ task.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</td>
+          <td>
+            <button type="button" name="edit" [routerLink]="['/tasks/form/task', task.id]" class="btn btn-outline-info btn-xs">Modificar</button>
+            <button type="button" name="delete" (click)='delete(task)' class="btn btn-outline-danger btn-xs">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <paginator-nav *ngIf="paginator" [paginator]="paginator" [linkPaginator]="linkPaginator"></paginator-nav-->
+  </div>
+</div>

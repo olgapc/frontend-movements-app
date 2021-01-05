@@ -20,6 +20,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" routerLink="/tasks">Tasques</a>
           <a class="dropdown-item" routerLink="/templates">Plantilles</a>
+          <a class="dropdown-item" routerLink="/tasks/list/bydeadline">Tasques per Venciment</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Agenda</a>
         </div>
@@ -37,6 +38,16 @@
 
       <li class="nav-item" routerLinkActive="active" *ngIf="authService.hasRole('ROLE_ADMIN')">
         <a class="nav-link" routerLink="/users">Usuaris</a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Tests
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/tests/TableExpandableRowsExampleComponent">Taula expandable rows</a>
+
+        </div>
       </li>
     </ul>
     <ul class="navbar-nav navbar-right">

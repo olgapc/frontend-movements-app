@@ -1,0 +1,16 @@
+<table id="tasks" datatable class="table  table-sm row-border hover" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Descripció</th>
+      <th>Data venciment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of tasks | async">
+      <td>{{task.id}}</td>
+      <td>{{task.description}}</td>
+      <td>{{task.deadline}}</td>
+    </tr>
+  </tbody>
+</table>

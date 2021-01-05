@@ -1,3 +1,4 @@
+import { User } from 'src/app/users/models/user';
 import { Information } from './information';
 
 export class TaskInformation {
@@ -7,4 +8,6 @@ export class TaskInformation {
   createAt: string;
   done: boolean;
   doneAt: string;
+  doneBy: User;         
+  isSticked: boolean;
 }

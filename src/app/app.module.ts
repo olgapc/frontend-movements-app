@@ -47,7 +47,12 @@ import { TemplatesComponent } from './tasks/list-templates/templates.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-
+import { TasksdatatableComponent } from './tasks/list-data-table/tasksdatatable.component';
+import { DataTablesModule } from 'angular-datatables';
+//import { DataTablesResponse } from './tasks/models/data-tables-response';
+import { ZeroConfigurationComponent } from './zero-configuration/zero-configuration.component';
+import { TasksByDeadlineComponent } from './tasks/list/tasks-by-deadline.component';
+import { TableExpandableRowsExampleComponent } from './tests/table-expandable-rows-example/table-expandable-rows-example.component';
 
 registerLocaleData(localeCa, 'ca');
 
@@ -62,6 +67,8 @@ const routes: Routes = [
   { path: 'tasks/:id', component: ViewTaskComponent },
   { path: 'tasks', component: TasksComponent },
   { path: 'tasks/page/:page', component: TasksComponent },
+  { path: 'tasks/list/bydeadline', component: TasksByDeadlineComponent},
+  { path: 'tasks/datatable/page/:page' ,component: TasksdatatableComponent },
   //{path: 'tasks/form/:companyId', component: FormTaskComponent},
   //{path: 'tasks/form/:companyId/:employeeId', component: FormTaskComponent},
   //{path: 'tasks/form/task/:taskId', component: FormTaskComponent},
@@ -91,6 +98,8 @@ const routes: Routes = [
   { path: 'company_types/form', component: FormCompanyTypeComponent },
   { path: 'company_types/form/:id', component: FormCompanyTypeComponent },
   { path: 'company_types/view/:id', component: ViewCompanyTypeComponent },
+  { path: 'zero_config', component: ZeroConfigurationComponent},
+  { path: 'tests/TableExpandableRowsExampleComponent', component: TableExpandableRowsExampleComponent}
 
 ];
 
@@ -104,6 +113,7 @@ const routes: Routes = [
     EmployeesComponent,
     RolesComponent,
     TasksComponent,
+    TasksdatatableComponent,
     CompanyTypesComponent,
     ViewCompanyComponent,
     LoginComponent,
@@ -121,6 +131,9 @@ const routes: Routes = [
     ViewCompanyTypeComponent,
     FormCompanyTypeComponent,
     TemplatesComponent,
+    ZeroConfigurationComponent,
+    TasksByDeadlineComponent,
+    TableExpandableRowsExampleComponent,
 
   ],
   imports: [
@@ -140,7 +153,9 @@ const routes: Routes = [
     MatRadioModule,
     MatSortModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    DataTablesModule,
+    //DataTablesResponse
 
   ],
   providers:

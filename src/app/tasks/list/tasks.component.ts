@@ -12,12 +12,14 @@ import { TaskInformation } from '../models/task-information';
 
 @Component({
   selector: 'app-tasks',
+  styleUrls: ['tasks.component.css'],
   templateUrl: './tasks.component.html',
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('collapsed, void', style({ height: '0px', minHeight: '0', display: 'none' })),
       state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
     ]),
   ],
 })
@@ -38,12 +40,13 @@ export class TasksComponent implements OnInit {
   //paginator: any;
   linkPaginator: string = '/tasks';
 
-  displayedColumns = ['description', 'deadline', 'createAt', 'options'];
+  displayedColumns = ['details', 'description', 'deadline', 'createAt', 'options'];
   innerDisplayedColumns = ['description', 'deadline', 'createAt', 'options'];
   innerInformationsDisplayedColumns = ['done', 'comment', 'information.description']
   dataSource: MatTableDataSource<Task>;
-  expandedElement: Task | null;
-
+  expandedElementSubtask: Task | null;
+  expandedElementInformation: Task | null;
+  taskInformations: TaskInformation[];
 
 
   constructor(
@@ -60,11 +63,11 @@ export class TasksComponent implements OnInit {
         this.tasks.forEach(task => {
           if (task.subtasks && Array.isArray(task.subtasks) && task.subtasks.length) {
             //if (task.taskInformations && Array.isArray(task.taskInformations) && task.taskInformations.length) {
-              //this.tasksData = [...this.tasksData, { ...task, subtasks: new MatTableDataSource(task.subtasks) }, { ...task, taskInformations: new MatTableDataSource(task.taskInformations) }];
-              //console.log(task);
-          //} else {
-              this.tasksData = [...this.tasksData, { ...task, subtasks: new MatTableDataSource(task.subtasks) }];
-          //}
+            //this.tasksData = [...this.tasksData, { ...task, subtasks: new MatTableDataSource(task.subtasks) }, { ...task, taskInformations: new MatTableDataSource(task.taskInformations) }];
+            //console.log(task);
+            //} else {
+            this.tasksData = [...this.tasksData, { ...task, subtasks: new MatTableDataSource(task.subtasks) }];
+            //}
           } else {
             this.tasksData = [...this.tasksData, task];
           }
@@ -96,21 +99,39 @@ export class TasksComponent implements OnInit {
 
   }
 
-  toggleRow(element: Task) {
+  //expandRowInformation(element: Task) {
+    //try {
+      //if ((element.taskInformations as MatTableDataSource<TaskInformation>).data.length > 0) {
+        //  console.log("element");
+        //console.log(element);
+        //console.log("expandedElement1");
+        //console.log(this.expandedElementInformation);
+        //element.subtasks && (element.taskInformations as MatTableDataSource<TaskInformation>).data.length ? (this.expandedElementInformation = this.expandedElementInformation === element ? null : element) : null;
+        //console.log("expandedElement2");
+        //console.log(this.expandedElementInformation);
+        //this.cd.detectChanges();
+        //this.innerTables1.forEach((table, index) => (table.dataSource as MatTableDataSource<TaskInformation>).sort = this.innerSort1.toArray()[index]);
+      //}
+    //} catch (error) {
+    //}
+  //}
+
+
+  expandRowSubtask(element: Task) {
     //console.log(element.subtasks ==null);
     //console.log((element.subtasks as MatTableDataSource<Task>).data.length>0);
     try {
       if ((element.subtasks as MatTableDataSource<Task>).data.length > 0) {
-        console.log("no elementsubtasks");
-        element.subtasks && (element.subtasks as MatTableDataSource<Task>).data.length ? (this.expandedElement = this.expandedElement === element ? null : element) : null;
+        console.log(this.expandedElementSubtask);
+        element.subtasks && (element.subtasks as MatTableDataSource<Task>).data.length ? (this.expandedElementSubtask = this.expandedElementSubtask === element ? null : element) : null;
+        console.log(this.expandedElementSubtask);
         this.cd.detectChanges();
         this.innerTables2.forEach((table, index) => (table.dataSource as MatTableDataSource<Task>).sort = this.innerSort2.toArray()[index]);
       }
     } catch (error) {
-
     }
-
   }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

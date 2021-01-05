@@ -10,13 +10,13 @@ import { RoleService } from '../services/role.service';
 })
 export class RolesComponent implements OnInit {
 
-  role: Role[];
+  roles: Role[];
 
   constructor(private roleService: RoleService) { }
 
   ngOnInit(): void {
     this.roleService.getRoles().subscribe(
-      role => this.role = role
+      roles => this.roles = roles
     );
   }
 
