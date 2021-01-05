@@ -155,7 +155,6 @@ export class FormTaskComponent implements OnInit {
   public taskDone(event: any): void {
     if (this.task.isDone) {
       this.task.doneAt = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss", 'ca');
-
     }
   }
 

@@ -37,7 +37,7 @@ export class Task {
 
   isMainTask: boolean;
   taskInformationsStickedToMainTask: TaskInformation[];
-  subtasks?: Task[] | MatTableDataSource<Task>;
+  subtasks?: Task[];
 
 
 }
