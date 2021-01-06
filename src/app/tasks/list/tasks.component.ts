@@ -43,10 +43,12 @@ export class TasksComponent implements OnInit {
   linkPaginator: string = '/tasks';
   public errors: string[];
 
+  today: Date = new Date();
+
   displayedColumns = ['subtasks', 'description', 'deadline', 'createAt', 'taskInformations', 'options'];
   innerDisplayedColumns = ['description', 'deadline', 'createAt', 'options'];
-  innerInformationsDisplayedColumns = ['description', 'comment', 'done' ]
-  dataSource: MatTableDataSource<any>;
+  innerInformationsDisplayedColumns = ['description', 'comment', 'done']
+  dataSource: MatTableDataSource<any[]>;
   expandedElementSubtask: Task | null;
   expandedElementInformation: Task | null;
 
@@ -69,7 +71,7 @@ export class TasksComponent implements OnInit {
           if (task.subtasks && Array.isArray(task.subtasks) && task.subtasks.length) {
 
             if (task.taskInformations && Array.isArray(task.taskInformations) && task.taskInformations.length) {
-              this.tasksData = [...this.tasksData, { ...task, subtasks: new MatTableDataSource(task.subtasks) , taskInformations: new MatTableDataSource(task.taskInformations) }];
+              this.tasksData = [...this.tasksData, { ...task, subtasks: new MatTableDataSource(task.subtasks), taskInformations: new MatTableDataSource(task.taskInformations) }];
               //console.log(task);
             } else {
               this.tasksData = [...this.tasksData, { ...task, subtasks: new MatTableDataSource(task.subtasks) }];
@@ -79,9 +81,11 @@ export class TasksComponent implements OnInit {
           } else {
             this.tasksData = [...this.tasksData, task];
           }
+          console.log(task.deadline);
         });
         this.dataSource = new MatTableDataSource(this.tasksData);
         console.log(this.dataSource);
+        console.log(this.today);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
@@ -183,6 +187,23 @@ export class TasksComponent implements OnInit {
         )
       }
     })
+  }
+
+  getStatus(deadline: string): string {
+
+    let newDate = new Date(deadline + 'T00:00:00Z');
+    let today = new Date(Date.UTC(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()));
+
+    console.log(newDate);
+    console.log(today);
+    if (newDate.getTime() == today.getTime()) {
+      console.log("ispresent");
+      return "is-present";
+    } else if (newDate.getTime() < this.today.getTime()) {
+
+      return "is-past";
+    } else { return "is-future"; }
+
   }
 
 

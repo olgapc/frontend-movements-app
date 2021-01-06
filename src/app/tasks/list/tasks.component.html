@@ -13,7 +13,7 @@
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
       </mat-form-field>
-      <table mat-table #outerSort="matSort" [dataSource]="dataSource" multiTemplateDataRows matSort>
+      <table mat-table #outerSort="matSort" [dataSource]="dataSource"  multiTemplateDataRows matSort>
 
         <ng-container matColumnDef="subtasks">
           <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
@@ -27,7 +27,6 @@
         </ng-container>
 
 
-
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripció </th>
           <td mat-cell *matCellDef="let task"> {{task.description}} </td>
@@ -38,7 +37,7 @@
         </ng-container>
         <ng-container matColumnDef="deadline">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Data venciment </th>
-          <td mat-cell *matCellDef="let task"> {{ task.deadline | date: 'dd.MM.yyyy'}} </td>
+          <td mat-cell *matCellDef="let task" > <div [ngClass]="getStatus(task.deadline)"> {{ task.deadline | date: 'dd.MM.yyyy'}} </div></td>
         </ng-container>
 
         <ng-container matColumnDef="taskInformations">
@@ -49,7 +48,7 @@
                 [class.expanded]="expandedElementInformation === element" (click)="expandRowInformation(element)">
             <img src="http://localhost:8090/images/minus-sign.png" alt="Less details" class="rounded" style="width:20px; cursor:pointer;" *ngIf="expandedElementInformation == element" [class.expanded]="expandedElementInformation == undefined"
                 (click)="expandRowInformation(element)">
-          </td>  
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="options">
@@ -63,7 +62,7 @@
         <ng-container matColumnDef="expandedDetail1">
           <td mat-cell *matCellDef="let element" [attr.colspan]="innerInformationsDisplayedColumns.length">
             <div class="example-element-detail" *ngIf="element.taskInformations.data?.length" [@detailExpand]="element == expandedElementInformation ? 'expanded' : 'collapsed'">
-              <div class="inner-table mat-elevation-z8" *ngIf="expandedElementInformation">
+              <div class="inner-table" *ngIf="expandedElementInformation">
                 <mat-form-field>
                   <input matInput (keyup)="applyInnerFilter($event.target.value)" placeholder="Filter">
                 </mat-form-field>
@@ -92,7 +91,7 @@
         <ng-container matColumnDef="expandedDetail">
           <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
             <div class="example-element-detail" *ngIf="element.subtasks.data?.length" [@detailExpand]="element == expandedElementSubtask ? 'expanded' : 'collapsed'">
-              <div class="inner-table mat-elevation-z8" *ngIf="expandedElementSubtask">
+              <div class="inner-table" *ngIf="expandedElementSubtask">
                 <mat-form-field>
                   <input matInput (keyup)="applyInnerFilter2($event.target.value)" placeholder="Filter">
                 </mat-form-field>
