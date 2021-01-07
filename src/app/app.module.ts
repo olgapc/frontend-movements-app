@@ -49,7 +49,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { TasksdatatableComponent } from './tasks/list-data-table/tasksdatatable.component';
 import { DataTablesModule } from 'angular-datatables';
-//import { DataTablesResponse } from './tasks/models/data-tables-response';
 import { ZeroConfigurationComponent } from './zero-configuration/zero-configuration.component';
 import { TasksByDeadlineComponent } from './tasks/list/tasks-by-deadline.component';
 import { TableExpandableRowsExampleComponent } from './tests/table-expandable-rows-example/table-expandable-rows-example.component';

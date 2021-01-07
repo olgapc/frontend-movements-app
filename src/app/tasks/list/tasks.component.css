@@ -1,7 +1,65 @@
 table {
   width: 100%;
-  border-collapse: collapse;
+    border-collapse: collapse;
+}
 
+td.mat-cell:last-child {
+ border-bottom: 1px solid white;
+border-top: 1px solid rgba(0,0,0,.12);
+
+}
+
+#opcions:last-child {
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    border-top: 1px solid white;
+
+}
+#opcions:first-child {
+    border-top: 1px solid rgba(0,0,0,.12);
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+
+
+
+
+.border-radius {
+      border-radius: 15px;
 }
 
 .mat-row:hover {
@@ -44,39 +102,11 @@ tr.example-element-row:not(.example-expanded-row):active {
   background: #efefef;
 }*/
 
-.example-element-row td {
-  border-bottom-width: 0;
-}
 
-.example-element-detail {
-  overflow: hidden;
-  display: flex;
-}
 
-.example-element-diagram {
-  min-width: 80px;
-  border: 2px solid black;
-  padding: 8px;
-  font-weight: lighter;
-  margin: 8px 0;
-  height: 104px;
-}
-
-.example-element-symbol {
-  font-weight: bold;
-  font-size: 40px;
-  line-height: normal;
-}
-
-.example-element-description {
-  padding: 16px, 0;
-}
-
-.example-element-description-attribution {
-  opacity: 0.5;
-}
 
 .inner-table {
+
   width: 100%;
   border-collapse: collapse;
     border: hidden;
@@ -88,6 +118,6 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .inner-table, .mat-form-field {
-  margin-top: 15px;
+  margin-top: 0px;
   width: 100%;
 }

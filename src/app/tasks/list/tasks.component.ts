@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { Task } from '../models/task';
 import { TaskService } from '../services/task.service';
 import Swal from 'sweetalert2';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 
 
 @Component({
+
   selector: 'app-tasks',
   styleUrls: ['tasks.component.css'],
   templateUrl: './tasks.component.html',
