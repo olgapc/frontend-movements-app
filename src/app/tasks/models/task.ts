@@ -14,7 +14,7 @@ export class Task {
   comment: string;
   numberToCalculateDeadlineToAlarm: string;
   typeCalculationDeadline: TimeTypes;
-  taskInformations?: TaskInformation[];
+  taskInformations: TaskInformation[];
   beforeTasks: AfterBeforeTask[];
   afterTasks: AfterBeforeTask[];
 
@@ -37,7 +37,7 @@ export class Task {
 
   isMainTask: boolean;
   taskInformationsStickedToMainTask: TaskInformation[];
-  subtasks?: Task[];
+  subtasks: Task[];
 
 
 }

@@ -88,7 +88,8 @@
 
       <div class="form-group-row">
         <div class="class col-sm-6">
-          <mat-checkbox for="isEnabled" name="isEnabled" [(ngModel)]="user.isEnabled" class="example-margin">Actiu</mat-checkbox>
+            <mat-slide-toggle [(ngModel)]="user.isEnabled" name="isEnabled" >Actiu</mat-slide-toggle>
+
         </div>
       </div>
 
@@ -110,9 +111,6 @@
           </div>
         </div>
       </div>
-
-
-
 
 
       <table class="table table-striped table-hover table-sm">

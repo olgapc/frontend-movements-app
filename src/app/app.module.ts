@@ -11,6 +11,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormCompanyComponent } from './companies/form/form-company.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import localeCa from '@angular/common/locales/ca';
 import { EmployeesComponent } from './employees/list/employees.component';
 import { RolesComponent } from './users/list-roles/roles.component';
@@ -154,6 +155,7 @@ const routes: Routes = [
     MatPaginatorModule,
     MatTableModule,
     DataTablesModule,
+    MatSlideToggleModule
     //DataTablesResponse
 
   ],
