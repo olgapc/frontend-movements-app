@@ -52,7 +52,9 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 
-
+.mat-form-field{
+    padding-left: 15px;
+}
 
 
 .border-radius {
@@ -80,11 +82,17 @@ div.is-past {
 }
 
 div.is-future {
-    background-color: #5cb85c;
+    background-color: #74CB74;
     color: white;
     border-radius: 20px;
     width: 90px;
     text-align: center;
+}
+
+input[type=checkbox] {
+    transform: scale(1.2);
+    text-align: left;
+    vertical-align: middle;
 }
 
 tr.example-detail-row {

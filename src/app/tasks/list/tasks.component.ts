@@ -10,6 +10,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { TaskInformation } from '../models/task-information';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class TasksComponent implements OnInit {
 
   today: Date = new Date();
 
-  displayedColumns = ['subtasks', 'description', 'deadline', 'createAt', 'taskInformations', 'options'];
+  displayedColumns = ['subtasks', 'done', 'description', 'deadline', 'taskInformations', 'options'];
   innerDisplayedColumns = ['description', 'deadline', 'createAt', 'options'];
   innerInformationsDisplayedColumns = ['description', 'comment', 'done']
   dataSource: MatTableDataSource<any[]>;
