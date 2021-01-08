@@ -47,8 +47,8 @@ export class TasksComponent implements OnInit {
 
   today: Date = new Date();
 
-  displayedColumns = ['subtasks', 'done', 'description', 'deadline', 'taskInformations', 'options'];
-  innerDisplayedColumns = ['done', 'description', 'deadline', 'options'];
+  displayedColumns = ['subtasks', 'done', 'description', 'company','employee', 'deadline', 'taskInformations', 'options'];
+  innerDisplayedColumns = ['done', 'description', 'company','employee','deadline', 'options'];
   innerInformationsDisplayedColumns = ['description', 'comment', 'done']
   dataSource: MatTableDataSource<any[]>;
   expandedElementSubtask: Task | null;
@@ -83,11 +83,9 @@ export class TasksComponent implements OnInit {
           } else {
             this.tasksData = [...this.tasksData, task];
           }
-          console.log(task.deadline);
+          console.log(task);
         });
         this.dataSource = new MatTableDataSource(this.tasksData);
-        console.log(this.dataSource);
-        console.log(this.today);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
@@ -116,10 +114,7 @@ export class TasksComponent implements OnInit {
   expandRowInformation(element: Task) {
     try {
       if ((element.taskInformations as MatTableDataSource<TaskInformation>).data.length > 0) {
-        console.log(this.expandedElementInformation);
         element.subtasks && (element.taskInformations as MatTableDataSource<TaskInformation>).data.length ? (this.expandedElementInformation = this.expandedElementInformation === element ? null : element) : null;
-        console.log("expandedElement2");
-        console.log(this.expandedElementInformation);
         this.cd.detectChanges();
         this.innerTables1.forEach((table, index) => (table.dataSource as MatTableDataSource<TaskInformation>).sort = this.innerSort1.toArray()[index]);
       }
@@ -133,9 +128,7 @@ export class TasksComponent implements OnInit {
     //console.log((element.subtasks as MatTableDataSource<Task>).data.length>0);
     try {
       if ((element.subtasks as MatTableDataSource<Task>).data.length > 0) {
-        console.log(this.expandedElementSubtask);
         element.subtasks && (element.subtasks as MatTableDataSource<Task>).data.length ? (this.expandedElementSubtask = this.expandedElementSubtask === element ? null : element) : null;
-        console.log(this.expandedElementSubtask);
         this.cd.detectChanges();
         this.innerTables2.forEach((table, index) => (table.dataSource as MatTableDataSource<Task>).sort = this.innerSort2.toArray()[index]);
       }
@@ -196,10 +189,7 @@ export class TasksComponent implements OnInit {
     let newDate = new Date(deadline + 'T00:00:00Z');
     let today = new Date(Date.UTC(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()));
 
-    console.log(newDate);
-    console.log(today);
     if (newDate.getTime() == today.getTime()) {
-      console.log("ispresent");
       return "is-present";
     } else if (newDate.getTime() < this.today.getTime()) {
 
