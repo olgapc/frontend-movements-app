@@ -48,7 +48,7 @@ export class TasksComponent implements OnInit {
   today: Date = new Date();
 
   displayedColumns = ['subtasks', 'done', 'description', 'deadline', 'taskInformations', 'options'];
-  innerDisplayedColumns = ['description', 'deadline', 'createAt', 'options'];
+  innerDisplayedColumns = ['done', 'description', 'deadline', 'options'];
   innerInformationsDisplayedColumns = ['description', 'comment', 'done']
   dataSource: MatTableDataSource<any[]>;
   expandedElementSubtask: Task | null;

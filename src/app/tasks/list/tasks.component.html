@@ -28,8 +28,10 @@
 
         <ng-container matColumnDef="done">
           <th mat-header-cell *matHeaderCellDef> Fet </th>
-          <td id="opcions" mat-cell *matCellDef="let element"> <input type="checkbox" [(ngModel)]="element.done"></td>
+          <td mat-cell *matCellDef="let element"> <input type="checkbox" [(ngModel)]="element.done"></td>
         </ng-container>
+
+
 
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripció </th>
@@ -76,10 +78,16 @@
                     <th mat-header-cell *matHeaderCellDef> Comentari </th>
                     <td mat-cell *matCellDef="let element"> {{ element.comment }}</td>
                   </ng-container>
+
                   <ng-container matColumnDef="done">
                     <th mat-header-cell *matHeaderCellDef> Fet </th>
-                    <td id="opcions" mat-cell *matCellDef="let element"> <mat-checkbox disabled color='primary' name="done{{element.information.id}}" [(ngModel)]="element.done"></mat-checkbox></td>
+                    <td mat-cell *matCellDef="let element"> <input type="checkbox" [(ngModel)]="element.done"></td>
                   </ng-container>
+
+                  <!--ng-container matColumnDef="done">
+                    <th mat-header-cell *matHeaderCellDef> Fet </th>
+                    <td id="opcions" mat-cell *matCellDef="let element"> <mat-checkbox disabled color='primary' name="done{{element.information.id}}" [(ngModel)]="element.done"></mat-checkbox></td>
+                  </ng-container-->
                   <tr mat-header-row *matHeaderRowDef="innerInformationsDisplayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: innerInformationsDisplayedColumns;"></tr>
                 </table>
@@ -97,6 +105,11 @@
                   <input matInput (keyup)="applyInnerFilter2($event.target.value)" placeholder="Filtrar">
                 </mat-form-field>
                 <table #innerTables2 mat-table #innerSort2="matSort" [dataSource]="element.subtasks" matSort>
+                    <ng-container matColumnDef="done">
+                      <th mat-header-cell *matHeaderCellDef> Fet </th>
+                      <td mat-cell *matCellDef="let element"> <input type="checkbox" [(ngModel)]="element.done"></td>
+                    </ng-container>
+
                   <ng-container matColumnDef="description">
                     <th mat-header-cell *matHeaderCellDef> Descripció </th>
                     <td mat-cell *matCellDef="let element"> {{element.description}} </td>
@@ -105,10 +118,7 @@
                     <th mat-header-cell *matHeaderCellDef> Data venciment </th>
                     <td mat-cell *matCellDef="let task" > <div [ngClass]="getStatus(task.deadline)"> {{ task.deadline | date: 'dd.MM.yyyy'}} </div></td>
                   </ng-container>
-                  <ng-container matColumnDef="createAt">
-                    <th mat-header-cell *matHeaderCellDef> Data creació </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.createAt | date: 'EEE dd.MM.yyyy HH:mm'}} </td>
-                  </ng-container>
+
                   <ng-container matColumnDef="options">
                     <th mat-header-cell *matHeaderCellDef> Opcions </th>
                     <td id="opcions" mat-cell *matCellDef="let element">
