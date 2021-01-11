@@ -16,6 +16,7 @@ import { EmployeeService } from 'src/app/employees/employee.service';
 
 @Component({
   selector: 'app-form-task',
+  styleUrls: ['form-tasks.component.css'],
   templateUrl: './form-task.component.html'
 })
 export class FormTaskComponent implements OnInit {
@@ -50,11 +51,11 @@ export class FormTaskComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
 
-      let taskId = +params['idTask']
+      let taskId = +params['taskId']
 
-      let companyId = +params['idCompany']
+      let companyId = +params['companyId']
 
-      let employeeId = +params['idEmployee']
+      let employeeId = +params['employeeId']
 
       if (taskId) {
         this.taskService.getTask(taskId).subscribe(task => this.task = task);
@@ -141,7 +142,6 @@ export class FormTaskComponent implements OnInit {
         json => {
           this.router.navigate(['/tasks'])
           Swal.fire('Tasca actualitzada', `${json.message}: ${json.task.description}`, 'success')
-
         },
         err => {
           this.errors = err.error.errors as string[];
@@ -154,7 +154,7 @@ export class FormTaskComponent implements OnInit {
 
   public taskDone(event: any): void {
     if (this.task.isDone) {
-      this.task.doneAt = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss", 'ca');
+      this.task.doneAt = formatDate(Date.now(), "yyyy-MM-dd", 'ca');
     }
   }
 
@@ -166,9 +166,23 @@ export class FormTaskComponent implements OnInit {
           information.doneAt = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss", 'ca');
         }
         else {
-            information.doneAt = null;
+          information.doneAt = null;
         }
       }
     }
+  }
+
+  changeIsSticked(id: number): void {
+      //for (let information of this.task.taskInformations) {
+
+        //if (information.information.id == id) {
+          //if (information.isSticked) {
+            //information.isSticked = false;
+          //}
+          //else {
+            //information.isSticked = true;
+          //}
+        //}
+      //}
   }
 }

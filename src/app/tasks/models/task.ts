@@ -12,11 +12,12 @@ export class Task {
   createAt: string;
   isToSend: boolean;
   comment: string;
-  numberToCalculateDeadlineToAlarm: string;
+
   typeCalculationDeadline: TimeTypes;
   taskInformations: TaskInformation[];
   beforeTasks: AfterBeforeTask[];
   afterTasks: AfterBeforeTask[];
+  isPeriodically: boolean;
 
   historicUserAssignments: UserAssignment[];
 
@@ -39,5 +40,5 @@ export class Task {
   taskInformationsStickedToMainTask: TaskInformation[];
   subtasks: Task[];
 
-
+  numberToCalculateDeadline: string;
 }

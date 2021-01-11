@@ -3,13 +3,13 @@
   <div class="card-body text-info">
 
     <div class="my-2 text-left">
-      <button class="btn btn-outline-info btn-xs mr-2" type="button" [routerLink]="['/tasks/form/task']">Crear tasca</button>
+      <button class="btn btn-outline-info btn-xs mr-2" type="button" [routerLink]="['/tasks/form/new/task']">Crear tasca</button>
     </div>
     <div *ngIf="tasks?.length == 0" class="alert alert-info">
       No hi ha registres a la base de dades
     </div>
     <div class="mat-elevation-z8 border-radius">
-      <mat-form-field>
+      <mat-form-field color="accent" [style.fontSize.px]="20">
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
       </mat-form-field>

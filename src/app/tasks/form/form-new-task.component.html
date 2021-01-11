@@ -14,37 +14,38 @@
 
     <form #taskForm="ngForm">
 
-      <div class="form-group-row" *ngIf="task.company">
-        <label for="company" class="col-sm-2 col-form-label">Empresa</label>
-        <div class="col-sm-6">
-          <input type="text" name="company" value="{{task.company.name}}" class="form-control" />
+      <div class="form-row">
+        <div class="form-group col-md-6" *ngIf="task.company">
+          <!--label for="company" class="col-sm-6 col-form-label">Empresa</label-->
+          <input type="text" name="company" value="{{task.company.name}}" class="form-control" disabled />
+        </div>
+
+        <div class="form-group col-md-6" *ngIf="task.employee">
+          <!--label for="" class="col-sm-6 col-form-label">Treballador</label-->
+          <input type="text" name="employee" value="{{task.employee.name}}" class="form-control" disabled />
         </div>
       </div>
 
-      <div class="form-group-row" *ngIf="task.employee">
-        <label for="" class="col-sm-2 col-form-label">Treballador</label>
-        <div class="col-sm-6">
-          <input type="text" name="employee" value="{{task.employee.name}}" class="form-control" />
-        </div>
-      </div>
 
-      <div class="form-group-row">
+      <div class="form-group">
         <label for="description" class="col-sm-6 col-form-label">Descripció</label>
-        <div class="class col-sm-6">
-          <input type="text" name="description" [(ngModel)]="task.description" class="form-control" required minlength="3" maxlength="80" #description="ngModel">
-          <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
-            <div *ngIf="description.errors.required">
-              Camp obligatori.
-            </div>
-            <div *ngIf="description.errors.minlength">
-              Ha de tenir mínim 3 caràcters.
-            </div>
+
+        <input type="text" name="description" [(ngModel)]="task.description" class="form-control" required minlength="3" maxlength="80" #description="ngModel">
+        <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
+          <div *ngIf="description.errors.required">
+            Camp obligatori.
           </div>
+          <div *ngIf="description.errors.minlength">
+            Ha de tenir mínim 3 caràcters.
+          </div>
+
         </div>
       </div>
 
-      <div class="form-group-row">
-        <label for="deadline" class="col-sm-6 col-form-label">Data de venciment</label>
+
+
+      <div class="form-row align-items-center">
+        <!--label for="deadline" class="col-sm-6 col-form-label">Data de venciment</label-->
         <div class="class col-sm-6">
           <mat-form-field appearance="fill">
             <mat-label>Tria una data</mat-label>
@@ -58,37 +59,24 @@
             </div>
           </mat-form-field>
         </div>
-      </div>
+        <div class="form-group-row">
+          <div class="class col-sm-6">
+            <mat-checkbox for="isToSend" name="isToSend" [(ngModel)]="task.isToSend" class="example-margin">Per enviar</mat-checkbox>
+          </div>
 
-      <div class="form-group-row">
-        <div class="class col-sm-6">
-          <mat-checkbox for="isToSend" name="isToSend" [(ngModel)]="task.isToSend" class="example-margin">Per enviar</mat-checkbox>
         </div>
 
-      </div>
-
-      <div class="form-group-row">
-        <div class="class col-sm-6">
-          <mat-checkbox for="isTemplate" name="isTemplate" [(ngModel)]="task.isTemplate" class="example-margin">Plantilla</mat-checkbox>
-        </div>
-      </div>
-
-      <div class="form-group-row" *ngIf="task.isTemplate">
-        <label for="templateName" *ngIf="task.isTemplate" class="col-sm-6 col-form-label">Nom Plantilla</label>
-        <div class="class col-sm-6" *ngIf="task.isTemplate">
-          <input type="text" name="templateName" [(ngModel)]="task.templateName" class="form-control" maxlength="25" #templateName="ngModel">
+        <div class="form-group-row">
+          <div class="class col-sm-6">
+            <mat-checkbox for="isPeriodically" name="isPeriodically" [(ngModel)]="task.isPeriodically" class="example-margin">Es repeteix</mat-checkbox>
+          </div>
         </div>
       </div>
 
-      <div class="form-group-row">
-        <label for="numberToCalculateDeadline" class="col-sm-6 col-form-label">Número per calcular data avís</label>
-        <div class="class col-sm-2">
-          <input type="number" name="numberToCalculateDeadline" [(ngModel)]="task.numberToCalculateDeadline" class="form-control">
-        </div>
-      </div>
 
-      <div class="form-group-row">
-        <label for="eTimeTypes" class="col-sm-2 col-form-label">Tipus</label>
+
+      <div class="form-group-row" *ngIf="task.isPeriodically">
+        <label for="eTimeTypes" *ngIf="task.isPeriodically" class="col-sm-2 col-form-label">Tipus</label>
         <div class="class col-sm-4">
           <select class="form-control" [(ngModel)]="task.typeCalculationDeadline" name="eTimeTypes">
             <option [ngValue]="undefined">--Seleccionar--</option>
@@ -133,31 +121,31 @@
         <h5 class="float-right" *ngIf="task.id && task.taskInformations.length > 0">Informacions: <span class="badge badge-secondary">{{task.taskInformations.length}}</span></h5>
       </div>
 
-      <table class="table table-striped table-hover table-sm" *ngIf="task.taskInformations.length > 0">
-        <thead>
-          <tr>
-            <th>Informació</th>
-            <th>Pin</th>
-            <th>Feta</th>
-            <th>Comment</th>
-            <th>Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let information of task.taskInformations">
-            <td>{{information.information.description}}</td>
-            <td><button mat-icon-button [ngClass]="information.isSticked ? 'red' : 'black' " (click)="changeIsSticked(information.id)" aria-label="Example icon button with a home icon">
-        <mat-icon>push_pin</mat-icon>
-      </button>
+      <!--table class="table table-striped table-hover table-sm" *ngIf="task.taskInformations.length > 0">
+              <thead>
+                <tr>
+                  <th>Informació</th>
+                  <th>Pin</th>
+                  <th>Feta</th>
+                  <th>Comment</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let information of task.taskInformations">
+                  <td>{{information.information.description}}</td>
+                  <td><button mat-icon-button [ngClass]="information.isSticked ? 'red' : 'black' " (click)="changeIsSticked(information.id)" aria-label="Example icon button with a home icon">
+              <mat-icon>push_pin</mat-icon>
+            </button>
 
-            <td>
-              <mat-checkbox (change)="informationDone(information.information.id, $event)" color='primary' name="done{{information.information.id}}" [(ngModel)]="information.done"></mat-checkbox>
-            </td>
-            <td>{{information.comment}}</td>
-            <td><button class="btn btn-danger btn-sm" type="button" (click)="deleteTaskInformation(information.information.id)">x</button></td>
-          </tr>
-        </tbody>
-      </table>
+                  <td>
+                    <mat-checkbox (change)="informationDone(information.information.id, $event)" color='primary' name="done{{information.information.id}}" [(ngModel)]="information.done"></mat-checkbox>
+                  </td>
+                  <td>{{information.comment}}</td>
+                  <td><button class="btn btn-danger btn-sm" type="button" (click)="deleteTaskInformation(information.information.id)">x</button></td>
+                </tr>
+              </tbody>
+            </table-->
 
 
       <div class="form-group-row">
@@ -169,6 +157,8 @@
 
         </div>
       </div>
+
+
 
 
 

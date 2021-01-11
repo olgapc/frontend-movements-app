@@ -49,7 +49,6 @@ export class FormEmployeeComponent implements OnInit {
         this.companyService.getCompany(companyId).subscribe(company => this.employee.company = company);
         this.employee.isEnabled = true;
         //this.employee.gender = "MALE";
-
       }
     });
 

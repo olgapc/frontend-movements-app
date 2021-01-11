@@ -49,7 +49,7 @@
         <td> <!--*ngIf="authService.hasRole('ROLE_ADMIN')"-->
           <button type="button" name="edit" [routerLink]="['/companies/form', company.id]" class="btn btn-outline-info btn-xs">Modificar</button>
           <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="delete" (click)='delete(company)' class="btn btn-outline-danger btn-xs">Eliminar</button>
-          <button type="button" name="edit" [routerLink]="['/tasks/form/company', company.id]" class="btn btn-outline-success btn-xs">Crear Tasca</button>
+          <button type="button" name="edit" [routerLink]="['/tasks/form/new/company', company.id]" class="btn btn-outline-success btn-xs">Crear Tasca</button>
           <button type="button" name="edit" [routerLink]="['/employees/form', company.id]" class="btn btn-outline-success btn-xs">Crear Treballador</button>
 
 

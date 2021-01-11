@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -13,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import localeCa from '@angular/common/locales/ca';
+import localeEs from '@angular/common/locales/es';
 import { EmployeesComponent } from './employees/list/employees.component';
 import { RolesComponent } from './users/list-roles/roles.component';
 import { TasksComponent } from './tasks/list/tasks.component';
@@ -53,29 +53,33 @@ import { DataTablesModule } from 'angular-datatables';
 import { ZeroConfigurationComponent } from './zero-configuration/zero-configuration.component';
 import { TasksByDeadlineComponent } from './tasks/list/tasks-by-deadline.component';
 import { TableExpandableRowsExampleComponent } from './tests/table-expandable-rows-example/table-expandable-rows-example.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { FormNewTaskComponent } from './tasks/form/form-new-task.component';
 
 registerLocaleData(localeCa, 'ca');
+registerLocaleData(localeEs, 'es');
 
 const routes: Routes = [
   { path: '', redirectTo: '/companies', pathMatch: 'full' },
   { path: 'companies', component: CompaniesComponent },
   { path: 'companies/page/:page', component: CompaniesComponent },
   { path: 'companies/form', component: FormCompanyComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
-  { path: 'companies/form/:id', component: FormCompanyComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } }//,
-  //{path: 'companies/view/:id', component: ViewComponent}
-  , { path: 'login', component: LoginComponent },
+  { path: 'companies/form/:id', component: FormCompanyComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
+  { path: 'login', component: LoginComponent },
   { path: 'tasks/:id', component: ViewTaskComponent },
   { path: 'tasks', component: TasksComponent },
   { path: 'tasks/page/:page', component: TasksComponent },
   { path: 'tasks/list/bydeadline', component: TasksByDeadlineComponent},
   { path: 'tasks/datatable/page/:page' ,component: TasksdatatableComponent },
-  //{path: 'tasks/form/:companyId', component: FormTaskComponent},
-  //{path: 'tasks/form/:companyId/:employeeId', component: FormTaskComponent},
-  //{path: 'tasks/form/task/:taskId', component: FormTaskComponent},
   { path: 'tasks/form/task', component: FormTaskComponent },
-  { path: 'tasks/form/task/:idTask', component: FormTaskComponent },
-  { path: 'tasks/form/company/:idCompany', component: FormTaskComponent },
-  { path: 'tasks/form/employee/:idCompany/:idEmployee', component: FormTaskComponent },
+  { path: 'tasks/form/task/:taskId', component: FormTaskComponent },
+  { path: 'tasks/form/company/:companyId', component: FormTaskComponent },
+  { path: 'tasks/form/employee/:companyId/:employeeId', component: FormTaskComponent },
+  { path: 'tasks/form/new/task', component: FormNewTaskComponent },
+  { path: 'tasks/form/new/task/:taskId', component: FormNewTaskComponent },
+  { path: 'tasks/form/new/company/:companyId', component: FormNewTaskComponent },
+  { path: 'tasks/form/new/employee/:companyId/:employeeId', component: FormNewTaskComponent },
   { path: 'templates', component: TemplatesComponent },
   { path: 'templates/page/:page', component: TemplatesComponent },
   { path: 'informations', component: InformationsComponent },
@@ -134,8 +138,9 @@ const routes: Routes = [
     ZeroConfigurationComponent,
     TasksByDeadlineComponent,
     TableExpandableRowsExampleComponent,
-
+    FormNewTaskComponent,
   ],
+
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -148,7 +153,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatDatepickerModule,
     MatMomentDateModule,
-    
+    MatButtonModule,
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
@@ -156,8 +161,8 @@ const routes: Routes = [
     MatPaginatorModule,
     MatTableModule,
     DataTablesModule,
-    MatSlideToggleModule
-    //DataTablesResponse
+    MatSlideToggleModule,
+    MatIconModule
 
   ],
   providers:

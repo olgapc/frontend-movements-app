@@ -120,7 +120,7 @@ export class TaskService {
 
   update(task: Task): Observable<any> {
     //task.createAt = formatDate(task.createAt, 'yyyy-MM-dd', 'es');
-    task.deadline = formatDate(task.deadline, 'yyyy-MM-dd', 'es');
+    task.deadline = formatDate(task.deadline, 'yyyy-MM-dd', 'ca');
 
     return this.http.put<any>(`${this.urlEndPoint}/${task.id}`, task).pipe(
       map(task => {
@@ -128,12 +128,12 @@ export class TaskService {
 
         task.taskInformations.forEach(taskInformation => {
           taskInformation.information.description = taskInformation.information.description.toUpperCase();
-          taskInformation.createAt = formatDate(taskInformation.createAt, 'yyyy-MM-dd', 'es');
+          taskInformation.createAt = formatDate(taskInformation.createAt, "yyyy-MM-dd HH:mm:ss", 'ca');
         })
         task.subtasks.forEach(subtask => {
           subtask.description = subtask.description.toUpperCase();
-          subtask.createAt = formatDate(subtask.createAt, 'yyyy-MM-dd', 'es');
-          subtask.deadline = formatDate(subtask.deadline, 'yyyy-MM-dd', 'es');
+          subtask.createAt = formatDate(subtask.createAt, "yyyy-MM-dd HH:mm:ss", 'ca');
+          subtask.deadline = formatDate(subtask.deadline, "yyyy-MM-dd", 'ca');
         })
         return task;
 
