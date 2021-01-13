@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,6 +24,7 @@ export class FormNewTaskComponent implements OnInit {
   public eTimeTypes = TimeTypes;
   filteredInformations: Observable<Information[]>;
   public errors: string[];
+  isPeriodically: boolean;
 
   constructor(private companyService: CompanyService,
     private employeeService: EmployeeService,
@@ -52,7 +54,9 @@ export class FormNewTaskComponent implements OnInit {
       let employeeId = +params['employeeId']
 
       if (taskId) {
-        this.taskService.getTask(taskId).subscribe(task => this.task = task);
+        this.taskService.getTask(taskId).subscribe(task => {this.task = task;
+        this.isPeriodically = this.task.isPeriodically
+    });
         //console.log("task");
         //console.log(this.task);
       } else if (employeeId) {
@@ -60,14 +64,17 @@ export class FormNewTaskComponent implements OnInit {
         this.employeeService.getEmployee(employeeId).subscribe(employee => this.task.employee = employee);
         this.employeeService.getEmployee(employeeId).subscribe(employee => this.task.company = employee.company);
         this.task.isMainTask = true;
+        this.isPeriodically = false;
       } else if (companyId) {
         //console.log("company task");
         //console.log(companyId);
         this.companyService.getCompany(companyId).subscribe(company => this.task.company = company);
         this.task.isMainTask = true;
+        this.isPeriodically = false;
     } else if (!taskId){
         //console.log("novatasca");
         this.task.isMainTask = true;
+        this.isPeriodically = false;
       }
     });
   }
@@ -98,8 +105,32 @@ export class FormNewTaskComponent implements OnInit {
 
   }
 
+  public update(): void {
+    console.log(this.task);
+    this.taskService.update(this.task)
+      .subscribe(
+        json => {
+          this.router.navigate(['/tasks'])
+          Swal.fire('Tasca actualitzada', `${json.message}: ${json.task.description}`, 'success')
+        },
+        err => {
+          this.errors = err.error.errors as string[];
+          Swal.fire('Error', `${err.error.errors}`, 'error');
+          console.error('Codi de l\'error des del backend: ' + err.status);
+          console.error(err.error.errors);
+        }
+      )
+  }
 
+    public taskDone(event: any): void {
+      if (this.task.isDone) {
+        this.task.doneAt = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss", 'ca');
+      }
+    }
 
+  onIsPeriodicallyChanged(value:boolean){
+      this.isPeriodically = value;
+}
 
 
 

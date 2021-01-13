@@ -46,7 +46,7 @@
       <div class="form-group-row">
         <label for="deadline" class="col-sm-6 col-form-label">Data de venciment</label>
         <div class="class col-sm-6">
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" color="warn">
             <mat-label>Tria una data</mat-label>
             <input matInput [matDatepicker]="picker" name="deadline" class="form-control" [(ngModel)]="task.deadline" required #deadline="ngModel">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

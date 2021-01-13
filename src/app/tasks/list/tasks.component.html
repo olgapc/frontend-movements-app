@@ -28,9 +28,8 @@
 
         <ng-container matColumnDef="done">
           <th mat-header-cell *matHeaderCellDef> Fet </th>
-          <td mat-cell *matCellDef="let element"> <input type="checkbox" [(ngModel)]="element.done"></td>
+          <td mat-cell *matCellDef="let element"> <input type="checkbox" name="element.done" [(ngModel)]="element.done"></td>
         </ng-container>
-
 
 
         <ng-container matColumnDef="description">
@@ -74,7 +73,7 @@
 
         <ng-container matColumnDef="options">
           <th mat-header-cell *matHeaderCellDef> Opcions </th>
-          <td id="opcions" mat-cell *matCellDef="let element"> <input type="image" src="http://localhost:8090/images/edit-icon.png" style="width:20px; cursor:pointer;" [routerLink]="['/tasks/form/task', element.id]" />
+          <td id="opcions" mat-cell *matCellDef="let element"> <input type="image" src="http://localhost:8090/images/edit-icon.png" style="width:20px; cursor:pointer;" [routerLink]="['/tasks/form/new/task', element.id]" />
             <!--button type="button" name="edit" [routerLink]="['/tasks/form/task', element.id]" class="btn btn-outline-info btn-xs">Modificar</button-->
           </td>
         </ng-container>
