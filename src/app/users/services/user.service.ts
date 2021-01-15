@@ -20,7 +20,7 @@ export class UserService {
         private roleService: RoleService) { }
 
 
-    getUsers(page: number): Observable<any> {
+    getUsersPage(page: number): Observable<any> {
 
       return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
 
@@ -35,6 +35,10 @@ export class UserService {
           return response;
         }),
       );
+    }
+
+    getUsers(): Observable<User[]> {
+      return this.http.get<User[]>(this.urlEndPoint);
     }
 
     create(user: User): Observable<any> {

@@ -98,21 +98,25 @@ export class TaskService {
     )
   }
 
-  uploadInformations(term: string): Observable<Information[]> {
+  filterInformations(term: string): Observable<Information[]> {
     return this.http.get<Information[]>(`${this.urlEndPoint}/upload-informations/${term}`);
   }
 
   create(task: Task): Observable<any> {
 
-    return this.http.post<Task>(this.urlEndPoint, task).pipe(
+    return this.http.post<any>(this.urlEndPoint, task).pipe(
       catchError(e => {
-
+          console.log("aqui també està error");
+          console.log();
         if (e.status == 400) {
+            console.log("aqui hola està error");
           return throwError(e);
         }
         if (e.error.message) {
+            console.log("aqui està error");
           console.error(e.error.message);
         }
+        console.log(e.status);
         return throwError(e);
       })
     )

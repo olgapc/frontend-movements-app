@@ -1,10 +1,11 @@
 
 import { TimeTypes } from 'src/app/enums/time-types.enum';
+import { User } from 'src/app/users/models/user';
 import { Company } from '../../companies/company';
 import { Employee } from '../../employees/employee';
 import { AfterBeforeTask } from './after-before-task';
 import { TaskInformation } from './task-information';
-import { UserAssignment } from './user-assignment';
+
 
 export class Task {
 
@@ -14,14 +15,12 @@ export class Task {
   comment: string;
 
   typeCalculationDeadline: TimeTypes;
-  taskInformations: TaskInformation[];
-  beforeTasks: AfterBeforeTask[];
-  afterTasks: AfterBeforeTask[];
+  taskInformations: TaskInformation[]=[];
+  //beforeTasks: AfterBeforeTask[]=[];
+  //afterTasks: AfterBeforeTask[]=[];
   isPeriodically: boolean;
 
-  historicUserAssignments: UserAssignment[];
-
-  currentUserAssignment: UserAssignment[];
+  currentAssignedUser: User ;
 
   isTemplate: boolean;
   templateName: string;
@@ -29,6 +28,7 @@ export class Task {
   description: string;
   isDone: boolean;
   doneAt: string;
+  doneBy: User;
   mainTask: Task;
 
   isVisible: boolean;
@@ -37,8 +37,8 @@ export class Task {
   employee: Employee;
 
   isMainTask: boolean;
-  taskInformationsStickedToMainTask: TaskInformation[];
-  subtasks: Task[];
+  taskInformationsStickedToMainTask: TaskInformation[]=[];
+  subtasks: Task[]=[];
 
   numberToCalculateDeadline: string;
 }

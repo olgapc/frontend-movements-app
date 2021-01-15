@@ -13,13 +13,15 @@ body{
 
 input[type=checkbox] {
   transform: scale(1.3);
-  text-align: left;
+  text-align: center;
   vertical-align: middle;
   background-color: #fff;
  /*border: 1px solid #F3F2F2;*/
  cursor: pointer;
+
  filter: hue-rotate(327deg)
 }
+
 
 .border-radius {
   border-radius: 15px;

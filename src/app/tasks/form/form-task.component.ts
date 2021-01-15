@@ -75,7 +75,7 @@ export class FormTaskComponent implements OnInit {
   private _filter(value: string): Observable<Information[]> {
     const filterValue = value.toLowerCase();
 
-    return this.taskService.uploadInformations(filterValue);
+    return this.taskService.filterInformations(filterValue);
   }
 
   showDescription(information?: Information): string | undefined {

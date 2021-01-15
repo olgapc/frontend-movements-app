@@ -29,7 +29,7 @@ export class UsersComponent implements OnInit {
           page = 0;
         }
 
-        this.userService.getUsers(page)
+        this.userService.getUsersPage(page)
           .subscribe(response => {
             this.users = response.content as User[];
             this.paginator = response;

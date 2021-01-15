@@ -12,11 +12,9 @@
   </h4>
 
   <!--div class="card-header"></div-->
-  <div class="mat-elevation-z8 border-radius" *ngIf="task">
+  <div class="mat-elevation-z8 border-radius">
 
     <div class="card-body">
-
-
 
       <form #taskForm="ngForm">
 
@@ -75,9 +73,7 @@
             </div>
           </div>
 
-
-          <div class="col-sm-6" *ngIf="task.isPeriodically">
-
+          <div class="col-sm-4" *ngIf="task.isPeriodically">
             <select class="form-control" [(ngModel)]="task.typeCalculationDeadline" name="eTimeTypes">
               <option [ngValue]="undefined">--Seleccionar--</option>
               <option *ngFor="let type of eTimeTypes | keyvalue" [ngValue]="type.key">{{type.value}}</option>
@@ -94,6 +90,26 @@
 
         <br>
 
+        <!--div class="form-group row">
+          <label for="users" class="col-sm-4 col-form-label">Usuari assignat</label>
+           <div class="col-sm-6">
+            <select [compareWith]="compareUser" class="form-control"  [(ngModel)]="task.currentAssignedUser" name="currentAssignedUser">
+              <option [ngValue]="undefined">----Seleccionar usuari----</option>
+              <option *ngFor="let user of users" [ngValue]="task.currentAssignedUser">{{user.username}}</option>
+            </select>
+          </div>
+        </div-->
+
+        <div class="form-group row">
+          <label for="currentAssignedUser" class="col-form-label col-sm-4 ">Usuari assignat</label>
+           <div class="col-sm-6">
+            <select [compareWith]="compareUser" class="form-control" [(ngModel)]="task.currentAssignedUser" name="currentAssignedUser">
+              <option [ngValue]="undefined">----Seleccionar usuari----</option>
+              <option *ngFor="let user of users" [ngValue]="user">{{user.username}}</option>
+            </select>
+          </div>
+        </div>
+
 
         <div class="form-row align-items-center">
           <div class="col-auto my-1">
@@ -104,8 +120,8 @@
           </div>
         </div>
 
-        <div class="class form-row">
-          <div class="class col-sm-6">
+        <div class="form-row">
+          <div class="col-sm-6">
             <mat-form-field>
               <input matInput type="text" placeholder="Afegir informació" aria-label="Informations" [formControl]="autocompleteControl" [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete" [displayWith]="showDescription" (optionSelected)="selectInformation($event)">
@@ -117,38 +133,43 @@
           </div>
         </div>
 
+
+
         <div *ngIf="task.id">
           <div class="alert alert-info my-4" *ngIf="task.taskInformations.length === 0">
             No hi ha informacions per la tasca {{task.description}}
           </div>
-          <h5 class="float-right" *ngIf="task.id && task.taskInformations.length > 0">Informacions: <span class="badge badge-secondary">{{task.taskInformations.length}}</span></h5>
+          <h5 class="float-right" *ngIf="task.id && task.taskInformations.length>0">Informacions: <span class="badge badge-secondary">{{task.taskInformations.length}}</span></h5>
         </div>
 
-        <!--table class="table table-striped table-hover table-sm" *ngIf="task.taskInformations.length > 0">
-              <thead>
-                <tr>
-                  <th>Informació</th>
-                  <th>Pin</th>
-                  <th>Feta</th>
-                  <th>Comment</th>
-                  <th>Eliminar</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let information of task.taskInformations">
-                  <td>{{information.information.description}}</td>
-                  <td><button mat-icon-button [ngClass]="information.isSticked ? 'red' : 'black' " (click)="changeIsSticked(information.id)" aria-label="Example icon button with a home icon">
-              <mat-icon>push_pin</mat-icon>
-            </button>
 
-                  <td>
-                    <mat-checkbox (change)="informationDone(information.information.id, $event)" color='primary' name="done{{information.information.id}}" [(ngModel)]="information.done"></mat-checkbox>
-                  </td>
-                  <td>{{information.comment}}</td>
-                  <td><button class="btn btn-danger btn-sm" type="button" (click)="deleteTaskInformation(information.information.id)">x</button></td>
-                </tr>
-              </tbody>
-            </table-->
+        <table class="table table-striped table-hover table-sm">
+          <thead>
+            <tr>
+              <th>Informació</th>
+              <th>Pin</th>
+              <th>Feta</th>
+              <th>Comentari</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let information of task.taskInformations">
+              <td>{{information.information.description}}</td>
+              <td valign="center"><button mat-icon-button [ngClass]="information.isSticked ? 'red' : 'black' " (click)="changeIsSticked(information.id)" aria-label="Example icon button with a home icon">
+                  <mat-icon>push_pin</mat-icon>
+                </button>
+
+              <td><input style="margin-top: .5rem;" type="checkbox" (change)="informationDone(information.information.id, $event)" name="done{{information.information.id}}" [(ngModel)]="information.done">
+
+                <!--mat-checkbox (change)="informationDone(information.information.id, $event)" color='primary' name="done{{information.information.id}}" [(ngModel)]="information.done"></mat-checkbox-->
+              </td>
+              <td><input class="form-control" type="text" name="information.comment" value="{{information.comment}}" (change)="updateComment(information.information.id, $event)"></td>
+              <td><button class="btn btn-danger btn-sm" type="button" (click)="deleteTaskInformation(information.information.id)">x</button></td>
+            </tr>
+          </tbody>
+        </table>
 
 
         <div class="form-group-row">
@@ -160,8 +181,6 @@
 
           </div>
         </div>
-
-
 
 
 
