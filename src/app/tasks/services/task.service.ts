@@ -8,6 +8,7 @@ import { Information } from '../models/information';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { DataTablesResponse } from '../models/data-tables-response';
+import { User } from 'src/app/users/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -162,5 +163,14 @@ export class TaskService {
 
     //return this.http.get<Task[]>(this.urlEndPoint);
   }
+
+  getTasksByUser(user:User): Observable<Task[]> {
+      if(user==null){
+          console.log("aquí es null");
+          return this.http.get<Task[]>(`${this.urlEndPoint}/user/null`);
+      }
+      console.log(user.username);
+    return this.http.get<Task[]>(`${this.urlEndPoint}/user/${user.username}`);
+}
 
 }

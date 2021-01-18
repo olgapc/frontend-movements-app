@@ -56,6 +56,7 @@ import { TableExpandableRowsExampleComponent } from './tests/table-expandable-ro
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormNewTaskComponent } from './tasks/form/form-new-task.component';
+import { TasksByUserComponent } from './tasks/list/tasks-by-user.component';
 
 registerLocaleData(localeCa, 'ca');
 registerLocaleData(localeEs, 'es');
@@ -71,6 +72,7 @@ const routes: Routes = [
   { path: 'tasks', component: TasksComponent },
   { path: 'tasks/page/:page', component: TasksComponent },
   { path: 'tasks/list/bydeadline', component: TasksByDeadlineComponent},
+  { path: 'tasks/list/byuser', component: TasksByUserComponent},
   { path: 'tasks/datatable/page/:page' ,component: TasksdatatableComponent },
   { path: 'tasks/form/task', component: FormTaskComponent },
   { path: 'tasks/form/task/:taskId', component: FormTaskComponent },
@@ -139,6 +141,7 @@ const routes: Routes = [
     TasksByDeadlineComponent,
     TableExpandableRowsExampleComponent,
     FormNewTaskComponent,
+    TasksByUserComponent,
   ],
 
   imports: [

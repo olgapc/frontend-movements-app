@@ -1,0 +1,192 @@
+<div class="container-fluid my-5">
+  <h1 class="text-warning">Llistat de tasques</h1>
+  <div class="card-body text-info">
+
+      <div class="form-group row">
+        <label for="currentUser" class="col-form-label col-sm-4 ">Usuari</label>
+         <div class="col-sm-6">
+          <select [compareWith]="compareUser" class="form-control" [(ngModel)]="currentUser" (ngModelChange)="onChangeUser($event)" name="currentUser">
+            <option [ngValue]="null">Sense usuari</option>
+            <option *ngFor="let user of users" [ngValue]="user">{{user.username}}</option>
+          </select>
+        </div>
+      </div>
+
+    <div class="my-2 text-left">
+      <button class="btn btn-outline-info btn-xs mr-2" type="button" [routerLink]="['/tasks/form/new/task']">Crear tasca</button>
+    </div>
+    <div *ngIf="tasks?.length == 0" class="alert alert-info">
+      No hi ha registres a la base de dades
+    </div>
+    <div class="mat-elevation-z8 border-radius">
+      <mat-form-field color="accent" [style.fontSize.px]="20">
+        <mat-label>Filtrar</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      </mat-form-field>
+      <table mat-table #outerSort="matSort" [dataSource]="dataSource" multiTemplateDataRows matSort>
+
+        <ng-container matColumnDef="subtasks">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let element">
+            <img src="http://localhost:8090/images/plus-sign.png" alt="More details" class="d-flex flex-wrap align-items-center" style="width:20px; cursor:pointer;" *ngIf="expandedElementSubtask != element && element.subtasks.data?.length"
+                [class.expanded]="expandedElementSubtask === element" (click)="expandRowSubtask(element)">
+            <img src="http://localhost:8090/images/minus-sign.png" alt="Less details" class="rounded" style="width:20px; cursor:pointer;" *ngIf="expandedElementSubtask == element" [class.expanded]="expandedElementSubtask == undefined"
+                (click)="expandRowSubtask(element)">
+
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="done">
+          <th mat-header-cell *matHeaderCellDef> Fet </th>
+          <td mat-cell *matCellDef="let element"> <input type="checkbox" name="element.done" [(ngModel)]="element.done"></td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripció </th>
+          <td mat-cell *matCellDef="let task"> {{task.description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="deadline">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Data venciment </th>
+          <td mat-cell *matCellDef="let task">
+            <div [ngClass]="getStatus(task.deadline)"> {{ task.deadline | date: 'dd.MM.yyyy'}} </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="company">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Empresa </th>
+          <td mat-cell *matCellDef="let task">
+            <div *ngIf="task.company">{{task.company.name}} </div>
+            <div *ngIf="!task.company"></div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="employee">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Treballador </th>
+          <td mat-cell *matCellDef="let task">
+            <div *ngIf="task.employee">{{task.employee.name}} </div>
+            <div *ngIf="!task.employee"></div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="taskInformations">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let element">
+
+            <img src="http://localhost:8090/images/info.png" alt="More details" class="d-flex flex-wrap align-items-center" style="width:20px; cursor:pointer;" *ngIf="expandedElementInformation != element && element.taskInformations.data?.length"
+                [class.expanded]="expandedElementInformation === element" (click)="expandRowInformation(element)">
+            <img src="http://localhost:8090/images/minus-sign.png" alt="Less details" class="rounded" style="width:20px; cursor:pointer;" *ngIf="expandedElementInformation == element" [class.expanded]="expandedElementInformation == undefined"
+                (click)="expandRowInformation(element)">
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="options">
+          <th mat-header-cell *matHeaderCellDef> Opcions </th>
+          <td id="opcions" mat-cell *matCellDef="let element"> <input type="image" src="http://localhost:8090/images/edit-icon.png" style="width:20px; cursor:pointer;" [routerLink]="['/tasks/form/new/task', element.id]" />
+      </td>
+        </ng-container>
+
+        <!-- TASK INFORMATIONS Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail1">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="innerInformationsDisplayedColumns.length">
+            <div class="example-element-detail" *ngIf="element.taskInformations.data?.length" [@detailExpand]="element == expandedElementInformation ? 'expanded' : 'collapsed'">
+              <div class="inner-table" *ngIf="expandedElementInformation">
+                <mat-form-field>
+                  <input matInput (keyup)="applyInnerFilter($event.target.value)" placeholder="Filtrar">
+                </mat-form-field>
+                <table #innerTables1 mat-table #innerSort1="matSort" [dataSource]="element.taskInformations" matSort>
+                  <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef> Informació </th>
+                    <td mat-cell *matCellDef="let element"> {{element.information.description}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="comment">
+                    <th mat-header-cell *matHeaderCellDef> Comentari </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.comment }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="done">
+                    <th mat-header-cell *matHeaderCellDef> Fet </th>
+                    <td mat-cell *matCellDef="let element"> <input type="checkbox" [(ngModel)]="element.done"></td>
+                  </ng-container>
+
+
+                  <tr mat-header-row *matHeaderRowDef="innerInformationsDisplayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: innerInformationsDisplayedColumns;"></tr>
+                </table>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- SUBTASKS Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" *ngIf="element.subtasks.data?.length" [@detailExpand]="element == expandedElementSubtask ? 'expanded' : 'collapsed'">
+              <div class="inner-table" *ngIf="expandedElementSubtask">
+                <mat-form-field>
+                  <input matInput (keyup)="applyInnerFilter2($event.target.value)" placeholder="Filtrar">
+                </mat-form-field>
+                <table #innerTables2 mat-table #innerSort2="matSort" [dataSource]="element.subtasks" matSort>
+
+                  <ng-container matColumnDef="done">
+                    <th mat-header-cell *matHeaderCellDef> Fet </th>
+                    <td mat-cell *matCellDef="let element"> <input type="checkbox" [(ngModel)]="element.isDone"></td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef> Descripció </th>
+                    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="company">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Empresa </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div *ngIf="element.company">{{element.company.name}} </div>
+                      <div *ngIf="!element.company"></div>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="employee">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Treballador </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div *ngIf="element.employee">{{element.employee.name}} </div>
+                      <div *ngIf="!element.employee"></div>
+                    </td>
+                  </ng-container>
+
+
+
+                  <ng-container matColumnDef="deadline">
+                    <th mat-header-cell *matHeaderCellDef> Data venciment </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div [ngClass]="getStatus(element.deadline)"> {{ element.deadline | date: 'dd.MM.yyyy'}} </div>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="options">
+                    <th mat-header-cell *matHeaderCellDef> Opcions </th>
+                    <td id="opcions" mat-cell *matCellDef="let element">
+                      <input type="image" src="http://localhost:8090/images/edit-icon.png" style="width:20px; cursor:pointer;" [routerLink]="['/tasks/form/task', element.id]" />
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="innerDisplayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: innerDisplayedColumns;"></tr>
+                </table>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;" [class.example-element-row]="element.taskInformations.data?.length" [class.example-expanded-row]="expandedElementInformation === element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail1']" class="example-detail-row"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+    </div>
+ </div>
+</div>
