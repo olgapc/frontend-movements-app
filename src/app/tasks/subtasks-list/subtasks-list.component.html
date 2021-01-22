@@ -1,0 +1,49 @@
+<!--div cdkDropList
+    class="item-dropzone parent"
+    [id]="parentItemId"
+    [cdkDropListData]="parentItem"
+    [cdkDropListConnectedTo]="allDropListsIds"
+    (cdkDropListDropped)="onDragDrop($event)">
+    <div cdkDrag
+        [id]="task.id"
+        [cdkDragData]="task"
+        [cdkDragDisabled]="dragDisabled">
+        <div *ngIf="task.subtasks?" title="Drag this item with children"
+            class="item-drag-handle"
+            cdkDragHandle>
+            <i *ngIf="!dragDisabled"
+                class="material-icons">
+                drag_indicator
+            </i>
+            {{task.description}} amb {{task.subtasks.length}} subtasques
+        </div>
+        <div *ngIf="!task.subtasks" title="Drag this item"
+            class="item-drag-handle"
+            cdkDragHandle>
+            <i *ngIf="!dragDisabled"
+                class="material-icons">
+                drag_indicator
+            </i>
+            {{task.description}}
+        </div>
+
+        <div class="item-drag-preview"
+            *cdkDragPreview>
+            {{task.description}} with {{task.subtasks.length}} child item(s)
+        </div>
+    </div>
+    <ul cdkDropList
+        class="item-dropzone"
+        [id]="task.id"
+        [cdkDropListConnectedTo]="connectedDropListsIds"
+        [cdkDropListData]="task"
+        (cdkDropListDropped)="onDragDrop($event)">
+        <li *ngFor="let subtask of task.subtasks">
+            <subtasks-list [task]="subtask"
+                [parentItem]="task"
+                [connectedDropListsIds]="allDropListsIds"
+                (itemDrop)="onDragDrop($event)">
+            </subtasks-list>
+        </li>
+    </ul>
+</div-->

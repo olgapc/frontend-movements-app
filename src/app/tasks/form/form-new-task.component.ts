@@ -16,6 +16,8 @@ import { Information } from '../models/information';
 import { Task } from '../models/task';
 import { TaskInformation } from '../models/task-information';
 import { TaskService } from '../services/task.service';
+import { CdkDragDrop, CdkDragEnter, CdkDragExit, moveItemInArray } from '@angular/cdk/drag-drop';
+import { TaskSequence } from '../models/task-sequence';
 
 @Component({
   selector: 'app-form-new-task',
@@ -31,6 +33,12 @@ export class FormNewTaskComponent implements OnInit {
   filteredInformations: Observable<Information[]>;
   public errors: string[];
 
+  //SUBTASKS
+  //public parentTask: Task;
+  public get connectedDropListsIds(): number[] {
+      //we reverse ids here to respect items nesting hierarchy
+    return this.getIdsRecursive(this.task).reverse();
+  }
 
   constructor(private companyService: CompanyService,
     private employeeService: EmployeeService,
@@ -64,8 +72,8 @@ export class FormNewTaskComponent implements OnInit {
       if (taskId) {
         this.taskService.getTask(taskId).subscribe(task => {
           this.task = task;
-          if(this.task.currentAssignedUser==null){
-              this.task.currentAssignedUser = undefined;
+          if (this.task.currentAssignedUser == null) {
+            this.task.currentAssignedUser = undefined;
           }
 
         });
@@ -133,7 +141,7 @@ export class FormNewTaskComponent implements OnInit {
 
     this.users.forEach((user: User) => {
       if (this.authService.user.username === user.username) {
-          newUser = user;
+        newUser = user;
       }
     });
 
@@ -259,4 +267,50 @@ export class FormNewTaskComponent implements OnInit {
     }
     return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? false : o1.username === o2.username;
   }
+
+  //methods for subtasks
+  public onDragDrop(event: CdkDragDrop<Task>) {
+    event.container.element.nativeElement.classList.remove('active');
+    if (this.canBeDropped(event)) {
+      const movingTask: Task = event.item.data;
+      let newTaskSequence: TaskSequence = new TaskSequence();
+      newTaskSequence.subtask = movingTask;
+      event.container.data.subtasks.push(newTaskSequence);
+      event.previousContainer.data.subtasks = event.previousContainer.data.subtasks.filter((child) => child.id !== movingTask.id);
+    } else {
+      moveItemInArray(
+        event.container.data.subtasks,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+  }
+
+  private getIdsRecursive(task: Task): number[] {
+    let ids = [task.id];
+
+    if (task.subtasks) {
+      task.subtasks.forEach((childTaskSequence) => { ids = ids.concat(this.getIdsRecursive(childTaskSequence.subtask)) });
+    }
+    console.log(ids);
+    return ids;
+  }
+
+  private canBeDropped(event: CdkDragDrop<Task, Task>): boolean {
+    const movingItem: Task = event.item.data;
+
+    return event.previousContainer.id !== event.container.id
+      && this.isNotSelfDrop(event)
+      && !this.hasChild(movingItem, event.container.data);
+  }
+
+  private isNotSelfDrop(event: CdkDragDrop<Task> | CdkDragEnter<Task> | CdkDragExit<Task>): boolean {
+    return event.container.data.id !== event.item.data.id;
+  }
+
+  private hasChild(parentItem: Task, childItem: Task): boolean {
+    const hasChild = parentItem.subtasks.some((taskSequence) => taskSequence.subtask.id === childItem.id);
+    return hasChild ? true : parentItem.subtasks.some((taskSequence) => this.hasChild(taskSequence.subtask, childItem));
+  }
+
 }

@@ -44,19 +44,23 @@ import { ViewUserComponent } from './users/view/view-user.component';
 import { FormUserComponent } from './users/form/form-user.component';
 import { ViewCompanyTypeComponent } from './company-types/view/view-company-type.component';
 import { FormCompanyTypeComponent } from './company-types/form/form-company-type.component';
-import { TemplatesComponent } from './tasks/list-templates/templates.component';
+//import { TemplatesComponent } from './tasks/list-templates/templates.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { TasksdatatableComponent } from './tasks/list-data-table/tasksdatatable.component';
+//import { TasksdatatableComponent } from './tasks/list-data-table/tasksdatatable.component';
 import { DataTablesModule } from 'angular-datatables';
 import { ZeroConfigurationComponent } from './zero-configuration/zero-configuration.component';
-import { TasksByDeadlineComponent } from './tasks/list/tasks-by-deadline.component';
+//import { TasksByDeadlineComponent } from './tasks/list/tasks-by-deadline.component';
 import { TableExpandableRowsExampleComponent } from './tests/table-expandable-rows-example/table-expandable-rows-example.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormNewTaskComponent } from './tasks/form/form-new-task.component';
-import { TasksByUserComponent } from './tasks/list/tasks-by-user.component';
+//import { TasksByUserComponent } from './tasks/list/tasks-by-user.component';
+//import { SubtasksListComponent } from './tasks/subtasks-list/subtasks-list.component';
+//import { ListItemComponent } from './a-drap-and-drop/list-item/list-item.component';
+
+
 
 registerLocaleData(localeCa, 'ca');
 registerLocaleData(localeEs, 'es');
@@ -71,9 +75,9 @@ const routes: Routes = [
   { path: 'tasks/:id', component: ViewTaskComponent },
   { path: 'tasks', component: TasksComponent },
   { path: 'tasks/page/:page', component: TasksComponent },
-  { path: 'tasks/list/bydeadline', component: TasksByDeadlineComponent},
-  { path: 'tasks/list/byuser', component: TasksByUserComponent},
-  { path: 'tasks/datatable/page/:page' ,component: TasksdatatableComponent },
+  //{ path: 'tasks/list/bydeadline', component: TasksByDeadlineComponent},
+  //{ path: 'tasks/list/byuser', component: TasksByUserComponent},
+  //{ path: 'tasks/datatable/page/:page' ,component: TasksdatatableComponent },
   { path: 'tasks/form/task', component: FormTaskComponent },
   { path: 'tasks/form/task/:taskId', component: FormTaskComponent },
   { path: 'tasks/form/company/:companyId', component: FormTaskComponent },
@@ -82,8 +86,8 @@ const routes: Routes = [
   { path: 'tasks/form/new/task/:taskId', component: FormNewTaskComponent },
   { path: 'tasks/form/new/company/:companyId', component: FormNewTaskComponent },
   { path: 'tasks/form/new/employee/:companyId/:employeeId', component: FormNewTaskComponent },
-  { path: 'templates', component: TemplatesComponent },
-  { path: 'templates/page/:page', component: TemplatesComponent },
+  //{ path: 'templates', component: TemplatesComponent },
+  //{ path: 'templates/page/:page', component: TemplatesComponent },
   { path: 'informations', component: InformationsComponent },
   { path: 'informations/page/:page', component: InformationsComponent },
   { path: 'informations/view/:id', component: ViewInformationComponent },
@@ -105,7 +109,7 @@ const routes: Routes = [
   { path: 'company_types/form/:id', component: FormCompanyTypeComponent },
   { path: 'company_types/view/:id', component: ViewCompanyTypeComponent },
   { path: 'zero_config', component: ZeroConfigurationComponent},
-  { path: 'tests/TableExpandableRowsExampleComponent', component: TableExpandableRowsExampleComponent}
+  { path: 'tests/TableExpandableRowsExampleComponent', component: TableExpandableRowsExampleComponent},
 
 ];
 
@@ -119,7 +123,7 @@ const routes: Routes = [
     EmployeesComponent,
     RolesComponent,
     TasksComponent,
-    TasksdatatableComponent,
+    //TasksdatatableComponent,
     CompanyTypesComponent,
     ViewCompanyComponent,
     LoginComponent,
@@ -136,12 +140,14 @@ const routes: Routes = [
     FormUserComponent,
     ViewCompanyTypeComponent,
     FormCompanyTypeComponent,
-    TemplatesComponent,
+    //TemplatesComponent,
     ZeroConfigurationComponent,
-    TasksByDeadlineComponent,
+    //TasksByDeadlineComponent,
     TableExpandableRowsExampleComponent,
     FormNewTaskComponent,
-    TasksByUserComponent,
+    //TasksByUserComponent,
+    //SubtasksListComponent,
+    //ListItemComponent,
   ],
 
   imports: [

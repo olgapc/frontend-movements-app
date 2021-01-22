@@ -10,8 +10,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { TaskInformation } from '../models/task-information';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TaskSequence } from '../models/task-sequence';
 
 @Component({
 
@@ -34,7 +34,7 @@ export class TasksComponent implements OnInit {
   @ViewChildren('innerSort1') innerSort1: QueryList<MatSort>;
   @ViewChildren('innerTables1') innerTables1: QueryList<MatTable<TaskInformation>>;
   @ViewChildren('innerSort2') innerSort2: QueryList<MatSort>;
-  @ViewChildren('innerTables2') innerTables2: QueryList<MatTable<Task>>;
+  @ViewChildren('innerTables2') innerTables2: QueryList<MatTable<TaskSequence>>;
 
 
   title: string = 'Nova tasca';
@@ -47,8 +47,8 @@ export class TasksComponent implements OnInit {
 
   today: Date = new Date();
 
-  displayedColumns = ['subtasks', 'done', 'description', 'company','employee', 'deadline', 'taskInformations', 'options'];
-  innerDisplayedColumns = ['done', 'description', 'company','employee','deadline', 'options'];
+  displayedColumns = ['subtasks', 'done', 'description', 'company', 'employee', 'deadline', 'taskInformations', 'options'];
+  innerDisplayedColumns = ['done', 'description', 'company', 'employee', 'deadline', 'comment', 'options'];
   innerInformationsDisplayedColumns = ['description', 'comment', 'done']
   dataSource: MatTableDataSource<any[]>;
   expandedElementSubtask: Task | null;
@@ -69,12 +69,14 @@ export class TasksComponent implements OnInit {
     this.taskService.getTasks().subscribe(
       tasks => {
         this.tasks = tasks;
+
+        //TEMPORAL COMMENT
         this.tasks.forEach(task => {
           if (task.subtasks && Array.isArray(task.subtasks) && task.subtasks.length) {
 
             if (task.taskInformations && Array.isArray(task.taskInformations) && task.taskInformations.length) {
               this.tasksData = [...this.tasksData, { ...task, subtasks: new MatTableDataSource(task.subtasks), taskInformations: new MatTableDataSource(task.taskInformations) }];
-              //console.log(task);
+
             } else {
               this.tasksData = [...this.tasksData, { ...task, subtasks: new MatTableDataSource(task.subtasks) }];
             }
@@ -86,6 +88,9 @@ export class TasksComponent implements OnInit {
           console.log(task);
         });
         this.dataSource = new MatTableDataSource(this.tasksData);
+        //end temporal comment
+
+
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
@@ -127,10 +132,10 @@ export class TasksComponent implements OnInit {
     //console.log(element.subtasks ==null);
     //console.log((element.subtasks as MatTableDataSource<Task>).data.length>0);
     try {
-      if ((element.subtasks as MatTableDataSource<Task>).data.length > 0) {
-        element.subtasks && (element.subtasks as MatTableDataSource<Task>).data.length ? (this.expandedElementSubtask = this.expandedElementSubtask === element ? null : element) : null;
+      if ((element.subtasks as MatTableDataSource<TaskSequence>).data.length > 0) {
+        element.subtasks && (element.subtasks as MatTableDataSource<TaskSequence>).data.length ? (this.expandedElementSubtask = this.expandedElementSubtask === element ? null : element) : null;
         this.cd.detectChanges();
-        this.innerTables2.forEach((table, index) => (table.dataSource as MatTableDataSource<Task>).sort = this.innerSort2.toArray()[index]);
+        this.innerTables2.forEach((table, index) => (table.dataSource as MatTableDataSource<TaskSequence>).sort = this.innerSort2.toArray()[index]);
       }
     } catch (error) {
     }
@@ -147,7 +152,7 @@ export class TasksComponent implements OnInit {
   }
 
   applyInnerFilter2(filterValue: string) {
-    this.innerTables2.forEach((table, index) => (table.dataSource as MatTableDataSource<Task>).filter = filterValue.trim().toLowerCase());
+    this.innerTables2.forEach((table, index) => (table.dataSource as MatTableDataSource<TaskSequence>).filter = filterValue.trim().toLowerCase());
   }
 
 
