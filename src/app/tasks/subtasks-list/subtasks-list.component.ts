@@ -6,7 +6,7 @@ import { TaskSequence } from '../models/task-sequence';
 @Component({
   selector: 'subtasks-list',
   templateUrl: './subtasks-list.component.html',
-  styleUrls: ['./subtasks-list.component.css']
+  styleUrls: ['./subtasks-list.component.scss']
 })
 export class SubtasksListComponent implements OnInit{
   @Input() task: Task;

@@ -11,6 +11,7 @@ import { FormCompanyComponent } from './companies/form/form-company.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 import localeCa from '@angular/common/locales/ca';
 import localeEs from '@angular/common/locales/es';
 import { EmployeesComponent } from './employees/list/employees.component';
@@ -56,9 +57,13 @@ import { TableExpandableRowsExampleComponent } from './tests/table-expandable-ro
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormNewTaskComponent } from './tasks/form/form-new-task.component';
+import { ListItemComponent } from './a-drap-and-drop/list-item/list-item.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
+import { BaseComponent } from './a-drap-and-drop/base/base.component';
 //import { TasksByUserComponent } from './tasks/list/tasks-by-user.component';
 //import { SubtasksListComponent } from './tasks/subtasks-list/subtasks-list.component';
-//import { ListItemComponent } from './a-drap-and-drop/list-item/list-item.component';
+
 
 
 
@@ -108,8 +113,9 @@ const routes: Routes = [
   { path: 'company_types/form', component: FormCompanyTypeComponent },
   { path: 'company_types/form/:id', component: FormCompanyTypeComponent },
   { path: 'company_types/view/:id', component: ViewCompanyTypeComponent },
-  { path: 'zero_config', component: ZeroConfigurationComponent},
-  { path: 'tests/TableExpandableRowsExampleComponent', component: TableExpandableRowsExampleComponent},
+  { path: 'zero_config', component: ZeroConfigurationComponent },
+  { path: 'tests/TableExpandableRowsExampleComponent', component: TableExpandableRowsExampleComponent },
+  { path: 'tests/listitem', component: BaseComponent },
 
 ];
 
@@ -145,9 +151,10 @@ const routes: Routes = [
     //TasksByDeadlineComponent,
     TableExpandableRowsExampleComponent,
     FormNewTaskComponent,
+    ListItemComponent,
+    BaseComponent,
     //TasksByUserComponent,
     //SubtasksListComponent,
-    //ListItemComponent,
   ],
 
   imports: [
@@ -171,7 +178,9 @@ const routes: Routes = [
     MatTableModule,
     DataTablesModule,
     MatSlideToggleModule,
-    MatIconModule
+    MatIconModule,
+    DragDropModule,
+    CommonModule
 
   ],
   providers:
