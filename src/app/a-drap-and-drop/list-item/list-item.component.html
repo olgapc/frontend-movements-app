@@ -11,11 +11,12 @@
         <div title="Drag this item with children"
             class="item-drag-handle"
             cdkDragHandle>
-            {{item.name}}
             <i *ngIf="!dragDisabled"
-                class="material-icons">
+                class="material-icons icon-grey">
                 drag_indicator
             </i>
+            {{item.name}}
+
         </div>
         <div class="item-drag-preview"
             *cdkDragPreview>

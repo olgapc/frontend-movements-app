@@ -1,19 +1,23 @@
 ul,
 li {
-  margin: 10px;
-  padding: 10px;
+  //margin: 10px;
+  padding: 0px;
   background-color: white;
-  border-radius: 4px;
+  border-radius: 5px;
   list-style: none;
+  margin-left: 4px;
+  margin-right: 1px;
+  margin-bottom: 4px;
 }
 
 li {
-  border: 1px solid black;
+  border: 1px solid #f0ad4e;
+  //box-shadow: 1px 1px grey;
 }
 
 .item {
   &-dropzone {
-    border: 1px dashed grey;
+    //border: 1px dashed grey;
     min-height: 20px;
 
     &.parent {
@@ -38,10 +42,15 @@ li {
 }
 
 .cdk-drop-list-dragging {
-  background: lightgreen;
+  background: #F1C68A;
 }
 
 .cdk-drag-placeholder {
   opacity: 0;
   height: 0;
+}
+
+i.icon-grey {
+    color: grey;
+    opacity: 0.5;
 }

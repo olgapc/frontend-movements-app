@@ -15,26 +15,26 @@ export class BaseComponent implements OnInit {
       }
 
       constructor() {
-        this.parentItem = new Item({ name: 'parent-item' });
+        this.parentItem = new Item({ name: 'TASCA PARE' });
       }
 
       public ngOnInit() {
         this.parentItem.children.push(new Item({
-          name: 'test1',
+          name: 'Una subtasca en general',
           children: [
-            new Item({ name: 'subItem1' }),
-            new Item({ name: 'subItem2' }),
-            new Item({ name: 'subItem3' })
+            new Item({ name: 'SubTasca1' }),
+            new Item({ name: 'Subtasca2' }),
+            new Item({ name: 'Subtasca3' })
           ]
         }));
         this.parentItem.children.push(new Item({
-          name: 'test2',
+          name: 'Una altra subtasca en general',
           children: [
-            new Item({ name: 'subItem4' }),
-            new Item({ name: 'subItem5' }),
+            new Item({ name: 'Un altre exemple de subtasca' }),
+            new Item({ name: 'Aqui un exemple de subtasca' }),
             new Item({
               name: 'subItem6', children: [
-                new Item({ name: 'subItem8' })
+                new Item({ name: 'Tenim una subtasca d\'exemple per provar' })
               ]
             })
           ]
