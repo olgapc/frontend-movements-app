@@ -2,7 +2,7 @@ import { Task } from 'src/app/tasks/models/task';
 import { UserRole } from './user-role';
 
 export class User {
-  id: number;
+  id: string;
   username: string;
   lastName: string;
   name: string;

@@ -25,15 +25,12 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    console.log(this.user);
     if(this.user.username == null || this.user.password == null){
       Swal.fire('Error login', 'Username o password buides', 'error');
       return;
     }
 
     this.authService.login(this.user).subscribe(response => {
-      console.log(response);
-
 
       this.authService.saveUser(response.access_token);
       this.authService.saveToken(response.access_token);
