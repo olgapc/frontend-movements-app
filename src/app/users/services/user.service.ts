@@ -57,8 +57,8 @@ export class UserService {
       )
     }
 
-    getUser(id:number): Observable<User> {
-      return this.http.get<User>(`${this.urlEndPoint}/${id}`).pipe(
+    getUser(idString:string): Observable<User> {
+      return this.http.get<User>(`${this.urlEndPoint}/${idString}`).pipe(
         catchError(e => {
           if (e.status != 401 && e.error.message) {
             this.router.navigate(['/users']);
@@ -85,7 +85,7 @@ export class UserService {
       )
     }
 
-    delete(id: number): Observable<User> {
+    delete(id: string): Observable<User> {
       return this.http.delete<User>(`${this.urlEndPoint}/${id}`).pipe(
         catchError(e => {
 

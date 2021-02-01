@@ -72,6 +72,7 @@ export class FormNewTaskComponent implements OnInit {
       if (taskId) {
         this.taskService.getTask(taskId).subscribe(task => {
           this.task = task;
+          /*this.parentTask = task;*/
           if (this.task.currentAssignedUser == null) {
             this.task.currentAssignedUser = undefined;
           }

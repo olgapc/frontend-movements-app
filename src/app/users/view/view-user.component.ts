@@ -16,11 +16,10 @@ export class ViewUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
-      let id = +params.get('id');
-      this.userService.getUser(id).subscribe(user =>
+      let idString = params.get('idString');
+      this.userService.getUser(idString).subscribe(user =>
         this.user = user);
     });
-
   }
 
 }

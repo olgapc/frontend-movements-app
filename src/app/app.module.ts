@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+
 import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -107,9 +108,9 @@ const routes: Routes = [
   { path: 'employees/form/:companyId/:employeeId', component: FormEmployeeComponent },
   { path: 'users', component: UsersComponent },
   { path: 'users/page/:page', component: UsersComponent },
-  { path: 'users/view/:id', component: ViewUserComponent },
+  { path: 'users/view/:idString', component: ViewUserComponent },
   { path: 'users/form', component: FormUserComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
-  { path: 'users/form/:id', component: FormUserComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
+  { path: 'users/form/:idString', component: FormUserComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
   { path: 'company_types', component: CompanyTypesComponent },
   { path: 'company_types/page/:page', component: CompanyTypesComponent },
   { path: 'company_types/form', component: FormCompanyTypeComponent },
@@ -118,6 +119,7 @@ const routes: Routes = [
   { path: 'zero_config', component: ZeroConfigurationComponent },
   { path: 'tests/TableExpandableRowsExampleComponent', component: TableExpandableRowsExampleComponent },
   { path: 'tests/listitem', component: BaseComponent },
+
 
 ];
 

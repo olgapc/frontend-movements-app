@@ -33,9 +33,9 @@ export class FormUserComponent implements OnInit {
 
   public loadUser(): void {
     this.activatedRoute.params.subscribe(params => {
-      let id = +params['id']
-      if (id) {
-        this.userService.getUser(id).subscribe(user => this.user = user);
+      let idString = params['idString']
+      if (idString) {
+        this.userService.getUser(idString).subscribe(user => this.user = user);
       } else {
         this.user.isEnabled = true;
       }

@@ -2,9 +2,9 @@
   <h1 class="text-warning">Llistat d'usuaris</h1>
   <div class="card-body text-info">
 
-      <div class="my-2 text-left">
-        <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-outline-info btn-xs mr-2" type="button" [routerLink]="['/users/form']">Crear usuari</button>
-      </div>
+    <div class="my-2 text-left">
+      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-outline-info btn-xs mr-2" type="button" [routerLink]="['/users/form']">Crear usuari</button>
+    </div>
 
     <div *ngIf="users?.length == 0" class="alert alert-info">
       No hi ha registres a la base de dades
@@ -28,7 +28,6 @@
 
       <tbody>
         <tr *ngFor="let user of users">
-
           <td><button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/users/view', user.id]" class="btn btn-outline-info btn-xs">{{ user.username }}</button></td>
           <td>{{ user.name }}</td>
           <td>{{ user.lastName }}</td>
@@ -36,12 +35,12 @@
           <td>{{ user.isEnabled }}</td>
           <td>{{ user.createAt | date: 'EEE dd.MM.yyyy HH:mm' }}</td>
           <td>
-              <li *ngFor="let role of user.userRoles">{{ role.role.description }}</li>
+            <li *ngFor="let role of user.userRoles">{{ role.role.description }}</li>
           </td>
           <td>
-              <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/users/form', user.id]" class="btn btn-outline-info btn-xs">Modificar</button>
-              <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="delete" (click)='delete(user)' class="btn btn-outline-danger btn-xs">Eliminar</button>
-      </td>
+            <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="edit" [routerLink]="['/users/form', user.id]" class="btn btn-outline-info btn-xs">Modificar</button>
+            <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" name="delete" (click)='delete(user)' class="btn btn-outline-danger btn-xs">Eliminar</button>
+          </td>
         </tr>
       </tbody>
     </table>
