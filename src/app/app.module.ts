@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppComponent } from './app.component';
+
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { PaginatorComponent } from './paginator/paginator.component';
@@ -11,10 +12,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormCompanyComponent } from './companies/form/form-company.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
+
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import localeCa from '@angular/common/locales/ca';
 import localeEs from '@angular/common/locales/es';
+
 import { EmployeesComponent } from './employees/list/employees.component';
 import { RolesComponent } from './users/list-roles/roles.component';
 import { TasksComponent } from './tasks/list/tasks.component';
@@ -80,6 +83,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'tasks/:id', component: ViewTaskComponent },
   { path: 'tasks', component: TasksComponent },
+
   { path: 'tasks/page/:page', component: TasksComponent },
   //{ path: 'tasks/list/bydeadline', component: TasksByDeadlineComponent},
   //{ path: 'tasks/list/byuser', component: TasksByUserComponent},
