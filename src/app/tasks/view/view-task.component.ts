@@ -17,7 +17,7 @@ export class ViewTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
-      let id = +params.get('id');
+      let id = params.get('id');
       this.taskService.getTask(id).subscribe(task => this.task = task);
     });
   }

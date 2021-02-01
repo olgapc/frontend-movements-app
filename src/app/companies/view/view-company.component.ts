@@ -10,6 +10,7 @@ import { TaskService } from 'src/app/tasks/services/task.service';
 //import Swal from 'sweetalert2';
 import { Task } from 'src/app/tasks/models/task';
 import { Employee } from 'src/app/employees/employee';
+import { EmployeeService } from 'src/app/employees/employee.service';
 
 @Component({
   selector: 'company-view',
@@ -27,6 +28,7 @@ export class ViewCompanyComponent implements OnInit {
 
   constructor(private companyService: CompanyService,
     private taskService: TaskService,
+    private employeeService: EmployeeService,
     //private activatedRoute: ActivatedRoute, //Commented because we use Modal
     public modalService: ModalService,
     public authService: AuthService) { }
@@ -134,7 +136,7 @@ export class ViewCompanyComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
-        this.taskService.delete(employee.id).subscribe(
+        this.employeeService.delete(employee.id).subscribe(
           () => {
             this.company.employees = this.company.employees.filter(t => t !== employee)
             SwalWithBootstrapButtons.fire(

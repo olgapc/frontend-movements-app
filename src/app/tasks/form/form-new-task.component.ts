@@ -35,7 +35,7 @@ export class FormNewTaskComponent implements OnInit {
 
   //SUBTASKS
   //public parentTask: Task;
-  public get connectedDropListsIds(): number[] {
+  public get connectedDropListsIds(): string[] {
       //we reverse ids here to respect items nesting hierarchy
     return this.getIdsRecursive(this.task).reverse();
   }
@@ -63,7 +63,7 @@ export class FormNewTaskComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
 
-      let taskId = +params['taskId']
+      let taskId = params['taskId']
 
       let companyId = +params['companyId']
 
@@ -277,7 +277,7 @@ export class FormNewTaskComponent implements OnInit {
       let newTaskSequence: TaskSequence = new TaskSequence();
       newTaskSequence.subtask = movingTask;
       event.container.data.subtasks.push(newTaskSequence);
-      event.previousContainer.data.subtasks = event.previousContainer.data.subtasks.filter((child) => child.id !== movingTask.id);
+      event.previousContainer.data.subtasks = event.previousContainer.data.subtasks.filter((child) => child.subtask.id !== movingTask.id);
     } else {
       moveItemInArray(
         event.container.data.subtasks,
@@ -287,7 +287,7 @@ export class FormNewTaskComponent implements OnInit {
     }
   }
 
-  private getIdsRecursive(task: Task): number[] {
+  private getIdsRecursive(task: Task): string[] {
     let ids = [task.id];
 
     if (task.subtasks) {

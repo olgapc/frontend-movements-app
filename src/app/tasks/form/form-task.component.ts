@@ -51,7 +51,7 @@ export class FormTaskComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
 
-      let taskId = +params['taskId']
+      let taskId = params['taskId']
 
       let companyId = +params['companyId']
 

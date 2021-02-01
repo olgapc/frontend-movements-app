@@ -53,7 +53,7 @@ export class TaskService {
     //return this.http.get<Task[]>(this.urlEndPoint);
   }
 
-  getTask(id: number): Observable<Task> {
+  getTask(id: string): Observable<Task> {
     return this.http.get<Task>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
         if (e.status != 401 && e.error.message) {
@@ -84,7 +84,7 @@ export class TaskService {
     );
   }
 
-  delete(id: number): Observable<Task> {
+  delete(id: string): Observable<Task> {
     return this.http.delete<Task>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
 

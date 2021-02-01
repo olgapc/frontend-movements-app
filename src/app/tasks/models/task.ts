@@ -9,7 +9,7 @@ import { TaskInformation } from './task-information';
 
 export class Task {
 
-  id: number;
+  id: string;
   createAt: string;
   isToSend: boolean;
   comment: string;
