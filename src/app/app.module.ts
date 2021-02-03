@@ -1,7 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-
 import { NgModule, LOCALE_ID } from '@angular/core';
-
 import { AppComponent } from './app.component';
 
 import { HeaderComponent } from './header/header.component';
@@ -66,6 +64,8 @@ import { ListItemComponent } from './a-drap-and-drop/list-item/list-item.compone
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { BaseComponent } from './a-drap-and-drop/base/base.component';
+import { BaseTaskComponent } from './a-drap-and-drop-task/base-task/base-task.component';
+import { ListItemTaskComponent } from './a-drap-and-drop-task/list-item-task/list-item-task.component';
 //import { TasksByUserComponent } from './tasks/list/tasks-by-user.component';
 //import { SubtasksListComponent } from './tasks/subtasks-list/subtasks-list.component';
 
@@ -122,6 +122,7 @@ const routes: Routes = [
   { path: 'zero_config', component: ZeroConfigurationComponent },
   { path: 'tests/TableExpandableRowsExampleComponent', component: TableExpandableRowsExampleComponent },
   { path: 'tests/listitem', component: BaseComponent },
+  { path: 'tests/listitemtask', component: BaseTaskComponent}
 
 
 ];
@@ -160,6 +161,8 @@ const routes: Routes = [
     FormNewTaskComponent,
     ListItemComponent,
     BaseComponent,
+    BaseTaskComponent,
+    ListItemTaskComponent
     //TasksByUserComponent,
     //SubtasksListComponent,
   ],

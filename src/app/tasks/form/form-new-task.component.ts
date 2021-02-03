@@ -34,7 +34,9 @@ export class FormNewTaskComponent implements OnInit {
   public errors: string[];
 
   //SUBTASKS
-  //public parentTask: Task;
+  public parentTask: Task = new Task();
+
+
   public get connectedDropListsIds(): string[] {
       //we reverse ids here to respect items nesting hierarchy
     return this.getIdsRecursive(this.task).reverse();
@@ -72,14 +74,13 @@ export class FormNewTaskComponent implements OnInit {
       if (taskId) {
         this.taskService.getTask(taskId).subscribe(task => {
           this.task = task;
-          /*this.parentTask = task;*/
+          this.parentTask = task;
           if (this.task.currentAssignedUser == null) {
             this.task.currentAssignedUser = undefined;
           }
 
         });
-        //console.log("task");
-        //console.log(this.task);
+
       } else if (employeeId) {
         //console.log("employee task");
         this.employeeService.getEmployee(employeeId).subscribe(employee => this.task.employee = employee);
@@ -150,7 +151,6 @@ export class FormNewTaskComponent implements OnInit {
     console.log(this.task);
 
   }
-
 
 
   showDescription(information?: Information): string | undefined {
@@ -289,11 +289,9 @@ export class FormNewTaskComponent implements OnInit {
 
   private getIdsRecursive(task: Task): string[] {
     let ids = [task.id];
-
     if (task.subtasks) {
       task.subtasks.forEach((childTaskSequence) => { ids = ids.concat(this.getIdsRecursive(childTaskSequence.subtask)) });
     }
-    console.log(ids);
     return ids;
   }
 
@@ -309,9 +307,14 @@ export class FormNewTaskComponent implements OnInit {
     return event.container.data.id !== event.item.data.id;
   }
 
-  private hasChild(parentItem: Task, childItem: Task): boolean {
-    const hasChild = parentItem.subtasks.some((taskSequence) => taskSequence.subtask.id === childItem.id);
-    return hasChild ? true : parentItem.subtasks.some((taskSequence) => this.hasChild(taskSequence.subtask, childItem));
+  private hasChild(parentTask: Task, childItem: Task): boolean {
+    const hasChild = parentTask.subtasks.some((taskSequence) => {taskSequence.subtask.id === childItem.id;
+    console.log("hasChild in form-new-task");
+    console.log(childItem.id);
+    console.log(taskSequence.subtask.id);
+    console.log(hasChild);
+    });
+    return hasChild ? true : parentTask.subtasks.some((taskSequence) => this.hasChild(taskSequence.subtask, childItem));
   }
 
 }

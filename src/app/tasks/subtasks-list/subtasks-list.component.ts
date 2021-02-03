@@ -10,29 +10,29 @@ import { TaskSequence } from '../models/task-sequence';
 })
 export class SubtasksListComponent implements OnInit{
   @Input() task: Task;
-  @Input() parentItem?: Task;
-  @Input() public set connectedDropListsIds(ids: number[]) {
+  @Input() parentTask?: Task;
+  @Input() public set connectedDropListsIds(ids: string[]) {
     this.allDropListsIds = ids;
   }
 
-  public get connectedDropListsIds(): number[] {
+  public get connectedDropListsIds(): string[] {
     return this.allDropListsIds.filter((id) => id !== this.task.id);
   }
 
-  public allDropListsIds: number[];
+  public allDropListsIds: string[];
 
   public get dragDisabled(): boolean {
       console.log ("dragDisabled");
-      console.log(this.parentItem);
-      console.log(!this.parentItem);
-    return !this.parentItem;
+      console.log(this.parentTask);
+      console.log(!this.parentTask);
+    return !this.parentTask;
   }
 
-  public get parentItemId(): number {
-      console.log(this.parentItem.id);
-      console.log("parentItemId");
+  public get parentTaskId(): string {
+      console.log(this.parentTask.id);
+      console.log("parentTaskId");
       console.log(this.dragDisabled);
-    return this.dragDisabled ? null : this.parentItem.id;
+    return this.dragDisabled ? '' : this.parentTask.id;
 
   }
 

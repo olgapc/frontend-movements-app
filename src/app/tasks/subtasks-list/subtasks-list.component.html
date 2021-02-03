@@ -1,23 +1,23 @@
-<!--div cdkDropList
+<div cdkDropList
     class="item-dropzone parent"
-    [id]="parentItemId"
-    [cdkDropListData]="parentItem"
+    [id]="parentTaskId"
+    [cdkDropListData]="parentTask"
     [cdkDropListConnectedTo]="allDropListsIds"
     (cdkDropListDropped)="onDragDrop($event)">
     <div cdkDrag
         [id]="task.id"
         [cdkDragData]="task"
         [cdkDragDisabled]="dragDisabled">
-        <div *ngIf="task.subtasks?" title="Drag this item with children"
+        <div <!--*ngIf="task.subtasks?"--> title="Drag this item with children"
             class="item-drag-handle"
             cdkDragHandle>
             <i *ngIf="!dragDisabled"
-                class="material-icons">
+                class="material-icons icon-grey">
                 drag_indicator
             </i>
-            {{task.description}} amb {{task.subtasks.length}} subtasques
+            {{task.description}} <!--amb {{task.subtasks.length}} subtasques-->
         </div>
-        <div *ngIf="!task.subtasks" title="Drag this item"
+        <!--div *ngIf="!task.subtasks" title="Drag this item"
             class="item-drag-handle"
             cdkDragHandle>
             <i *ngIf="!dragDisabled"
@@ -25,7 +25,7 @@
                 drag_indicator
             </i>
             {{task.description}}
-        </div>
+        </div-->
 
         <div class="item-drag-preview"
             *cdkDragPreview>
@@ -38,12 +38,12 @@
         [cdkDropListConnectedTo]="connectedDropListsIds"
         [cdkDropListData]="task"
         (cdkDropListDropped)="onDragDrop($event)">
-        <li *ngFor="let subtask of task.subtasks">
-            <subtasks-list [task]="subtask"
-                [parentItem]="task"
+        <li *ngFor="let taskSequence of task.subtasks">
+            <subtasks-list [task]="taskSequence.subtask"
+                [parentTask]="task"
                 [connectedDropListsIds]="allDropListsIds"
                 (itemDrop)="onDragDrop($event)">
             </subtasks-list>
         </li>
     </ul>
-</div-->
+</div>
