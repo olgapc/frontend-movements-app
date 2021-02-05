@@ -4,10 +4,12 @@
       <i *ngIf="!dragDisabled" class="material-icons icon-grey">
         drag_indicator
       </i>
-      <button *ngIf="!dragDisabled" type="button" class="btn button1" name="button"><i class="material-icons icon-grey1" onclick="moveItemUp()">
+      <button *ngIf="!dragDisabled" [disabled]="position == 0" type="button" class="btn button1" (click)="moveItemUp()" name="button"><i class="material-icons icon-grey1" >
           arrow_upward
-        </i></button>
-      <button *ngIf="!dragDisabled" type="button" class="btn button1" name="button"><i class="material-icons icon-grey1">
+        </i>
+
+      </button>
+      <button *ngIf="!dragDisabled" [disabled]="position == length-1" type="button" class="btn button1" (click)="moveItemDown()" name="button"><i class="material-icons icon-grey1">
           arrow_downward
         </i></button> {{item.name}}
 
@@ -18,7 +20,7 @@
   </div>
   <ul cdkDropList class="item-dropzone" [id]="item.uId" [cdkDropListConnectedTo]="connectedDropListsIds" [cdkDropListData]="item" (cdkDropListDropped)="onDragDrop($event)">
     <li *ngFor="let subItem of item.children">
-      <list-item-task [item]="subItem.subtask" [parentItem]="item" [connectedDropListsIds]="allDropListsIds" (itemDrop)="onDragDrop($event)">
+      <list-item-task [item]="subItem.subtask" [position]="subItem.position" [length]="item.children.length" [parentItem]="item" [connectedDropListsIds]="allDropListsIds" (itemDrop)="onDragDrop($event)">
       </list-item-task>
     </li>
   </ul>

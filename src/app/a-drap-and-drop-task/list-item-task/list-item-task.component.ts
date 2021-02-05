@@ -1,5 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TaskSequence } from 'src/app/tasks/models/task-sequence';
 import { Item } from '../item';
 import { ItemSequence } from '../item-sequence';
 
@@ -12,6 +13,8 @@ import { ItemSequence } from '../item-sequence';
 export class ListItemTaskComponent {
   @Input() item: Item;
   @Input() parentItem?: Item;
+  @Input() position: number;
+  @Input() length: number;
   @Input() public set connectedDropListsIds(ids: string[]) {
     this.allDropListsIds = ids;
   }
@@ -45,10 +48,30 @@ export class ListItemTaskComponent {
     this.itemDrop.emit(event);
   }
 
-  public moveItemUp(): void {
-    console.log(event.data);
-    console.log(item);
+  public moveItemUp(){
+      console.log("moveItemUp");
+      console.log(this.item);
+      console.log(this.parentItem);
+      let indexToUp: number = this.parentItem.children.findIndex(taskSequence => taskSequence.subtask.uId == this.item.uId);
+      let itemSequenceToUp: ItemSequence = this.parentItem.children[indexToUp];
+      this.parentItem.children[indexToUp].position = indexToUp-1;
+      this.parentItem.children[indexToUp-1].position = indexToUp;
+      this.parentItem.children[indexToUp]= this.parentItem.children[indexToUp-1];
+      this.parentItem.children[indexToUp-1]= itemSequenceToUp;
+      console.log(this.parentItem);
   }
-
+  
+  public moveItemDown(){
+      console.log("moveItemDown");
+      console.log(this.item);
+      console.log(this.parentItem);
+      let indexToDown: number = this.parentItem.children.findIndex(taskSequence => taskSequence.subtask.uId == this.item.uId);
+      let itemSequenceToUp: ItemSequence = this.parentItem.children[indexToDown];
+      this.parentItem.children[indexToDown].position = indexToDown+1;
+      this.parentItem.children[indexToDown+1].position = indexToDown;
+      this.parentItem.children[indexToDown]= this.parentItem.children[indexToDown+1];
+      this.parentItem.children[indexToDown+1]= itemSequenceToUp;
+      console.log(this.parentItem);
+  }
 
 }

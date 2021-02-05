@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppComponent } from './app.component';
-
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { PaginatorComponent } from './paginator/paginator.component';
@@ -191,6 +190,7 @@ const routes: Routes = [
     MatIconModule,
     DragDropModule,
     CommonModule
+
 
   ],
   providers:

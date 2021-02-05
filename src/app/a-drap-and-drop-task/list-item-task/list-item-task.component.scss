@@ -79,3 +79,9 @@ i.icon-grey1 {
     width: 20px;
     height: 25px;
 }
+
+.button1:disabled,
+.button1[disabled]{
+ cursor: default;
+  color: #666666;
+}

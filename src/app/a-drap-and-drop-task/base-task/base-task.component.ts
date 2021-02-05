@@ -15,6 +15,7 @@ export class BaseTaskComponent implements OnInit {
   public get connectedDropListsIds(): string[] {
     // We reverse ids here to respect items nesting hierarchy
     console.log("get connectedDropListsIds");
+    this.sortRecursive(this.parentItem);
     return this.getIdsRecursive(this.parentItem).reverse();
   }
 
@@ -27,16 +28,17 @@ export class BaseTaskComponent implements OnInit {
     this.parentItem.children.push(
       new ItemSequence(
         {
-          name: 'nou1', subtask: new Item({
+          name: 'nou1', position: 0, subtask: new Item({
             name: 'Una subtasca en general',
             children: [
               new ItemSequence({
-                name: 'sub1',
+                name: 'sub1', position: 0,
                 subtask: new Item({
                   name: 'SubTasca1',
                   children: [
                     new ItemSequence({
                       name: 'subsub1',
+                      position: 0,
                       subtask: new Item({
                         name: 'SubtascaSub1'
                       })
@@ -45,15 +47,17 @@ export class BaseTaskComponent implements OnInit {
                 })
               }),
               new ItemSequence({
-                name: 'sub2',
+                name: 'sub3',
+                position: 2,
                 subtask: new Item({
-                  name: 'SubTasca2'
+                  name: 'SubTasca3'
                 })
               }),
               new ItemSequence({
-                name: 'sub3',
+                name: 'sub2',
+                position: 1,
                 subtask: new Item({
-                  name: 'SubTasca3'
+                  name: 'SubTasca2'
                 })
               })
             ]
@@ -62,24 +66,6 @@ export class BaseTaskComponent implements OnInit {
 
     )
 
-
-
-
-
-
-
-    //name: 'Una altra subtasca en general',
-    //children: [
-    //new Item({ name: 'Un altre exemple de subtasca' }),
-    //new Item({ name: 'Aqui un exemple de subtasca' }),
-    //new Item({
-    //name: 'subItem6', children: [
-    //new Item({ name: 'Tenim una subtasca d\'exemple per provar' })
-    //]
-    //})
-    //]
-    //}));
-    //this.parentItem.children.push(new Item({ name: 'test3' }));
     console.log(this.parentItem);
     console.log("oninit");
   }
@@ -89,10 +75,15 @@ export class BaseTaskComponent implements OnInit {
     if (this.canBeDropped(event)) {
       const movingItem: Item = event.item.data;
       //add itemSequence to new container
-      let itemSequence = new ItemSequence({ name: '', subtask: movingItem });
+      let position = event.container.data.children.length;
+      let itemSequenceIndex = event.previousContainer.data.children.findIndex(taskSequence => taskSequence.subtask.uId == movingItem.uId)
+      let itemSequence = event.previousContainer.data.children[itemSequenceIndex];
+      itemSequence.position = position;
       event.container.data.children.push(itemSequence);
+      //new ItemSequence({ name: '', subtask: movingItem, position });
+      //event.container.data.children.push(itemSequence);
       //delete itemSequence from previousContainer
-      event.previousContainer.data.children = event.previousContainer.data.children.filter((child) => child.subtask.uId !== movingItem.uId);
+      event.previousContainer.data.children = event.previousContainer.data.children.filter((child) => child.uId !== itemSequence.uId);
     } else {
       const previousIndex = event.container.data.children.findIndex(element => element.subtask.uId === event.item.data.uId);
 
@@ -120,6 +111,23 @@ export class BaseTaskComponent implements OnInit {
     return ids;
   }
 
+  private sortRecursive(item: Item) {
+    item.children.sort(function(a, b) {
+      if (a.position > b.position) {
+        return 1;
+      }
+      if (a.position < b.position) {
+        return -1;
+      }
+      return 0;
+    });
+    item.children.forEach((childItem) => {
+      this.sortRecursive(childItem.subtask);
+    })
+
+  }
+
+
   private canBeDropped(event: CdkDragDrop<Item, Item>): boolean {
     console.log("canBeDropped");
     const movingItem: Item = event.item.data;
@@ -141,9 +149,6 @@ export class BaseTaskComponent implements OnInit {
     });
   }
 
-  public moveItemUp(event: CdkDragDrop<Item>){
-      console.log("moveItemUp");
-      console.log(event.item.data);
-  }
+
 
 }
