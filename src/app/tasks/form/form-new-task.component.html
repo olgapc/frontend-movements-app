@@ -167,13 +167,10 @@
 
         <!-- SUBTASKS -->
         <div class="mat-app-background">
-            <div>
-              <subtasks-list [task]="parentTask"
-                [connectedDropListsIds]="connectedDropListsIds"
-                (itemDrop)="onDragDrop($event)">
-              </subtasks-list>
-            </div>
-
+          <div class="card bg-light" *ngIf="parentTask">
+            <subtasks-list [task]="parentTask" [connectedDropListsIds]="connectedDropListsIds" (itemDrop)="onDragDrop($event)">
+            </subtasks-list>
+          </div>
         </div>
 
 

@@ -66,7 +66,7 @@ import { BaseComponent } from './a-drap-and-drop/base/base.component';
 import { BaseTaskComponent } from './a-drap-and-drop-task/base-task/base-task.component';
 import { ListItemTaskComponent } from './a-drap-and-drop-task/list-item-task/list-item-task.component';
 //import { TasksByUserComponent } from './tasks/list/tasks-by-user.component';
-//import { SubtasksListComponent } from './tasks/subtasks-list/subtasks-list.component';
+import { SubtasksListComponent } from './tasks/subtasks-list/subtasks-list.component';
 
 
 
@@ -81,7 +81,9 @@ const routes: Routes = [
   { path: 'companies/form', component: FormCompanyComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
   { path: 'companies/form/:id', component: FormCompanyComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
   { path: 'login', component: LoginComponent },
-  { path: 'tasks/:id', component: ViewTaskComponent },
+  { path: 'tasks/view/:id', component: ViewTaskComponent },
+
+
   { path: 'tasks', component: TasksComponent },
 
   { path: 'tasks/page/:page', component: TasksComponent },
@@ -121,7 +123,7 @@ const routes: Routes = [
   { path: 'zero_config', component: ZeroConfigurationComponent },
   { path: 'tests/TableExpandableRowsExampleComponent', component: TableExpandableRowsExampleComponent },
   { path: 'tests/listitem', component: BaseComponent },
-  { path: 'tests/listitemtask', component: BaseTaskComponent}
+  { path: 'tests/listitemtask', component: BaseTaskComponent},
 
 
 ];
@@ -161,9 +163,9 @@ const routes: Routes = [
     ListItemComponent,
     BaseComponent,
     BaseTaskComponent,
-    ListItemTaskComponent
+    ListItemTaskComponent,
     //TasksByUserComponent,
-    //SubtasksListComponent,
+    SubtasksListComponent,
   ],
 
   imports: [
@@ -190,7 +192,6 @@ const routes: Routes = [
     MatIconModule,
     DragDropModule,
     CommonModule
-
 
   ],
   providers:

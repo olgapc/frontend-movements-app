@@ -34,7 +34,7 @@
 
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripció </th>
-          <td mat-cell *matCellDef="let task"> {{task.description}} </td>
+          <td mat-cell *matCellDef="let task"> <button type="button" name="edit" [routerLink]="['/tasks/view', task.id]" class="btn btn-outline-info btn-xs">{{task.description}} </button></td>
         </ng-container>
 
         <ng-container matColumnDef="deadline">
@@ -191,6 +191,9 @@
       </table>
       <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
     </div>
+
+
+
     <!--table class="table table-responsive table-hover" *ngIf="tasks?.length>0">
       <thead>
         <tr>

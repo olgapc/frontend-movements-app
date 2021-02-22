@@ -8,9 +8,11 @@ import { TaskSequence } from '../models/task-sequence';
   templateUrl: './subtasks-list.component.html',
   styleUrls: ['./subtasks-list.component.scss']
 })
-export class SubtasksListComponent implements OnInit{
+export class SubtasksListComponent {
   @Input() task: Task;
   @Input() parentTask?: Task;
+  @Input() position: number;
+  @Input() length: number;
   @Input() public set connectedDropListsIds(ids: string[]) {
     this.allDropListsIds = ids;
   }
@@ -22,16 +24,10 @@ export class SubtasksListComponent implements OnInit{
   public allDropListsIds: string[];
 
   public get dragDisabled(): boolean {
-      console.log ("dragDisabled");
-      console.log(this.parentTask);
-      console.log(!this.parentTask);
     return !this.parentTask;
   }
 
   public get parentTaskId(): string {
-      console.log(this.parentTask.id);
-      console.log("parentTaskId");
-      console.log(this.dragDisabled);
     return this.dragDisabled ? '' : this.parentTask.id;
 
   }
@@ -44,10 +40,31 @@ export class SubtasksListComponent implements OnInit{
     this.itemDrop = new EventEmitter();
   }
 
-  ngOnInit() {}
+
 
   public onDragDrop(event: CdkDragDrop<Task, Task>): void {
     this.itemDrop.emit(event);
+  }
+
+  public moveTaskUp(){
+      let indexToUp: number = this.parentTask.subtasks.findIndex(taskSequence => taskSequence.subtask.id == this.task.id);
+      let itemSequenceToUp: TaskSequence = this.parentTask.subtasks[indexToUp];
+      this.parentTask.subtasks[indexToUp].position = indexToUp-1;
+      this.parentTask.subtasks[indexToUp-1].position = indexToUp;
+      this.parentTask.subtasks[indexToUp]= this.parentTask.subtasks[indexToUp-1];
+      this.parentTask.subtasks[indexToUp-1]= itemSequenceToUp;
+      console.log(this.parentTask);
+  }
+
+
+  public moveTaskUpDown(){
+      let indexToDown: number = this.parentTask.subtasks.findIndex(taskSequence => taskSequence.subtask.id == this.task.id);
+      let itemSequenceToUp: TaskSequence = this.parentTask.subtasks[indexToDown];
+      this.parentTask.subtasks[indexToDown].position = indexToDown+1;
+      this.parentTask.subtasks[indexToDown+1].position = indexToDown;
+      this.parentTask.subtasks[indexToDown]= this.parentTask.subtasks[indexToDown+1];
+      this.parentTask.subtasks[indexToDown+1]= itemSequenceToUp;
+      console.log(this.parentTask);
   }
 
 }

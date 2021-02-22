@@ -1,9 +1,11 @@
 import { CdkDragDrop, CdkDragEnter, CdkDragExit, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/tasks/models/task';
-import { Item } from '../item';
+import { TaskService } from 'src/app/tasks/services/task.service';
+import { ActivatedRoute } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { ItemSequence } from '../item-sequence';
+
 
 @Component({
   selector: 'base-task',
@@ -11,7 +13,7 @@ import { ItemSequence } from '../item-sequence';
   styleUrls: ['./base-task.component.scss']
 })
 export class BaseTaskComponent implements OnInit {
-  public parentItem: Item;
+  public parentItem: Task;
   public get connectedDropListsIds(): string[] {
     // We reverse ids here to respect items nesting hierarchy
     console.log("get connectedDropListsIds");
@@ -19,100 +21,70 @@ export class BaseTaskComponent implements OnInit {
     return this.getIdsRecursive(this.parentItem).reverse();
   }
 
-  constructor() {
-    this.parentItem = new Item({ name: 'TASCA PARE' });
-    console.log("constructor");
+  constructor(private taskService: TaskService,
+    //private activatedRoute: ActivatedRoute
+  ) { }
+
+  ngOnInit(): void {
+    //this.activatedRoute.paramMap.subscribe(params => {
+    //let id = params.get('id');
+    this.taskService.getTask('e3b144bc-4aab-4ec7-b1ed-120270c0e288').subscribe(task => {
+      this.parentItem = task;
+      console.log(this.parentItem);
+    });
+    //});
   }
 
-  public ngOnInit() {
-    this.parentItem.children.push(
-      new ItemSequence(
-        {
-          name: 'nou1', position: 0, subtask: new Item({
-            name: 'Una subtasca en general',
-            children: [
-              new ItemSequence({
-                name: 'sub1', position: 0,
-                subtask: new Item({
-                  name: 'SubTasca1',
-                  children: [
-                    new ItemSequence({
-                      name: 'subsub1',
-                      position: 0,
-                      subtask: new Item({
-                        name: 'SubtascaSub1'
-                      })
-                    })
-                  ]
-                })
-              }),
-              new ItemSequence({
-                name: 'sub3',
-                position: 2,
-                subtask: new Item({
-                  name: 'SubTasca3'
-                })
-              }),
-              new ItemSequence({
-                name: 'sub2',
-                position: 1,
-                subtask: new Item({
-                  name: 'SubTasca2'
-                })
-              })
-            ]
-          })
-        })
 
-    )
-
-    console.log(this.parentItem);
-    console.log("oninit");
-  }
-
-  public onDragDrop(event: CdkDragDrop<Item>) {
+  public onDragDrop(event: CdkDragDrop<Task>) {
     event.container.element.nativeElement.classList.remove('active');
     if (this.canBeDropped(event)) {
-      const movingItem: Item = event.item.data;
+      const movingItem: Task = event.item.data;
       //add itemSequence to new container
-      let position = event.container.data.children.length;
-      let itemSequenceIndex = event.previousContainer.data.children.findIndex(taskSequence => taskSequence.subtask.uId == movingItem.uId)
-      let itemSequence = event.previousContainer.data.children[itemSequenceIndex];
+      let position = event.container.data.subtasks.length;
+      let itemSequenceIndex = event.previousContainer.data.subtasks.findIndex(taskSequence => taskSequence.subtask.id == movingItem.id);
+      let itemSequence = event.previousContainer.data.subtasks[itemSequenceIndex];
       itemSequence.position = position;
-      event.container.data.children.push(itemSequence);
+      console.log("itemSequence");
+      console.log(itemSequence);
+      event.container.data.subtasks.push(itemSequence);
       //new ItemSequence({ name: '', subtask: movingItem, position });
       //event.container.data.children.push(itemSequence);
       //delete itemSequence from previousContainer
-      event.previousContainer.data.children = event.previousContainer.data.children.filter((child) => child.uId !== itemSequence.uId);
+      event.previousContainer.data.subtasks = event.previousContainer.data.subtasks.filter((child) => child.id !== itemSequence.id);
+      let pos = 0;
+      event.previousContainer.data.subtasks.forEach((subtask)=>{
+          subtask.position = pos;
+          pos = pos+1;
+      })
     } else {
-      const previousIndex = event.container.data.children.findIndex(element => element.subtask.uId === event.item.data.uId);
+      const previousIndex = event.container.data.subtasks.findIndex(element => element.subtask.id === event.item.data.id);
 
       moveItemInArray(
-        event.container.data.children,
+        event.container.data.subtasks,
         previousIndex,
         event.currentIndex
       );
       console.log("moveItemInArray");
-      console.log(event.container.data.children);
+      console.log(event.container.data.subtasks);
       console.log(previousIndex);
       console.log(event.currentIndex);
     }
   }
 
-  private getIdsRecursive(item: Item): string[] {
-    let ids = [item.uId];
+  private getIdsRecursive(item: Task): string[] {
+    let ids = [item.id];
 
-    item.children.forEach((childItem) => {
+    item.subtasks.forEach((childItem) => {
 
       ids = ids.concat(this.getIdsRecursive(childItem.subtask));
 
     });
-
     return ids;
   }
 
-  private sortRecursive(item: Item) {
-    item.children.sort(function(a, b) {
+  private sortRecursive(item: Task) {
+    item.subtasks.sort(function(a, b) {
       if (a.position > b.position) {
         return 1;
       }
@@ -121,32 +93,33 @@ export class BaseTaskComponent implements OnInit {
       }
       return 0;
     });
-    item.children.forEach((childItem) => {
+    item.subtasks.forEach((childItem) => {
       this.sortRecursive(childItem.subtask);
     })
-
   }
 
 
-  private canBeDropped(event: CdkDragDrop<Item, Item>): boolean {
+  private canBeDropped(event: CdkDragDrop<Task, Task>): boolean {
     console.log("canBeDropped");
-    const movingItem: Item = event.item.data;
-
+    const movingItem: Task = event.item.data;
+    console.log(event.previousContainer.id);
+    console.log(event.container.id);
+    console.log(this.isNotSelfDrop(event));
     return event.previousContainer.id !== event.container.id
       && this.isNotSelfDrop(event)
       && !this.hasChild(movingItem, event.container.data);
   }
 
-  private isNotSelfDrop(event: CdkDragDrop<Item> | CdkDragEnter<Item> | CdkDragExit<Item>): boolean {
-    return event.container.data.uId !== event.item.data.uId;
+  private isNotSelfDrop(event: CdkDragDrop<Task> | CdkDragEnter<Task> | CdkDragExit<Task>): boolean {
+    return event.container.data.id !== event.item.data.id;
   }
 
-  private hasChild(parentItem: Item, childItem: Item): boolean {
-    console.log("hasChild");
-    const hasChild = parentItem.children.some((item) => item.uId === childItem.uId);
-    return hasChild ? true : parentItem.children.some((itemSequence) => {
-      this.hasChild(itemSequence.subtask, childItem)
-    });
+  private hasChild(parentItem: Task, childItem: Task): boolean {
+  console.log("hasChild");
+  const hasChild = parentItem.subtasks.some((item) => item.subtask.id === childItem.id);
+  return hasChild ? true : parentItem.subtasks.some((itemSequence) => {
+  this.hasChild(itemSequence.subtask, childItem)
+  });
   }
 
 

@@ -34,12 +34,12 @@ export class FormNewTaskComponent implements OnInit {
   public errors: string[];
 
   //SUBTASKS
-  public parentTask: Task = new Task();
-
+  public parentTask: Task;
 
   public get connectedDropListsIds(): string[] {
-      //we reverse ids here to respect items nesting hierarchy
-    return this.getIdsRecursive(this.task).reverse();
+    this.sortRecursive(this.parentTask);
+    //we reverse ids here to respect items nesting hierarchy
+    return this.getIdsRecursive(this.parentTask).reverse();
   }
 
   constructor(private companyService: CompanyService,
@@ -274,14 +274,18 @@ export class FormNewTaskComponent implements OnInit {
     event.container.element.nativeElement.classList.remove('active');
     if (this.canBeDropped(event)) {
       const movingTask: Task = event.item.data;
-      let newTaskSequence: TaskSequence = new TaskSequence();
-      newTaskSequence.subtask = movingTask;
-      event.container.data.subtasks.push(newTaskSequence);
-      event.previousContainer.data.subtasks = event.previousContainer.data.subtasks.filter((child) => child.subtask.id !== movingTask.id);
+      let position = event.container.data.subtasks.length;
+      let taskSequenceIndex = event.previousContainer.data.subtasks.findIndex(taskSequence => taskSequence.subtask.id == movingTask.id);
+      let taskSequence = event.previousContainer.data.subtasks[taskSequenceIndex];
+      taskSequence.position = position;
+      event.container.data.subtasks.push(taskSequence);
+      event.previousContainer.data.subtasks = event.previousContainer.data.subtasks.filter((child) => child.id !== taskSequence.id);
+
     } else {
+        const previousIndex = event.container.data.subtasks.findIndex(element => element.subtask.id === event.item.data.id);
       moveItemInArray(
         event.container.data.subtasks,
-        event.previousIndex,
+        previousIndex,
         event.currentIndex
       );
     }
@@ -289,32 +293,48 @@ export class FormNewTaskComponent implements OnInit {
 
   private getIdsRecursive(task: Task): string[] {
     let ids = [task.id];
-    if (task.subtasks) {
-      task.subtasks.forEach((childTaskSequence) => { ids = ids.concat(this.getIdsRecursive(childTaskSequence.subtask)) });
-    }
+
+    task.subtasks.forEach((subtask) => {
+        ids = ids.concat(this.getIdsRecursive(subtask.subtask));
+    });
+
     return ids;
   }
 
+  private sortRecursive(task: Task) {
+    task.subtasks.sort(function(a, b) {
+      if (a.position > b.position) {
+        return 1;
+      }
+      if (a.position < b.position) {
+        return -1;
+      }
+      return 0;
+    });
+    task.subtasks.forEach((subtask) => {
+      this.sortRecursive(subtask.subtask);
+    })
+  }
+
+
   private canBeDropped(event: CdkDragDrop<Task, Task>): boolean {
-    const movingItem: Task = event.item.data;
+    const movingTask: Task = event.item.data;
 
     return event.previousContainer.id !== event.container.id
-      && this.isNotSelfDrop(event)
-      && !this.hasChild(movingItem, event.container.data);
+      && this.isNotSelfDrop(event);
+      //&& !this.hasChild(movingTask, event.container.data);
   }
 
   private isNotSelfDrop(event: CdkDragDrop<Task> | CdkDragEnter<Task> | CdkDragExit<Task>): boolean {
     return event.container.data.id !== event.item.data.id;
   }
 
-  private hasChild(parentTask: Task, childItem: Task): boolean {
-    const hasChild = parentTask.subtasks.some((taskSequence) => {taskSequence.subtask.id === childItem.id;
-    console.log("hasChild in form-new-task");
-    console.log(childItem.id);
-    console.log(taskSequence.subtask.id);
-    console.log(hasChild);
-    });
-    return hasChild ? true : parentTask.subtasks.some((taskSequence) => this.hasChild(taskSequence.subtask, childItem));
-  }
+  //private hasChild(parentTask: Task, childItem: Task): boolean {
+    //const hasChild = parentTask.subtasks.some((taskSequence) => {
+      //taskSequence.subtask.id === childItem.id;
+
+    //});
+    //return hasChild ? true : parentTask.subtasks.some((taskSequence) => this.hasChild(taskSequence.subtask, childItem));
+  //}
 
 }

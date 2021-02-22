@@ -1,66 +1,78 @@
 <div class="card bg-light" *ngIf="task">
   <div class="card-header">{{title}}: {{task.description}}</div>
-    <div class="card-body">
-      <h4 class="card-title">
-        <a [routerLink]="['/tasks']" class="btn btn-light">&laquo; Tornar</a>
-      </h4>
+  <div class="card-body">
+    <h4 class="card-title">
+      <a [routerLink]="['/tasks']" class="btn btn-light">&laquo; Tornar</a>
+    </h4>
 
-      <ul class="list-group my-2" *ngIf="task?.company">
-        <li class="list-group-item list-group-item-primary">EMPRESA</li>
-        <li class="list-group-item">{{task.company.name}}</li>
-        <li class="list-group-item">{{task.company.email}}</li>
-        <li class="list-group-item">{{task.company.phone}}</li>
-      </ul>
+    <ul class="list-group my-2" *ngIf="task?.company">
+      <li class="list-group-item list-group-item-primary">EMPRESA</li>
+      <li class="list-group-item">{{task.company.name}}</li>
+      <li class="list-group-item">{{task.company.email}}</li>
+      <li class="list-group-item">{{task.company.phone}}</li>
+    </ul>
 
-      <ul class="list-group my-2" *ngIf="task?.employee">
-        <li class="list-group-item list-group-item-primary">TREBALLADOR</li>
-        <li class="list-group-item">{{task.employee.name}}</li>
-        <li class="list-group-item">{{task.employee.phone}}</li>
-        <li class="list-group-item">{{task.employee.email}}</li>
-      </ul>
+    <ul class="list-group my-2" *ngIf="task?.employee">
+      <li class="list-group-item list-group-item-primary">TREBALLADOR</li>
+      <li class="list-group-item">{{task.employee.name}}</li>
+      <li class="list-group-item">{{task.employee.phone}}</li>
+      <li class="list-group-item">{{task.employee.email}}</li>
+    </ul>
 
-      <ul class="list-group my-2">
-        <li class="list-group-item list-group-item-primary">TASCA</li>
-        <li class="list-group-item">{{task.description}}</li>
-        <li class="list-group-item">Venciment: {{task.deadline | date: 'dd.MM.yyyy'}}</li>
-        <li class="list-group-item">Creació: {{task.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
-      </ul>
+    <ul class="list-group my-2">
+      <li class="list-group-item list-group-item-primary">TASCA</li>
+      <li class="list-group-item">{{task.description}}</li>
+      <li class="list-group-item">Venciment: {{task.deadline | date: 'dd.MM.yyyy'}}</li>
+      <li class="list-group-item">Creació: {{task.createAt | date: 'EEE dd.MM.yyyy HH:mm'}}</li>
+    </ul>
 
-      <div class="class border-info my-2" >
-          <div class="card card-header">
-              Comentaris
-          </div>
-          <div class="card card-body">
-              <p *ngIf="!task.comment">No té comentaris</p>
-              <p *ngIf="task.comment">{{task.comment}}</p>
-          </div>
+    <div class="class border-info my-2">
+      <div class="card card-header">
+        Comentaris
       </div>
-
-      <table *ngIf="task?.taskInformations.length>0" class="table table-striped table-hover table-bordered my-3">
-        <thead>
-          <tr>
-            <th>Informació</th>
-            <th>Comentari</th>
-            <th>Creació</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of task.taskInformations">
-            <td>{{row.information.description}}</td>
-            <td>{{row.comment}}</td>
-            <td>{{row.createAt | date: 'dd.MM.yyyy'}}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="card card-body">
+        <p *ngIf="!task.comment">No té comentaris</p>
+        <p *ngIf="task.comment">{{task.comment}}</p>
+      </div>
     </div>
 
-    <button class="btn btn-primary btn-sm" type="button" *ngIf="task?.subtasks.length>0">Veure subtasques</button>
+    <table *ngIf="task?.taskInformations.length>0" class="table table-striped table-hover table-bordered my-3">
+      <thead>
+        <tr>
+          <th>Informació</th>
+          <th>Comentari</th>
+          <th>Creació</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of task.taskInformations">
+          <td>{{row.information.description}}</td>
+          <td>{{row.comment}}</td>
+          <td>{{row.createAt | date: 'dd.MM.yyyy'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <!-- SUBTASKS -->
+    <div class="mat-app-background">
+      <div class="card bg-light" *ngIf="parentTask">
+        <subtasks-list [task]="parentTask" [connectedDropListsIds]="connectedDropListsIds" (itemDrop)="onDragDrop($event)">
+        </subtasks-list>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <!--button class="btn btn-primary btn-sm" type="button" *ngIf="task?.subtasks.length>0">Veure subtasques</button>
 
     <ul class="list-group my-2"  *ngFor="let sub of task.subtasks">
       <li class="list-group-item list-group-item-primary">SUBTASCA</li>
       <li class="list-group-item">{{sub.description}}</li>
       <li class="list-group-item">Venciment: {{sub.deadline| date: 'dd.MM.yyyy'}}</li>
       <li class="list-group-item">Creació: {{sub.createAt| date: 'EEE dd.MM.yyyy HH:mm'}}</li>
-    </ul>
+    </ul-->
 
 </div>

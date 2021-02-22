@@ -5,6 +5,8 @@ export class TaskSequence {
     id: number;
     createAt: string;
     subtask: Task;
-    pretask: Task;
     comment: string;
+    position: number;
+
+    pretask: Task;
 }
