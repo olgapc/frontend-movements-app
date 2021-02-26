@@ -90,12 +90,22 @@ export class ViewTaskComponent implements OnInit {
     const movingTask: Task = event.item.data;
 
     return event.previousContainer.id !== event.container.id
-      && this.isNotSelfDrop(event);
-      //&& !this.hasChild(movingTask, event.container.data);
+      && this.isNotSelfDrop(event)
+      && !this.hasChild(movingTask, event.container.data);
   }
 
   private isNotSelfDrop(event: CdkDragDrop<Task> | CdkDragEnter<Task> | CdkDragExit<Task>): boolean {
     return event.container.data.id !== event.item.data.id;
+  }
+
+
+  private hasChild(parentTask: Task, childItem: Task): boolean {
+    console.log("hasChild");
+    const hasChild = parentTask.subtasks.some((taskSequence) =>
+      taskSequence.subtask.id === childItem.id
+    );
+
+    return hasChild ? true : parentTask.subtasks.some((taskSequence) => this.hasChild(taskSequence.subtask, childItem));
   }
 
 }

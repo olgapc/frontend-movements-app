@@ -19,7 +19,7 @@ export class Task {
 
 
   isPeriodically: boolean;
-  pretasks: TaskSequence[] = [];
+  //pretasks: TaskSequence[] = [];
   subtasks: TaskSequence[] = [];
 
   currentAssignedUser: User ;
@@ -31,7 +31,7 @@ export class Task {
   isDone: boolean;
   doneAt: string;
   doneBy: User;
-  mainTask: Task;
+  //mainTask: Task;
 
   isVisible: boolean;
   deadline: string;

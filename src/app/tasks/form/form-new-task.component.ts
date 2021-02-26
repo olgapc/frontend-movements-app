@@ -273,16 +273,22 @@ export class FormNewTaskComponent implements OnInit {
   public onDragDrop(event: CdkDragDrop<Task>) {
     event.container.element.nativeElement.classList.remove('active');
     if (this.canBeDropped(event)) {
+
       const movingTask: Task = event.item.data;
       let position = event.container.data.subtasks.length;
       let taskSequenceIndex = event.previousContainer.data.subtasks.findIndex(taskSequence => taskSequence.subtask.id == movingTask.id);
       let taskSequence = event.previousContainer.data.subtasks[taskSequenceIndex];
+      //taskSequence.subtask.mainTask = event.container.data;
+      taskSequence.subtask.isMainTask = false;
       taskSequence.position = position;
+      console.log(taskSequence);
       event.container.data.subtasks.push(taskSequence);
+      console.log(event.container.data);
       event.previousContainer.data.subtasks = event.previousContainer.data.subtasks.filter((child) => child.id !== taskSequence.id);
 
     } else {
-        const previousIndex = event.container.data.subtasks.findIndex(element => element.subtask.id === event.item.data.id);
+      console.log("can't be dropped");
+      const previousIndex = event.container.data.subtasks.findIndex(element => element.subtask.id === event.item.data.id);
       moveItemInArray(
         event.container.data.subtasks,
         previousIndex,
@@ -295,7 +301,7 @@ export class FormNewTaskComponent implements OnInit {
     let ids = [task.id];
 
     task.subtasks.forEach((subtask) => {
-        ids = ids.concat(this.getIdsRecursive(subtask.subtask));
+      ids = ids.concat(this.getIdsRecursive(subtask.subtask));
     });
 
     return ids;
@@ -321,20 +327,21 @@ export class FormNewTaskComponent implements OnInit {
     const movingTask: Task = event.item.data;
 
     return event.previousContainer.id !== event.container.id
-      && this.isNotSelfDrop(event);
-      //&& !this.hasChild(movingTask, event.container.data);
+      && this.isNotSelfDrop(event)
+      && !this.hasChild(movingTask, event.container.data);
   }
 
   private isNotSelfDrop(event: CdkDragDrop<Task> | CdkDragEnter<Task> | CdkDragExit<Task>): boolean {
     return event.container.data.id !== event.item.data.id;
   }
 
-  //private hasChild(parentTask: Task, childItem: Task): boolean {
-    //const hasChild = parentTask.subtasks.some((taskSequence) => {
-      //taskSequence.subtask.id === childItem.id;
+  private hasChild(parentTask: Task, childItem: Task): boolean {
+    console.log("hasChild");
+    const hasChild = parentTask.subtasks.some((taskSequence) =>
+      taskSequence.subtask.id === childItem.id
+    );
 
-    //});
-    //return hasChild ? true : parentTask.subtasks.some((taskSequence) => this.hasChild(taskSequence.subtask, childItem));
-  //}
+    return hasChild ? true : parentTask.subtasks.some((taskSequence) => this.hasChild(taskSequence.subtask, childItem));
+  }
 
 }

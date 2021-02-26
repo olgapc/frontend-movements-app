@@ -7,6 +7,4 @@ export class TaskSequence {
     subtask: Task;
     comment: string;
     position: number;
-
-    pretask: Task;
 }

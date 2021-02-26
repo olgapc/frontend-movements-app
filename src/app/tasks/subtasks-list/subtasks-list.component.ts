@@ -40,8 +40,6 @@ export class SubtasksListComponent {
     this.itemDrop = new EventEmitter();
   }
 
-
-
   public onDragDrop(event: CdkDragDrop<Task, Task>): void {
     this.itemDrop.emit(event);
   }

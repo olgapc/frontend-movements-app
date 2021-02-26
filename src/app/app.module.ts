@@ -192,8 +192,8 @@ const routes: Routes = [
     MatIconModule,
     DragDropModule,
     CommonModule
-
   ],
+  
   providers:
     [{ provide: LOCALE_ID, useValue: 'ca' },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

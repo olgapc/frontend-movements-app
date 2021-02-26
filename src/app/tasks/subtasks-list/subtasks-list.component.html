@@ -11,7 +11,8 @@
       </button>
       <button *ngIf="!dragDisabled" [disabled]="position == length-1" type="button" class="btn button1" (click)="moveTaskDown()" name="button"><i class="material-icons icon-grey1">
           arrow_downward
-        </i></button> {{task.description}}
+        </i></button>
+         {{task.description}} {{task.deadline}}<input *ngIf="!dragDisabled" class="form-check-input" style="margin-left: .5rem; margin-top: .7rem;" type="checkbox" name="task.isDone" [(ngModel)]="task.isDone" id="{{task.id}}isDone">
     </div>
     <div class="item-drag-preview" *cdkDragPreview>
       {{task.description}} with {{task.subtasks.length}} subtask(s)
