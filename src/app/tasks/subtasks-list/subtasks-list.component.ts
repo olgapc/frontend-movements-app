@@ -2,6 +2,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Task } from '../models/task';
 import { TaskSequence } from '../models/task-sequence';
+import { ModalService } from '../form/modal.service';
 
 @Component({
   selector: 'subtasks-list',
@@ -16,6 +17,7 @@ export class SubtasksListComponent {
   @Input() public set connectedDropListsIds(ids: string[]) {
     this.allDropListsIds = ids;
   }
+  selectedSubtask: Task;
 
   public get connectedDropListsIds(): string[] {
     return this.allDropListsIds.filter((id) => id !== this.task.id);
@@ -35,7 +37,7 @@ export class SubtasksListComponent {
 
   @Output() itemDrop: EventEmitter<CdkDragDrop<Task>>
 
-  constructor() {
+  constructor( private modalService: ModalService) {
     this.allDropListsIds = [];
     this.itemDrop = new EventEmitter();
   }
@@ -65,4 +67,9 @@ export class SubtasksListComponent {
       console.log(this.parentTask);
   }
 
+
+  openSubtaskModal(task: Task){
+      this.selectedSubtask = task;
+      this.modalService.openModal();
+  }
 }

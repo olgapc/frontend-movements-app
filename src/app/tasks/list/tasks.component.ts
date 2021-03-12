@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TaskSequence } from '../models/task-sequence';
 
+
 @Component({
 
   selector: 'app-tasks',
@@ -61,7 +62,7 @@ export class TasksComponent implements OnInit {
     public authService: AuthService,
     private taskService: TaskService,
     private cd: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -202,6 +203,5 @@ export class TasksComponent implements OnInit {
     } else { return "is-future"; }
 
   }
-
 
 }

@@ -83,10 +83,7 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="comment">Comentaris</label>
-          <textarea name="comment" [(ngModel)]="task.comment" class="form-control"></textarea>
-        </div>
+
 
         <br>
 
@@ -100,6 +97,11 @@
           </div>
         </div>
 
+
+        <div class="form-group">
+          <label for="comment">Comentaris</label>
+          <textarea name="comment" [(ngModel)]="task.comment" class="form-control"></textarea>
+        </div>
 
         <div class="form-row align-items-center">
           <div class="col-auto my-1">
@@ -164,11 +166,13 @@
           </tbody>
         </table>
 
-
+        <!-- Button trigger modal add subtask-->
+        <!--button type="button" name="btn btn-primary" data-toggle="modal" data-target="#addSubtaskModal"></button-->
+    <!--button *ngIf="!dragDisabled" type="button" (click)="openSubtaskModal()" class="btn btn-outline-info btn-xs">+SUBTASCA</button-->
         <!-- SUBTASKS -->
         <div class="mat-app-background">
-          <div class="card bg-light" *ngIf="parentTask">
-            <subtasks-list [task]="parentTask" [connectedDropListsIds]="connectedDropListsIds" (itemDrop)="onDragDrop($event)">
+          <div class="card bg-light">
+            <subtasks-list [task]="task" [connectedDropListsIds]="connectedDropListsIds" (itemDrop)="onDragDrop($event)">
             </subtasks-list>
           </div>
         </div>
@@ -184,10 +188,8 @@
 
           </div>
         </div>
-
-
-
       </form>
 
     </div>
   </div>
+<form-new-subtask *ngIf="selectedSubtask" [task]="null"></form-new-subtask>

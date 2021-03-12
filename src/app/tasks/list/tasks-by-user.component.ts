@@ -1,16 +1,16 @@
-import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import { Task } from '../models/task';
 import { TaskService } from '../services/task.service';
+import { ModalService } from '../form-modal/modal.service';
+import { UserService } from 'src/app/users/services/user.service';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/users/services/auth.service';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { TaskInformation } from '../models/task-information';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/users/services/user.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { User } from 'src/app/users/models/user';
 
@@ -31,10 +31,6 @@ export class TasksByUserComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChildren('innerSort1') innerSort1: QueryList<MatSort>;
-  @ViewChildren('innerTables1') innerTables1: QueryList<MatTable<TaskInformation>>;
-  @ViewChildren('innerSort2') innerSort2: QueryList<MatSort>;
-  @ViewChildren('innerTables2') innerTables2: QueryList<MatTable<Task>>;
 
   title: string = 'Nova tasca';
   task: Task = new Task();
@@ -46,19 +42,18 @@ export class TasksByUserComponent implements OnInit {
   public users: User[];
   today: Date = new Date();
   currentUser: User;
-  displayedColumns = ['subtasks', 'done', 'description', 'company', 'employee', 'deadline', 'taskInformations', 'options'];
-  innerDisplayedColumns = ['done', 'description', 'company', 'employee', 'deadline', 'options'];
-  innerInformationsDisplayedColumns = ['description', 'comment', 'done']
-  dataSource: MatTableDataSource<any[]>;
-  expandedElementSubtask: Task | null;
-  expandedElementInformation: Task | null;
+  displayedColumns = ['done', 'description', 'company', 'employee', 'deadline', 'options'];
+  dataSource: MatTableDataSource<Task>;
+  selectedTask: Task;
 
   constructor(
     public authService: AuthService,
     private taskService: TaskService,
+    private modalService: ModalService,
     private userService: UserService,
     private cd: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+
   ) { }
 
   ngOnInit(): void {
@@ -66,8 +61,6 @@ export class TasksByUserComponent implements OnInit {
     console.log(this.currentUser.username);
     this.loadTasks();
     this.userService.getUsers().subscribe(users => this.users = users);
-
-
   }
 
   loadTasks() {
@@ -76,20 +69,10 @@ export class TasksByUserComponent implements OnInit {
       tasks => {
         this.tasks = tasks;
         this.tasks.forEach(task => {
-          if (task.subtasks && Array.isArray(task.subtasks) && task.subtasks.length) {
 
-            if (task.taskInformations && Array.isArray(task.taskInformations) && task.taskInformations.length) {
-              this.tasksData = [...this.tasksData, { ...task, subtasks: new MatTableDataSource(task.subtasks), taskInformations: new MatTableDataSource(task.taskInformations) }];
-              //console.log(task);
-            } else {
-              this.tasksData = [...this.tasksData, { ...task, subtasks: new MatTableDataSource(task.subtasks) }];
-            }
-          } else if (task.taskInformations && Array.isArray(task.taskInformations) && task.taskInformations.length) {
-            this.tasksData = [...this.tasksData, { ...task, taskInformations: new MatTableDataSource(task.taskInformations) }];
-          } else {
             this.tasksData = [...this.tasksData, task];
-          }
-          console.log(task);
+
+
         });
         this.dataSource = new MatTableDataSource(this.tasksData);
         this.dataSource.paginator = this.paginator;
@@ -98,45 +81,13 @@ export class TasksByUserComponent implements OnInit {
     );
 
   }
-  expandRowInformation(element: Task) {
-    try {
-      if ((element.taskInformations as MatTableDataSource<TaskInformation>).data.length > 0) {
-        element.subtasks && (element.taskInformations as MatTableDataSource<TaskInformation>).data.length ? (this.expandedElementInformation = this.expandedElementInformation === element ? null : element) : null;
-        this.cd.detectChanges();
-        this.innerTables1.forEach((table, index) => (table.dataSource as MatTableDataSource<TaskInformation>).sort = this.innerSort1.toArray()[index]);
-      }
-    } catch (error) {
-    }
-  }
 
-
-  expandRowSubtask(element: Task) {
-    //console.log(element.subtasks ==null);
-    //console.log((element.subtasks as MatTableDataSource<Task>).data.length>0);
-    try {
-      if ((element.subtasks as MatTableDataSource<Task>).data.length > 0) {
-        element.subtasks && (element.subtasks as MatTableDataSource<Task>).data.length ? (this.expandedElementSubtask = this.expandedElementSubtask === element ? null : element) : null;
-        this.cd.detectChanges();
-        this.innerTables2.forEach((table, index) => (table.dataSource as MatTableDataSource<Task>).sort = this.innerSort2.toArray()[index]);
-      }
-    } catch (error) {
-    }
-  }
 
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-  applyInnerFilter1(filterValue: string) {
-    this.innerTables1.forEach((table, index) => (table.dataSource as MatTableDataSource<TaskInformation>).filter = filterValue.trim().toLowerCase());
-  }
-
-  applyInnerFilter2(filterValue: string) {
-    this.innerTables2.forEach((table, index) => (table.dataSource as MatTableDataSource<Task>).filter = filterValue.trim().toLowerCase());
-  }
-
 
   delete(task: Task): void {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -200,5 +151,10 @@ export class TasksByUserComponent implements OnInit {
       this.userService.getUser(event.id).subscribe(user => this.currentUser = user);
     }
     this.loadTasks();
+  }
+
+  openTaskModal(task: Task){
+      this.selectedTask = task;
+      this.modalService.openModal();
   }
 }

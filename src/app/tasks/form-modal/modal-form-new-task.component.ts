@@ -2,7 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { CompanyService } from 'src/app/companies/company.service';
@@ -16,19 +16,21 @@ import { Information } from '../models/information';
 import { Task } from '../models/task';
 import { TaskInformation } from '../models/task-information';
 import { TaskService } from '../services/task.service';
+import { ModalService } from './modal.service';
 import { CdkDragDrop, CdkDragEnter, CdkDragExit, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TaskSequence } from '../models/task-sequence';
-//import { ModalService } from './modal.service';
+
 
 @Component({
-  selector: 'form-new-task',
-  templateUrl: './form-new-task.component.html'
+  selector: 'modal-form-new-task',
+  templateUrl: './modal-form-new-task.component.html',
+  styleUrls: ['./modal-form-new-task.component.css']
 })
-export class FormNewTaskComponent implements OnInit {
+export class ModalFormNewTaskComponent implements OnInit {
 
-  title: string = 'Formulari de Tasca';
-  //@Input() task: Task;
-  task: Task = new Task();
+  title: string = 'Formulari de Tasca Modal';
+  @Input() task: Task;
+  //task: Task = new Task();
   autocompleteControl = new FormControl();
   public eTimeTypes = TimeTypes;
   public users: User[];
@@ -40,7 +42,7 @@ export class FormNewTaskComponent implements OnInit {
   public parentTask: Task;
 
   public get connectedDropListsIds(): string[] {
-      //console.log(this.task);
+    //console.log(this.task);
     this.sortRecursive(this.task);
     //we reverse ids here to respect items nesting hierarchy
     return this.getIdsRecursive(this.task).reverse();
@@ -48,28 +50,27 @@ export class FormNewTaskComponent implements OnInit {
 
   constructor(private companyService: CompanyService,
     private employeeService: EmployeeService,
-    //private subtaskModalService: ModalService,
-    //private modalService: ModalService,
+    private modalService: ModalService,
     private taskService: TaskService,
     private userService: UserService,
     private router: Router,
     public authService: AuthService,
-    private activatedRoute: ActivatedRoute) { }
+) { }
 
   ngOnInit() {
 
-     // console.log(this.task1);
-      //console.log(this.task);
-      //this.taskService.getTask(this.task1.id).subscribe(task => {
-        //this.task = task;
-        //this.parentTask = task;
-        //if (this.task.currentAssignedUser == null) {
-          //this.task.currentAssignedUser = undefined;
-        //}
+    // console.log(this.task1);
+    //console.log(this.task);
+    //this.taskService.getTask(this.task1.id).subscribe(task => {
+    //this.task = task;
+    //this.parentTask = task;
+    //if (this.task.currentAssignedUser == null) {
+    //this.task.currentAssignedUser = undefined;
+    //}
 
-      //});
+    //});
 
-    this.loadTask();
+    //this.loadTask();
 
     this.filteredInformations = this.autocompleteControl.valueChanges
       .pipe(
@@ -77,57 +78,16 @@ export class FormNewTaskComponent implements OnInit {
         flatMap(value => value ? this._filter(value) : [])
       );
 
-     /* this.modalService.notifyUpload.subscribe(
-        task => {
-          this.task.subtasks = this.task.subtasks.map(modalSubtask => {
-              if (company.id == originalCompany.id) {
-                originalCompany.image = company.image;
-              }
-              return originalCompany;
-            })
-        })*/
+    /* this.modalService.notifyUpload.subscribe(
+       task => {
+         this.task.subtasks = this.task.subtasks.map(modalSubtask => {
+             if (company.id == originalCompany.id) {
+               originalCompany.image = company.image;
+             }
+             return originalCompany;
+           })
+       })*/
 
-  }
-
-  public loadTask(): void {
-
-    this.activatedRoute.params.subscribe(params => {
-
-      let taskId = params['taskId']
-
-      let companyId = +params['companyId']
-
-      let employeeId = +params['employeeId']
-
-      if (taskId) {
-        this.taskService.getTask(taskId).subscribe(task => {
-          this.task = task;
-          this.parentTask = task;
-          if (this.task.currentAssignedUser == null) {
-            this.task.currentAssignedUser = undefined;
-          }
-
-        });
-
-      } else if (employeeId) {
-        //console.log("employee task");
-        this.employeeService.getEmployee(employeeId).subscribe(employee => this.task.employee = employee);
-        this.employeeService.getEmployee(employeeId).subscribe(employee => this.task.company = employee.company);
-        this.task.isMainTask = true;
-        this.task.isPeriodically = false;
-      } else if (companyId) {
-        //console.log("company task");
-        //console.log(companyId);
-        this.companyService.getCompany(companyId).subscribe(company => this.task.company = company);
-        this.task.isMainTask = true;
-
-      } else if (!taskId) {
-        console.log(this.task);
-        this.task.isMainTask = true;
-
-      }
-    });
-    this.userService.getUsers().subscribe(users => this.users = users);
   }
 
   private _filter(value: string): Observable<Information[]> {
@@ -361,13 +321,13 @@ export class FormNewTaskComponent implements OnInit {
   }
 
   //openSubtaskModal(task: Task){
-    //  this.selectedSubtask = this.task;
-      //this.subtaskModalService.openModal();
+  //  this.selectedSubtask = this.task;
+  //this.subtaskModalService.openModal();
   //}
 
-  //closeModal(){
-    //  this.modalService.closeModal();
-  //}
+  closeModal(){
+    this.modalService.closeModal();
+  }
 
   /*openSubtaskModal(task: Task){
       let newTask: Task;

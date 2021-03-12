@@ -1,0 +1,189 @@
+<div *ngIf="modalService.modal" class="modal" tabindex="-1" role="dialog" style="display:block">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{task.description}}</h4>
+        <button (click)="closeModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <ul *ngIf="errors?.length >0" class="alert alert-danger">
+            <li *ngFor="let err of errors">
+              {{ err }}
+            </li>
+          </ul>
+
+                <form #taskForm="ngForm">
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6" *ngIf="task.company">
+                      <!--label for="company" class="col-sm-6 col-form-label">Empresa</label-->
+                      <input type="text" name="company" value="{{task.company.name}}" class="form-control" disabled />
+                    </div>
+
+                    <div class="form-group col-md-6" *ngIf="task.employee">
+                      <!--label for="" class="col-sm-6 col-form-label">Treballador</label-->
+                      <input type="text" name="employee" value="{{task.employee.name}}" class="form-control" disabled />
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label for="description">Descripció</label>
+                    <input type="text" name="description" [(ngModel)]="task.description" class="form-control" required minlength="3" maxlength="80" #description="ngModel">
+                    <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
+                      <div *ngIf="description.errors.required">
+                        Camp obligatori.
+                      </div>
+                      <div *ngIf="description.errors.minlength">
+                        Ha de tenir mínim 3 caràcters.
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="form-row align-items-center">
+                    <label for="deadline" class="col-sm-2 col-form-label"></label>
+                    <div class="class col-sm-6">
+                      <mat-form-field appearance="fill" color="accent">
+                        <mat-label>Venciment</mat-label>
+                        <input matInput [matDatepicker]="picker" name="deadline" class="form-control" [(ngModel)]="task.deadline" required #deadline="ngModel">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <div class="alert alert-danger" *ngIf="deadline.invalid && (deadline.dirty || deadline.touched)">
+                          <div *ngIf="deadline.errors.required">
+                            Camp obligatori.
+                          </div>
+                        </div>
+                      </mat-form-field>
+                    </div>
+
+                  </div>
+
+
+                  <div class="form-row align-items-center">
+
+                    <div class="col-auto my-1">
+                      <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" name="{{task}}isPeriodically" [(ngModel)]="task.isPeriodically" id="{{task}}isPeriodically">
+                        <label for="isPeriodically">Repetir</label>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-4" *ngIf="task.isPeriodically">
+                      <select class="form-control" [(ngModel)]="task.typeCalculationDeadline" name="eTimeTypes">
+                        <option [ngValue]="undefined">--Seleccionar--</option>
+                        <option *ngFor="let type of eTimeTypes | keyvalue" [ngValue]="type.key">{{type.value}}</option>
+
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="comment">Comentaris</label>
+                    <textarea name="comment" [(ngModel)]="task.comment" class="form-control"></textarea>
+                  </div>
+
+                  <br>
+
+                  <div class="form-group row">
+                    <label for="currentAssignedUser" class="col-form-label col-sm-4 ">Usuari assignat</label>
+                    <div class="col-sm-6">
+                      <select [compareWith]="compareUser" class="form-control" [(ngModel)]="task.currentAssignedUser" name="currentAssignedUser">
+                        <option [ngValue]="undefined">----Seleccionar usuari----</option>
+                        <option *ngFor="let user of users" [ngValue]="user">{{user.username}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+
+                  <div class="form-row align-items-center">
+                    <div class="col-auto my-1">
+                      <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" (change)="taskDone($event)" name="task.isDone" [(ngModel)]="task.isDone" id="isPeriodically">
+                        <label for="isDone">Feta</label>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <!-- TASKINFORMATIONS -->
+                  <!-- TASKINFORMATIONS FILTER -->
+                  <div class="form-row">
+                    <div class="col-sm-6">
+                      <mat-form-field>
+                        <input matInput type="text" placeholder="Afegir informació" aria-label="Informations" [formControl]="autocompleteControl" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="showDescription" (optionSelected)="selectInformation($event)">
+                          <mat-option *ngFor="let information of filteredInformations | async" [value]="information">
+                            {{information.description}}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <!-- TASKINFORMATIONS WITHOUT INFORMATION -->
+                  <div *ngIf="task.id">
+                    <div class="alert alert-info my-4" *ngIf="task.taskInformations.length === 0">
+                      No hi ha informacions per la tasca {{task.description}}
+                    </div>
+                    <h5 class="float-right" *ngIf="task.id && task.taskInformations.length>0">Informacions: <span class="badge badge-secondary">{{task.taskInformations.length}}</span></h5>
+                  </div>
+
+                  <!-- TASKINFORMATIONS TABLE -->
+                  <table class="table table-striped table-hover table-sm">
+                    <thead>
+                      <tr>
+                        <th>Informació</th>
+                        <th>Pin</th>
+                        <th>Feta</th>
+                        <th>Comentari</th>
+                        <th>Eliminar</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr *ngFor="let information of task.taskInformations">
+                        <td>{{information.information.description}}</td>
+                        <td valign="center"><button mat-icon-button [ngClass]="information.isSticked ? 'red' : 'black' " (click)="changeIsSticked(information.id)" aria-label="Example icon button with a home icon">
+                            <mat-icon>push_pin</mat-icon>
+                          </button>
+
+                        <td><input style="margin-top: .5rem;" type="checkbox" (change)="informationDone(information.information.id, $event)" name="done{{information.information.id}}" [(ngModel)]="information.done">
+
+                          <!--mat-checkbox (change)="informationDone(information.information.id, $event)" color='primary' name="done{{information.information.id}}" [(ngModel)]="information.done"></mat-checkbox-->
+                        </td>
+                        <td><input class="form-control" type="text" name="information.comment" value="{{information.comment}}" (change)="updateComment(information.information.id, $event)"></td>
+                        <td><button class="btn btn-danger btn-sm" type="button" (click)="deleteTaskInformation(information.information.id)">x</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <button *ngIf="!dragDisabled" type="button" (click)="openSubtaskModal()" class="btn btn-outline-info btn-xs">+SUBTASCA</button>
+
+
+                  <!-- SUBMIT BUTTONS -->
+                  <div class="form-group-row">
+                    <div class="class col-sm-6">
+                      <button class="btn btn-outline-info" role="button" (click)="create()" *ngIf="!task.id else elseBlock" [disabled]="!taskForm.form.valid">Crear</button>
+                      <ng-template #elseBlock>
+                        <button class="btn btn-outline-info" role="button" (click)='update()' [disabled]="!taskForm.form.valid">Editar</button>
+                      </ng-template>
+
+                    </div>
+                  </div>
+
+
+
+                </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" (click)="closeModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

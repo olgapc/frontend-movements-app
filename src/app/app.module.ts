@@ -10,12 +10,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormCompanyComponent } from './companies/form/form-company.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
-
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
 import localeCa from '@angular/common/locales/ca';
 import localeEs from '@angular/common/locales/es';
-
 import { EmployeesComponent } from './employees/list/employees.component';
 import { RolesComponent } from './users/list-roles/roles.component';
 import { TasksComponent } from './tasks/list/tasks.component';
@@ -65,11 +62,10 @@ import { CommonModule } from '@angular/common';
 import { BaseComponent } from './a-drap-and-drop/base/base.component';
 import { BaseTaskComponent } from './a-drap-and-drop-task/base-task/base-task.component';
 import { ListItemTaskComponent } from './a-drap-and-drop-task/list-item-task/list-item-task.component';
-//import { TasksByUserComponent } from './tasks/list/tasks-by-user.component';
+import { TasksByUserComponent } from './tasks/list/tasks-by-user.component';
 import { SubtasksListComponent } from './tasks/subtasks-list/subtasks-list.component';
-
-
-
+import { FormNewSubtaskComponent } from './tasks/form/form-new-subtask.component';
+import { ModalFormNewTaskComponent } from './tasks/form-modal/modal-form-new-task.component';
 
 registerLocaleData(localeCa, 'ca');
 registerLocaleData(localeEs, 'es');
@@ -82,22 +78,21 @@ const routes: Routes = [
   { path: 'companies/form/:id', component: FormCompanyComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
   { path: 'login', component: LoginComponent },
   { path: 'tasks/view/:id', component: ViewTaskComponent },
-
-
   { path: 'tasks', component: TasksComponent },
-
   { path: 'tasks/page/:page', component: TasksComponent },
   //{ path: 'tasks/list/bydeadline', component: TasksByDeadlineComponent},
-  //{ path: 'tasks/list/byuser', component: TasksByUserComponent},
+  { path: 'tasks/list/byuser', component: TasksByUserComponent },
   //{ path: 'tasks/datatable/page/:page' ,component: TasksdatatableComponent },
   { path: 'tasks/form/task', component: FormTaskComponent },
   { path: 'tasks/form/task/:taskId', component: FormTaskComponent },
   { path: 'tasks/form/company/:companyId', component: FormTaskComponent },
   { path: 'tasks/form/employee/:companyId/:employeeId', component: FormTaskComponent },
-  { path: 'tasks/form/new/task', component: FormNewTaskComponent },
+  //{ path: 'tasks/form/new/task', component: FormNewTaskComponent },
   { path: 'tasks/form/new/task/:taskId', component: FormNewTaskComponent },
   { path: 'tasks/form/new/company/:companyId', component: FormNewTaskComponent },
   { path: 'tasks/form/new/employee/:companyId/:employeeId', component: FormNewTaskComponent },
+  { path: 'tasks/form/new/subtask/new/:maintaskId', component: FormNewTaskComponent },
+  { path: 'tasks/form/new/subtask/form/:subtaskId', component: FormNewTaskComponent },
   //{ path: 'templates', component: TemplatesComponent },
   //{ path: 'templates/page/:page', component: TemplatesComponent },
   { path: 'informations', component: InformationsComponent },
@@ -123,8 +118,7 @@ const routes: Routes = [
   { path: 'zero_config', component: ZeroConfigurationComponent },
   { path: 'tests/TableExpandableRowsExampleComponent', component: TableExpandableRowsExampleComponent },
   { path: 'tests/listitem', component: BaseComponent },
-  { path: 'tests/listitemtask', component: BaseTaskComponent},
-
+  { path: 'tests/listitemtask', component: BaseTaskComponent },
 
 ];
 
@@ -164,8 +158,10 @@ const routes: Routes = [
     BaseComponent,
     BaseTaskComponent,
     ListItemTaskComponent,
-    //TasksByUserComponent,
+    TasksByUserComponent,
     SubtasksListComponent,
+    FormNewSubtaskComponent,
+    ModalFormNewTaskComponent
   ],
 
   imports: [
@@ -193,7 +189,7 @@ const routes: Routes = [
     DragDropModule,
     CommonModule
   ],
-  
+
   providers:
     [{ provide: LOCALE_ID, useValue: 'ca' },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
