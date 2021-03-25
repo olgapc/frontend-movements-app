@@ -37,6 +37,7 @@ export class ModalFormNewTaskComponent implements OnInit {
   filteredInformations: Observable<Information[]>;
   public errors: string[];
   //selectedSubtask: Task;
+  public forhiddingModal = false;
 
   //SUBTASKS
   public parentTask: Task;
@@ -57,37 +58,25 @@ export class ModalFormNewTaskComponent implements OnInit {
     public authService: AuthService,
 ) { }
 
+ngOnDestroy() {
+    this.forhiddingModal = false;
+ }
+
   ngOnInit() {
-
-    // console.log(this.task1);
-    //console.log(this.task);
-    //this.taskService.getTask(this.task1.id).subscribe(task => {
-    //this.task = task;
-    //this.parentTask = task;
-    //if (this.task.currentAssignedUser == null) {
-    //this.task.currentAssignedUser = undefined;
-    //}
-
-    //});
-
-    //this.loadTask();
-
+      this.forhiddingModal = true;
+      console.log(this.task);
+      console.log("onInit");
     this.filteredInformations = this.autocompleteControl.valueChanges
       .pipe(
         map(value => typeof value === 'string' ? value : value.description),
         flatMap(value => value ? this._filter(value) : [])
       );
 
-    /* this.modalService.notifyUpload.subscribe(
-       task => {
-         this.task.subtasks = this.task.subtasks.map(modalSubtask => {
-             if (company.id == originalCompany.id) {
-               originalCompany.image = company.image;
-             }
-             return originalCompany;
-           })
-       })*/
+      this.userService.getUsers().subscribe(users => this.users = users);
 
+      if (this.task.currentAssignedUser == null) {
+        this.task.currentAssignedUser = undefined;
+      }
   }
 
   private _filter(value: string): Observable<Information[]> {
@@ -165,6 +154,7 @@ export class ModalFormNewTaskComponent implements OnInit {
         if (done) {
           taskInformation.doneAt = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss", 'ca');
           taskInformation.doneBy = this.authService.user;
+          console.log(taskInformation);
         } else {
           taskInformation.doneAt = null;
           taskInformation.doneBy = null;

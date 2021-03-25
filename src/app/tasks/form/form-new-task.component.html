@@ -110,6 +110,17 @@
               <label for="isDone">Feta</label>
             </div>
           </div>
+          <!--div class="form-group row">
+            <label for="doneBy" class="col-form-label col-sm-4 ">Usuari assignat</label>
+            <div class="col-sm-4" *ngIf="task.isDone">
+              <select [compareWith]="compareUser" class="form-control" [(ngModel)]="task.doneBy" name="doneBy">
+                <option [ngValue]="undefined">----Seleccionar usuari----</option>
+                <option *ngFor="let user of users" [ngValue]="user">{{user.doneBy.username}}</option>
+              </select>
+            </div>
+          </div-->
+
+
         </div>
 
 

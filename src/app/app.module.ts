@@ -66,6 +66,7 @@ import { TasksByUserComponent } from './tasks/list/tasks-by-user.component';
 import { SubtasksListComponent } from './tasks/subtasks-list/subtasks-list.component';
 import { FormNewSubtaskComponent } from './tasks/form/form-new-subtask.component';
 import { ModalFormNewTaskComponent } from './tasks/form-modal/modal-form-new-task.component';
+import { ModalService } from './tasks/form-modal/modal.service';
 
 registerLocaleData(localeCa, 'ca');
 registerLocaleData(localeEs, 'es');
@@ -87,7 +88,7 @@ const routes: Routes = [
   { path: 'tasks/form/task/:taskId', component: FormTaskComponent },
   { path: 'tasks/form/company/:companyId', component: FormTaskComponent },
   { path: 'tasks/form/employee/:companyId/:employeeId', component: FormTaskComponent },
-  //{ path: 'tasks/form/new/task', component: FormNewTaskComponent },
+  { path: 'tasks/form/new/task', component: FormNewTaskComponent },
   { path: 'tasks/form/new/task/:taskId', component: FormNewTaskComponent },
   { path: 'tasks/form/new/company/:companyId', component: FormNewTaskComponent },
   { path: 'tasks/form/new/employee/:companyId/:employeeId', component: FormNewTaskComponent },
@@ -194,7 +195,8 @@ const routes: Routes = [
     [{ provide: LOCALE_ID, useValue: 'ca' },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+    ModalService
 
     ],
   bootstrap: [AppComponent]

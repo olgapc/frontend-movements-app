@@ -198,13 +198,15 @@ export class FormNewTaskComponent implements OnInit {
 
   public informationDone(id: number, event: any): void {
     let done: boolean = event.target.checked as boolean;
+    let doerUser: User = new User();
 
     this.task.taskInformations = this.task.taskInformations.map((taskInformation: TaskInformation) => {
       if (id === taskInformation.information.id) {
         taskInformation.done = done;
         if (done) {
           taskInformation.doneAt = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss", 'ca');
-          taskInformation.doneBy = this.authService.user;
+          doerUser.username = this.authService.user.username;
+          taskInformation.doneBy = doerUser;
         } else {
           taskInformation.doneAt = null;
           taskInformation.doneBy = null;
@@ -256,11 +258,14 @@ export class FormNewTaskComponent implements OnInit {
   }
 
   public taskDone(event: any): void {
+      let doerUser: User = new User();
     if (this.task.isDone) {
       this.task.doneAt = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss", 'ca');
-      this.task.doneBy = this.authService.user;
+      doerUser.username = this.authService.user.username;
+      this.task.doneBy = doerUser;
     }
   }
+
 
   onIsPeriodicallyChanged(value: boolean) {
     this.task.isPeriodically = value;

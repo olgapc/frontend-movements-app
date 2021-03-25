@@ -103,6 +103,10 @@ export class TaskService {
     return this.http.get<Information[]>(`${this.urlEndPoint}/upload-informations/${term}`);
   }
 
+  //getUser(username: string): Observable<User> {
+    //  return this.http.get<User>(`${this.urlEndPoint}/get-user/${username}`);
+  //}
+
   create(task: Task): Observable<any> {
 
     return this.http.post<any>(this.urlEndPoint, task).pipe(
